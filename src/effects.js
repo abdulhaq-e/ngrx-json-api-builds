@@ -56,7 +56,6 @@ export class NgrxJsonApiEffects {
             .mergeMap((query) => {
             return this.jsonApi
                 .find(query)
-                .map(res => res.json())
                 .map(data => new ApiGetSuccessAction({
                 jsonApiData: data,
                 query: query,
@@ -83,7 +82,6 @@ export class NgrxJsonApiEffects {
             .mergeMap((payload) => {
             return this.jsonApi
                 .delete(payload.query)
-                .map(res => res.json())
                 .map(data => new ApiDeleteSuccessAction({
                 jsonApiData: data,
                 query: payload.query,
@@ -149,7 +147,6 @@ export class NgrxJsonApiEffects {
                         let /** @type {?} */ payload = this.generatePayload(pendingChange, 'PATCH');
                         actions.push(this.jsonApi
                             .update(payload.query, payload.jsonApiData)
-                            .map(res => res.json())
                             .map(data => new ApiPatchSuccessAction({
                             jsonApiData: data,
                             query: payload.query,
@@ -160,7 +157,6 @@ export class NgrxJsonApiEffects {
                         let /** @type {?} */ payload = this.generatePayload(pendingChange, 'DELETE');
                         actions.push(this.jsonApi
                             .delete(payload.query)
-                            .map(res => res.json())
                             .map(data => new ApiDeleteSuccessAction({
                             jsonApiData: data,
                             query: payload.query,
@@ -223,7 +219,7 @@ export class NgrxJsonApiEffects {
             // transform http to json api error
             let /** @type {?} */ errors = [];
             let /** @type {?} */ error = {
-                status: response.status.toString(),
+                status: String(response.status),
                 code: response.statusText,
             };
             errors.push(error);

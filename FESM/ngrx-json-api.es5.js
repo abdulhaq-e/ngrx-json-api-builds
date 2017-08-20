@@ -2083,7 +2083,6 @@ var NgrxJsonApiEffects = (function () {
             .mergeMap(function (query) {
             return _this.jsonApi
                 .find(query)
-                .map(function (res) { return res.json(); })
                 .map(function (data) { return new ApiGetSuccessAction({
                 jsonApiData: data,
                 query: query,
@@ -2110,7 +2109,6 @@ var NgrxJsonApiEffects = (function () {
             .mergeMap(function (payload) {
             return _this.jsonApi
                 .delete(payload.query)
-                .map(function (res) { return res.json(); })
                 .map(function (data) { return new ApiDeleteSuccessAction({
                 jsonApiData: data,
                 query: payload.query,
@@ -2176,7 +2174,6 @@ var NgrxJsonApiEffects = (function () {
                         var /** @type {?} */ payload_2 = _this.generatePayload(pendingChange, 'PATCH');
                         actions.push(_this.jsonApi
                             .update(payload_2.query, payload_2.jsonApiData)
-                            .map(function (res) { return res.json(); })
                             .map(function (data) { return new ApiPatchSuccessAction({
                             jsonApiData: data,
                             query: payload_2.query,
@@ -2187,7 +2184,6 @@ var NgrxJsonApiEffects = (function () {
                         var /** @type {?} */ payload_3 = _this.generatePayload(pendingChange, 'DELETE');
                         actions.push(_this.jsonApi
                             .delete(payload_3.query)
-                            .map(function (res) { return res.json(); })
                             .map(function (data) { return new ApiDeleteSuccessAction({
                             jsonApiData: data,
                             query: payload_3.query,
@@ -2254,7 +2250,7 @@ var NgrxJsonApiEffects = (function () {
             // transform http to json api error
             var /** @type {?} */ errors = [];
             var /** @type {?} */ error = {
-                status: response.status.toString(),
+                status: String(response.status),
                 code: response.statusText,
             };
             errors.push(error);
