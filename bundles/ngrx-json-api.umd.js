@@ -155,6 +155,12 @@ var ApiGetFailAction = (function () {
     }
     return ApiGetFailAction;
 }());
+var ApiRollbackAction = (function () {
+    function ApiRollbackAction() {
+        this.type = NgrxJsonApiActionTypes.API_ROLLBACK;
+    }
+    return ApiRollbackAction;
+}());
 var ApiPatchInitAction = (function () {
     /**
      * @param {?} payload
@@ -2562,6 +2568,35 @@ exports.GetDenormalisedValuePipe = GetDenormalisedValuePipe;
 exports.NgrxJsonApiService = NgrxJsonApiService;
 exports.NgrxJsonApiModule = NgrxJsonApiModule;
 exports.Direction = Direction;
+exports.NgrxJsonApiActionTypes = NgrxJsonApiActionTypes;
+exports.ApiApplyInitAction = ApiApplyInitAction;
+exports.ApiApplySuccessAction = ApiApplySuccessAction;
+exports.ApiApplyFailAction = ApiApplyFailAction;
+exports.ApiPostInitAction = ApiPostInitAction;
+exports.ApiPostSuccessAction = ApiPostSuccessAction;
+exports.ApiPostFailAction = ApiPostFailAction;
+exports.ApiDeleteInitAction = ApiDeleteInitAction;
+exports.ApiDeleteSuccessAction = ApiDeleteSuccessAction;
+exports.ApiDeleteFailAction = ApiDeleteFailAction;
+exports.ApiGetInitAction = ApiGetInitAction;
+exports.ApiGetSuccessAction = ApiGetSuccessAction;
+exports.ApiGetFailAction = ApiGetFailAction;
+exports.ApiRollbackAction = ApiRollbackAction;
+exports.ApiPatchInitAction = ApiPatchInitAction;
+exports.ApiPatchSuccessAction = ApiPatchSuccessAction;
+exports.ApiPatchFailAction = ApiPatchFailAction;
+exports.DeleteStoreResourceAction = DeleteStoreResourceAction;
+exports.PatchStoreResourceAction = PatchStoreResourceAction;
+exports.NewStoreResourceAction = NewStoreResourceAction;
+exports.PostStoreResourceAction = PostStoreResourceAction;
+exports.RemoveQueryAction = RemoveQueryAction;
+exports.LocalQueryInitAction = LocalQueryInitAction;
+exports.LocalQuerySuccessAction = LocalQuerySuccessAction;
+exports.LocalQueryFailAction = LocalQueryFailAction;
+exports.CompactStoreAction = CompactStoreAction;
+exports.ClearStoreAction = ClearStoreAction;
+exports.ApiQueryRefreshAction = ApiQueryRefreshAction;
+exports.ModifyStoreResourceErrorsAction = ModifyStoreResourceErrorsAction;
 exports.ɵh = NgrxJsonApi;
 exports.ɵg = NgrxJsonApiEffects;
 exports.ɵa = NGRX_JSON_API_CONFIG;

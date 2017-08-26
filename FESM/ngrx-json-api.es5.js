@@ -177,6 +177,12 @@ var ApiGetFailAction = (function () {
     }
     return ApiGetFailAction;
 }());
+var ApiRollbackAction = (function () {
+    function ApiRollbackAction() {
+        this.type = NgrxJsonApiActionTypes.API_ROLLBACK;
+    }
+    return ApiRollbackAction;
+}());
 var ApiPatchInitAction = (function () {
     /**
      * @param {?} payload
@@ -2580,5 +2586,5 @@ NgrxJsonApiModule.ctorParameters = function () { return []; };
 /**
  * Generated bundle index. Do not edit.
  */
-export { SelectStoreResourcePipe, DenormaliseStoreResourcePipe, GetDenormalisedValuePipe, NgrxJsonApiService, NgrxJsonApiModule, Direction, NgrxJsonApi as ɵh, NgrxJsonApiEffects as ɵg, NGRX_JSON_API_CONFIG as ɵa, apiFactory as ɵb, configure as ɵe, selectorsFactory as ɵc, serviceFactory as ɵd, NgrxJsonApiStoreReducer as ɵi, reducer as ɵj, NgrxJsonApiSelectors as ɵf };
+export { SelectStoreResourcePipe, DenormaliseStoreResourcePipe, GetDenormalisedValuePipe, NgrxJsonApiService, NgrxJsonApiModule, Direction, NgrxJsonApiActionTypes, ApiApplyInitAction, ApiApplySuccessAction, ApiApplyFailAction, ApiPostInitAction, ApiPostSuccessAction, ApiPostFailAction, ApiDeleteInitAction, ApiDeleteSuccessAction, ApiDeleteFailAction, ApiGetInitAction, ApiGetSuccessAction, ApiGetFailAction, ApiRollbackAction, ApiPatchInitAction, ApiPatchSuccessAction, ApiPatchFailAction, DeleteStoreResourceAction, PatchStoreResourceAction, NewStoreResourceAction, PostStoreResourceAction, RemoveQueryAction, LocalQueryInitAction, LocalQuerySuccessAction, LocalQueryFailAction, CompactStoreAction, ClearStoreAction, ApiQueryRefreshAction, ModifyStoreResourceErrorsAction, NgrxJsonApi as ɵh, NgrxJsonApiEffects as ɵg, NGRX_JSON_API_CONFIG as ɵa, apiFactory as ɵb, configure as ɵe, selectorsFactory as ɵc, serviceFactory as ɵd, NgrxJsonApiStoreReducer as ɵi, reducer as ɵj, NgrxJsonApiSelectors as ɵf };
 //# sourceMappingURL=ngrx-json-api.es5.js.map
