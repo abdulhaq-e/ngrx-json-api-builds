@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash/index';
 import { Store } from '@ngrx/store';
-import { Effect, Actions, toPayload } from '@ngrx/effects';
+import { Effect, Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';
@@ -32,8 +32,7 @@ export class NgrxJsonApiEffects {
         this.selectors = selectors;
         this.createResource$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_POST_INIT)
-            .map(toPayload)
-            .map(it => this.generatePayload(it, 'POST'))
+            .map(it => this.generatePayload(it.payload, 'POST'))
             .mergeMap((payload) => {
             return this.jsonApi
                 .create(payload.query, payload.jsonApiData)
@@ -42,8 +41,7 @@ export class NgrxJsonApiEffects {
         });
         this.updateResource$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_PATCH_INIT)
-            .map(toPayload)
-            .map(it => this.generatePayload(it, 'PATCH'))
+            .map(it => this.generatePayload(it.payload, 'PATCH'))
             .mergeMap((payload) => {
             return this.jsonApi
                 .update(payload.query, payload.jsonApiData)
@@ -52,10 +50,11 @@ export class NgrxJsonApiEffects {
         });
         this.readResource$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_GET_INIT)
-            .map(toPayload)
+            .map(it => it.payload)
             .mergeMap((query) => {
             return this.jsonApi
                 .find(query)
+                .map((response) => response.body)
                 .map(data => new ApiGetSuccessAction({
                 jsonApiData: data,
                 query: query,
@@ -64,7 +63,7 @@ export class NgrxJsonApiEffects {
         });
         this.queryStore$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.LOCAL_QUERY_INIT)
-            .map(toPayload)
+            .map(it => it.payload)
             .mergeMap((query) => {
             return this.store
                 .let(this.selectors.getNgrxJsonApiStore$())
@@ -77,11 +76,12 @@ export class NgrxJsonApiEffects {
         });
         this.deleteResource$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_DELETE_INIT)
-            .map(toPayload)
+            .map(it => it.payload)
             .map(it => this.generatePayload(it, 'DELETE'))
             .mergeMap((payload) => {
             return this.jsonApi
                 .delete(payload.query)
+                .map((response) => response.body)
                 .map(data => new ApiDeleteSuccessAction({
                 jsonApiData: data,
                 query: payload.query,
@@ -207,7 +207,7 @@ export class NgrxJsonApiEffects {
         }
         let /** @type {?} */ document = null;
         if (contentType === 'application/vnd.api+json') {
-            document = response.json();
+            document = response;
         }
         if (document && document.errors && document.errors.length > 0) {
             return {

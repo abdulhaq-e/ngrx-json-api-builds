@@ -220,7 +220,7 @@ export class NgrxJsonApi {
      */
     request(requestOptions) {
         let /** @type {?} */ request;
-        let /** @type {?} */ newRequestOptions = Object.assign({}, requestOptions, { headers: this.headers });
+        let /** @type {?} */ newRequestOptions = Object.assign({}, requestOptions, { headers: this.headers, observe: 'response' });
         if (requestOptions.method === 'GET') {
             let { method, url } = newRequestOptions, init = __rest(newRequestOptions, ["method", "url"]);
             request = new HttpRequest(method, url, init);

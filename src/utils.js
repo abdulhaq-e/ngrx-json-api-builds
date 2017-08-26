@@ -19,7 +19,7 @@ export const /** @type {?} */ denormaliseObject = (resource, storeData, bag) => 
             }
             else if (_.isArray(data)) {
                 // hasMany relation
-                let /** @type {?} */ relatedRSs = getMultipleStoreResource(data, storeData);
+                let /** @type {?} */ relatedRSs = getMultipleStoreResource(/** @type {?} */ (data), storeData);
                 relationDenorm = relatedRSs.map(r => denormaliseStoreResource(r, storeData, bag));
             }
             let /** @type {?} */ relationDenormPath = 'relationships.' + relation + '.reference';
@@ -387,7 +387,7 @@ export const /** @type {?} */ updateStoreDataFromPayload = (storeData, payload) 
     if (_.isUndefined(data)) {
         return storeData;
     }
-    data = _.isArray(data) ? data : [data];
+    data = _.isArray(data) ? (data) : ([data]);
     let /** @type {?} */ included = (_.get(payload, 'included'));
     if (!_.isUndefined(included)) {
         data = [...data, ...included];

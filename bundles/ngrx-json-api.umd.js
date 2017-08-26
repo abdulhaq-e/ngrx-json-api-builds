@@ -319,7 +319,7 @@ var denormaliseObject = function (resource, storeData, bag) {
             }
             else if (lodash_index.isArray(data)) {
                 // hasMany relation
-                var /** @type {?} */ relatedRSs = getMultipleStoreResource(data, storeData);
+                var /** @type {?} */ relatedRSs = getMultipleStoreResource(/** @type {?} */ (data), storeData);
                 relationDenorm = relatedRSs.map(function (r) { return denormaliseStoreResource(r, storeData, bag); });
             }
             var /** @type {?} */ relationDenormPath = 'relationships.' + relation + '.reference';
@@ -695,7 +695,7 @@ var updateStoreDataFromPayload = function (storeData, payload) {
     if (lodash_index.isUndefined(data)) {
         return storeData;
     }
-    data = lodash_index.isArray(data) ? data : [data];
+    data = lodash_index.isArray(data) ? (data) : ([data]);
     var /** @type {?} */ included = (lodash_index.get(payload, 'included'));
     if (!lodash_index.isUndefined(included)) {
         data = data.concat(included);
@@ -1839,7 +1839,7 @@ var NgrxJsonApi = (function () {
      */
     NgrxJsonApi.prototype.request = function (requestOptions) {
         var /** @type {?} */ request;
-        var /** @type {?} */ newRequestOptions = Object.assign({}, requestOptions, { headers: this.headers });
+        var /** @type {?} */ newRequestOptions = Object.assign({}, requestOptions, { headers: this.headers, observe: 'response' });
         if (requestOptions.method === 'GET') {
             var method = newRequestOptions.method, url = newRequestOptions.url, init = __rest(newRequestOptions, ["method", "url"]);
             request = new _angular_common_http.HttpRequest(method, url, init);
@@ -2037,8 +2037,7 @@ var NgrxJsonApiEffects = (function () {
         this.selectors = selectors;
         this.createResource$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_POST_INIT)
-            .map(_ngrx_effects.toPayload)
-            .map(function (it) { return _this.generatePayload(it, 'POST'); })
+            .map(function (it) { return _this.generatePayload(it.payload, 'POST'); })
             .mergeMap(function (payload) {
             return _this.jsonApi
                 .create(payload.query, payload.jsonApiData)
@@ -2047,8 +2046,7 @@ var NgrxJsonApiEffects = (function () {
         });
         this.updateResource$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_PATCH_INIT)
-            .map(_ngrx_effects.toPayload)
-            .map(function (it) { return _this.generatePayload(it, 'PATCH'); })
+            .map(function (it) { return _this.generatePayload(it.payload, 'PATCH'); })
             .mergeMap(function (payload) {
             return _this.jsonApi
                 .update(payload.query, payload.jsonApiData)
@@ -2057,10 +2055,11 @@ var NgrxJsonApiEffects = (function () {
         });
         this.readResource$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_GET_INIT)
-            .map(_ngrx_effects.toPayload)
+            .map(function (it) { return it.payload; })
             .mergeMap(function (query) {
             return _this.jsonApi
                 .find(query)
+                .map(function (response) { return response.body; })
                 .map(function (data) { return new ApiGetSuccessAction({
                 jsonApiData: data,
                 query: query,
@@ -2069,7 +2068,7 @@ var NgrxJsonApiEffects = (function () {
         });
         this.queryStore$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.LOCAL_QUERY_INIT)
-            .map(_ngrx_effects.toPayload)
+            .map(function (it) { return it.payload; })
             .mergeMap(function (query) {
             return _this.store
                 .let(_this.selectors.getNgrxJsonApiStore$())
@@ -2082,11 +2081,12 @@ var NgrxJsonApiEffects = (function () {
         });
         this.deleteResource$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_DELETE_INIT)
-            .map(_ngrx_effects.toPayload)
+            .map(function (it) { return it.payload; })
             .map(function (it) { return _this.generatePayload(it, 'DELETE'); })
             .mergeMap(function (payload) {
             return _this.jsonApi
                 .delete(payload.query)
+                .map(function (response) { return response.body; })
                 .map(function (data) { return new ApiDeleteSuccessAction({
                 jsonApiData: data,
                 query: payload.query,
@@ -2216,7 +2216,7 @@ var NgrxJsonApiEffects = (function () {
         }
         var /** @type {?} */ document = null;
         if (contentType === 'application/vnd.api+json') {
-            document = response.json();
+            document = response;
         }
         if (document && document.errors && document.errors.length > 0) {
             return {

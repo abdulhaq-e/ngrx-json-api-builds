@@ -86,7 +86,7 @@ export interface ModifyStoreResourceErrorsPayload {
 }
 export interface Payload {
     jsonApiData?: Document;
-    query: Query;
+    query?: Query;
 }
 export interface Query {
     queryId?: string;

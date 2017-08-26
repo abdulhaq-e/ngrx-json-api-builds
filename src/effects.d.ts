@@ -1,5 +1,5 @@
 import { OnDestroy } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -13,7 +13,7 @@ import 'rxjs/add/operator/switchMapTo';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/toArray';
 import 'rxjs/add/operator/withLatestFrom';
-import { ApiGetInitAction, ApiPostFailAction, ApiPostSuccessAction, ApiDeleteFailAction, ApiDeleteSuccessAction, ApiGetFailAction, ApiGetSuccessAction, ApiPatchFailAction, ApiPatchSuccessAction, LocalQuerySuccessAction, LocalQueryFailAction, ApiQueryRefreshAction } from './actions';
+import { ApiGetInitAction, ApiDeleteFailAction, ApiDeleteSuccessAction, ApiGetFailAction, ApiGetSuccessAction, ApiPatchFailAction, ApiPatchSuccessAction, LocalQuerySuccessAction, LocalQueryFailAction, ApiQueryRefreshAction } from './actions';
 import { NgrxJsonApi } from './api';
 import { NgrxJsonApiSelectors } from './selectors';
 export declare class NgrxJsonApiEffects implements OnDestroy {
@@ -21,7 +21,7 @@ export declare class NgrxJsonApiEffects implements OnDestroy {
     private jsonApi;
     private store;
     private selectors;
-    createResource$: Observable<ApiPostSuccessAction | ApiPostFailAction>;
+    createResource$: Observable<Action>;
     updateResource$: Observable<ApiPatchSuccessAction | ApiPatchFailAction>;
     readResource$: Observable<ApiGetSuccessAction | ApiGetFailAction>;
     queryStore$: Observable<LocalQuerySuccessAction | LocalQueryFailAction>;
