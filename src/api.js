@@ -8,7 +8,7 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 import * as _ from 'lodash/index';
-import { HttpHeaders, HttpRequest, } from '@angular/common/http';
+import { HttpHeaders, } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
@@ -223,21 +223,20 @@ export class NgrxJsonApi {
         let /** @type {?} */ newRequestOptions = Object.assign({}, requestOptions, { headers: this.headers, observe: 'response' });
         if (requestOptions.method === 'GET') {
             let { method, url } = newRequestOptions, init = __rest(newRequestOptions, ["method", "url"]);
-            request = new HttpRequest(method, url, init);
+            return this.http.get(url, init);
         }
         else if (requestOptions.method === 'POST') {
             let { method, url, body } = newRequestOptions, init = __rest(newRequestOptions, ["method", "url", "body"]);
-            request = new HttpRequest(method, url, body, init);
+            return this.http.post(url, body, init);
         }
         else if (requestOptions.method === 'PATCH') {
             let { method, url, body } = newRequestOptions, init = __rest(newRequestOptions, ["method", "url", "body"]);
-            request = new HttpRequest(method, url, body, init);
+            return this.http.patch(url, body, init);
         }
         else if (requestOptions.method === 'DELETE') {
             let { method, url } = newRequestOptions, init = __rest(newRequestOptions, ["method", "url"]);
-            request = new HttpRequest(method, url, init);
+            return this.http.delete(url, init);
         }
-        return this.http.request(request);
     }
 }
 function NgrxJsonApi_tsickle_Closure_declarations() {

@@ -1848,21 +1848,20 @@ var NgrxJsonApi = (function () {
         var /** @type {?} */ newRequestOptions = Object.assign({}, requestOptions, { headers: this.headers, observe: 'response' });
         if (requestOptions.method === 'GET') {
             var method = newRequestOptions.method, url = newRequestOptions.url, init = __rest(newRequestOptions, ["method", "url"]);
-            request = new _angular_common_http.HttpRequest(method, url, init);
+            return this.http.get(url, init);
         }
         else if (requestOptions.method === 'POST') {
             var method = newRequestOptions.method, url = newRequestOptions.url, body = newRequestOptions.body, init = __rest(newRequestOptions, ["method", "url", "body"]);
-            request = new _angular_common_http.HttpRequest(method, url, body, init);
+            return this.http.post(url, body, init);
         }
         else if (requestOptions.method === 'PATCH') {
             var method = newRequestOptions.method, url = newRequestOptions.url, body = newRequestOptions.body, init = __rest(newRequestOptions, ["method", "url", "body"]);
-            request = new _angular_common_http.HttpRequest(method, url, body, init);
+            return this.http.patch(url, body, init);
         }
         else if (requestOptions.method === 'DELETE') {
             var method = newRequestOptions.method, url = newRequestOptions.url, init = __rest(newRequestOptions, ["method", "url"]);
-            request = new _angular_common_http.HttpRequest(method, url, init);
+            return this.http.delete(url, init);
         }
-        return this.http.request(request);
     };
     return NgrxJsonApi;
 }());

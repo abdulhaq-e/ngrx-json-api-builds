@@ -1,4 +1,4 @@
-import { HttpHeaders, HttpClient, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpSentEvent, HttpUserEvent } from '@angular/common/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -16,9 +16,9 @@ export declare class NgrxJsonApi {
     private collectionUrlFor(type);
     private resourcePathFor(type, id);
     private resourceUrlFor(type, id);
-    find(query: Query): ErrorObservable | Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<{}> | HttpUserEvent<{}>>;
-    create(query: Query, document: Document): ErrorObservable | Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<{}> | HttpUserEvent<{}>>;
-    update(query: Query, document: Document): ErrorObservable | Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<{}> | HttpUserEvent<{}>>;
-    delete(query: Query): ErrorObservable | Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<{}> | HttpUserEvent<{}>>;
+    find(query: Query): ErrorObservable | Observable<ArrayBuffer>;
+    create(query: Query, document: Document): ErrorObservable | Observable<ArrayBuffer>;
+    update(query: Query, document: Document): ErrorObservable | Observable<ArrayBuffer>;
+    delete(query: Query): ErrorObservable | Observable<ArrayBuffer>;
     private request(requestOptions);
 }
