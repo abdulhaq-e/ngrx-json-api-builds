@@ -1255,13 +1255,9 @@ var NgrxJsonApiService = (function () {
      * @param {?} selectors
      */
     function NgrxJsonApiService(store, selectors) {
-        var _this = this;
         this.store = store;
         this.selectors = selectors;
         this.test = true;
-        this.store
-            .let(this.selectors.getNgrxJsonApiStore$())
-            .subscribe(function (it) { return (_this.storeSnapshot = it); });
     }
     /**
      * @param {?} options
@@ -1277,6 +1273,25 @@ var NgrxJsonApiService = (function () {
     NgrxJsonApiService.prototype.findMany = function (options) {
         return (this.findInternal(options, true));
     };
+    Object.defineProperty(NgrxJsonApiService.prototype, "storeSnapshot", {
+        /**
+         * @return {?}
+         */
+        get: function () {
+            var _this = this;
+            if (!this._storeSnapshot) {
+                this.store
+                    .let(this.selectors.getNgrxJsonApiStore$())
+                    .subscribe(function (it) { return (_this._storeSnapshot = (it)); });
+                if (!this._storeSnapshot) {
+                    throw new Error('failed to initialize store snapshot');
+                }
+            }
+            return this._storeSnapshot;
+        },
+        enumerable: true,
+        configurable: true
+    });
     /**
      * Adds the given query to the store. Any existing query with the same queryId is replaced.
      * Make use of selectResults(...) to fetch the data.

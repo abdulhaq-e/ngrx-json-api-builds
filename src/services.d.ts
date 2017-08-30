@@ -2,7 +2,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/finally';
 import { Store } from '@ngrx/store';
 import { NgrxJsonApiSelectors } from './selectors';
-import { Resource, ResourceIdentifier, Query, OneQueryResult, ManyQueryResult, StoreResource, ResourceError } from './interfaces';
+import { NgrxJsonApiStore, Resource, ResourceIdentifier, Query, OneQueryResult, ManyQueryResult, StoreResource, ResourceError } from './interfaces';
 export interface FindOptions {
     query: Query;
     fromServer?: boolean;
@@ -45,10 +45,11 @@ export declare class NgrxJsonApiService {
     /**
      * Keeps current snapshot of the store to allow fast access to resources.
      */
-    private storeSnapshot;
+    private _storeSnapshot;
     constructor(store: Store<any>, selectors: NgrxJsonApiSelectors<any>);
     findOne(options: FindOptions): Observable<OneQueryResult>;
     findMany(options: FindOptions): Observable<ManyQueryResult>;
+    readonly storeSnapshot: NgrxJsonApiStore;
     /**
      * Adds the given query to the store. Any existing query with the same queryId is replaced.
      * Make use of selectResults(...) to fetch the data.

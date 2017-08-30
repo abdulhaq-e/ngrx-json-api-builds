@@ -1213,9 +1213,6 @@ class NgrxJsonApiService {
         this.store = store;
         this.selectors = selectors;
         this.test = true;
-        this.store
-            .let(this.selectors.getNgrxJsonApiStore$())
-            .subscribe(it => (this.storeSnapshot = it));
     }
     /**
      * @param {?} options
@@ -1230,6 +1227,20 @@ class NgrxJsonApiService {
      */
     findMany(options) {
         return (this.findInternal(options, true));
+    }
+    /**
+     * @return {?}
+     */
+    get storeSnapshot() {
+        if (!this._storeSnapshot) {
+            this.store
+                .let(this.selectors.getNgrxJsonApiStore$())
+                .subscribe(it => (this._storeSnapshot = (it)));
+            if (!this._storeSnapshot) {
+                throw new Error('failed to initialize store snapshot');
+            }
+        }
+        return this._storeSnapshot;
     }
     /**
      * Adds the given query to the store. Any existing query with the same queryId is replaced.
