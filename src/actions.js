@@ -29,13 +29,19 @@ export const /** @type {?} */ NgrxJsonApiActionTypes = {
     CLEAR_STORE: '[NgrxJsonApi] CLEAR_STORE',
 };
 export class ApiApplyInitAction {
-    constructor() {
+    /**
+     * @param {?} payload
+     */
+    constructor(payload) {
+        this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_APPLY_INIT;
     }
 }
 function ApiApplyInitAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiApplyInitAction.prototype.type;
+    /** @type {?} */
+    ApiApplyInitAction.prototype.payload;
 }
 export class ApiApplySuccessAction {
     /**
@@ -203,13 +209,19 @@ function ApiGetFailAction_tsickle_Closure_declarations() {
     ApiGetFailAction.prototype.payload;
 }
 export class ApiRollbackAction {
-    constructor() {
+    /**
+     * @param {?} payload
+     */
+    constructor(payload) {
+        this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_ROLLBACK;
     }
 }
 function ApiRollbackAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiRollbackAction.prototype.type;
+    /** @type {?} */
+    ApiRollbackAction.prototype.payload;
 }
 export class ApiPatchInitAction {
     /**

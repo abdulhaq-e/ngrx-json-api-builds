@@ -46,7 +46,7 @@ export declare class NgrxJsonApiService {
      * Keeps current snapshot of the store to allow fast access to resources.
      */
     private _storeSnapshot;
-    constructor(store: Store<any>, selectors: NgrxJsonApiSelectors<any>);
+    constructor(store: Store<any>, selectors: NgrxJsonApiSelectors);
     findOne(options: FindOptions): Observable<OneQueryResult>;
     findMany(options: FindOptions): Observable<ManyQueryResult>;
     readonly storeSnapshot: NgrxJsonApiStore;

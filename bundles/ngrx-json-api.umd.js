@@ -1,6 +1,6 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs/add/operator/let'), require('lodash/index'), require('rxjs/add/operator/finally'), require('@angular/common/http'), require('@ngrx/store'), require('@ngrx/effects'), require('rxjs/Observable'), require('rxjs/add/operator/map'), require('rxjs/add/observable/throw'), require('rxjs/add/observable/of'), require('rxjs/add/operator/catch'), require('rxjs/add/operator/concatAll'), require('rxjs/add/operator/do'), require('rxjs/add/operator/mapTo'), require('rxjs/add/operator/mergeMap'), require('rxjs/add/operator/switchMap'), require('rxjs/add/operator/switchMapTo'), require('rxjs/add/operator/take'), require('rxjs/add/operator/toArray'), require('rxjs/add/operator/withLatestFrom'), require('rxjs/add/observable/concat'), require('rxjs/add/operator/combineLatest'), require('rxjs/add/operator/concat'), require('rxjs/add/operator/concatMap'), require('rxjs/add/operator/distinctUntilChanged'), require('rxjs/add/operator/filter'), require('rxjs/add/observable/zip')) :
-	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'rxjs/add/operator/let', 'lodash/index', 'rxjs/add/operator/finally', '@angular/common/http', '@ngrx/store', '@ngrx/effects', 'rxjs/Observable', 'rxjs/add/operator/map', 'rxjs/add/observable/throw', 'rxjs/add/observable/of', 'rxjs/add/operator/catch', 'rxjs/add/operator/concatAll', 'rxjs/add/operator/do', 'rxjs/add/operator/mapTo', 'rxjs/add/operator/mergeMap', 'rxjs/add/operator/switchMap', 'rxjs/add/operator/switchMapTo', 'rxjs/add/operator/take', 'rxjs/add/operator/toArray', 'rxjs/add/operator/withLatestFrom', 'rxjs/add/observable/concat', 'rxjs/add/operator/combineLatest', 'rxjs/add/operator/concat', 'rxjs/add/operator/concatMap', 'rxjs/add/operator/distinctUntilChanged', 'rxjs/add/operator/filter', 'rxjs/add/observable/zip'], factory) :
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs/add/operator/let'), require('lodash/index'), require('rxjs/add/operator/finally'), require('@angular/common/http'), require('@ngrx/store'), require('@ngrx/effects'), require('rxjs/Observable'), require('rxjs/add/operator/map'), require('rxjs/add/observable/throw'), require('rxjs/add/observable/of'), require('rxjs/add/operator/catch'), require('rxjs/add/operator/concatAll'), require('rxjs/add/operator/do'), require('rxjs/add/operator/mapTo'), require('rxjs/add/operator/mergeMap'), require('rxjs/add/operator/switchMap'), require('rxjs/add/operator/switchMapTo'), require('rxjs/add/operator/take'), require('rxjs/add/operator/toArray'), require('rxjs/add/operator/withLatestFrom'), require('rxjs/add/operator/takeWhile'), require('rxjs/add/operator/takeUntil'), require('rxjs/add/observable/concat'), require('rxjs/add/operator/combineLatest'), require('rxjs/add/operator/concat'), require('rxjs/add/operator/concatMap'), require('rxjs/add/operator/distinctUntilChanged'), require('rxjs/add/operator/filter'), require('rxjs/add/observable/zip')) :
+	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'rxjs/add/operator/let', 'lodash/index', 'rxjs/add/operator/finally', '@angular/common/http', '@ngrx/store', '@ngrx/effects', 'rxjs/Observable', 'rxjs/add/operator/map', 'rxjs/add/observable/throw', 'rxjs/add/observable/of', 'rxjs/add/operator/catch', 'rxjs/add/operator/concatAll', 'rxjs/add/operator/do', 'rxjs/add/operator/mapTo', 'rxjs/add/operator/mergeMap', 'rxjs/add/operator/switchMap', 'rxjs/add/operator/switchMapTo', 'rxjs/add/operator/take', 'rxjs/add/operator/toArray', 'rxjs/add/operator/withLatestFrom', 'rxjs/add/operator/takeWhile', 'rxjs/add/operator/takeUntil', 'rxjs/add/observable/concat', 'rxjs/add/operator/combineLatest', 'rxjs/add/operator/concat', 'rxjs/add/operator/concatMap', 'rxjs/add/operator/distinctUntilChanged', 'rxjs/add/operator/filter', 'rxjs/add/observable/zip'], factory) :
 	(factory((global.ngrx = global.ngrx || {}, global.ngrx.json = global.ngrx.json || {}, global.ngrx.json.api = {}),global.ng.core,null,global.lodash_index,null,global._angular_common_http,global._ngrx_store,global._ngrx_effects,global.Rx));
 }(this, (function (exports,_angular_core,rxjs_add_operator_let,lodash_index,rxjs_add_operator_finally,_angular_common_http,_ngrx_store,_ngrx_effects,rxjs_Observable) { 'use strict';
 
@@ -40,7 +40,11 @@ var NgrxJsonApiActionTypes = {
     CLEAR_STORE: '[NgrxJsonApi] CLEAR_STORE',
 };
 var ApiApplyInitAction = (function () {
-    function ApiApplyInitAction() {
+    /**
+     * @param {?} payload
+     */
+    function ApiApplyInitAction(payload) {
+        this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_APPLY_INIT;
     }
     return ApiApplyInitAction;
@@ -156,7 +160,11 @@ var ApiGetFailAction = (function () {
     return ApiGetFailAction;
 }());
 var ApiRollbackAction = (function () {
-    function ApiRollbackAction() {
+    /**
+     * @param {?} payload
+     */
+    function ApiRollbackAction(payload) {
+        this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_ROLLBACK;
     }
     return ApiRollbackAction;
@@ -618,20 +626,38 @@ var updateResourceErrors = function (storeData, id, errors, modificationType) {
     return newState;
     var _a, _b, _c;
 };
-var rollbackStoreResources = function (storeData) {
+/**
+ * @param {?} newState
+ * @param {?} type
+ * @param {?} id
+ * @return {?}
+ */
+function rollbackResource(newState, type, id) {
+    var /** @type {?} */ storeResource = newState[type][id];
+    if (!storeResource.persistedResource) {
+        delete newState[type][id];
+    }
+    else if (storeResource.state !== 'IN_SYNC') {
+        newState[type][id] = (Object.assign({}, newState[type][id], { state: 'IN_SYNC', resource: newState[type][id].persistedResource }));
+    }
+}
+var rollbackStoreResources = function (storeData, ids, include) {
     var /** @type {?} */ newState = Object.assign({}, storeData);
-    Object.keys(newState).forEach(function (type) {
-        newState[type] = Object.assign({}, newState[type]);
-        Object.keys(newState[type]).forEach(function (id) {
-            var /** @type {?} */ storeResource = newState[type][id];
-            if (!storeResource.persistedResource) {
-                delete newState[type][id];
-            }
-            else if (storeResource.state !== 'IN_SYNC') {
-                newState[type][id] = (Object.assign({}, newState[type][id], { state: 'IN_SYNC', resource: newState[type][id].persistedResource }));
-            }
+    if (lodash_index.isUndefined(ids)) {
+        Object.keys(newState).forEach(function (type) {
+            newState[type] = Object.assign({}, newState[type]);
+            Object.keys(newState[type]).forEach(function (id) {
+                rollbackResource(newState, type, id);
+            });
         });
-    });
+    }
+    else {
+        var /** @type {?} */ modifiedResources = getPendingChanges(newState, ids, include, true);
+        for (var _i = 0, modifiedResources_1 = modifiedResources; _i < modifiedResources_1.length; _i++) {
+            var modifiedResource = modifiedResources_1[_i];
+            rollbackResource(newState, modifiedResource.type, modifiedResource.id);
+        }
+    }
     return newState;
 };
 var deleteStoreResources = function (storeData, query) {
@@ -1213,18 +1239,80 @@ var visitPending = function (pendingResource, i, predecessors, context) {
 };
 /**
  * @param {?} state
+ * @param {?} pending
+ * @param {?} id
+ * @param {?} include
+ * @param {?} includeNew
  * @return {?}
  */
-function getPendingChanges(state) {
-    var /** @type {?} */ pending = [];
-    Object.keys(state.data).forEach(function (type) {
-        Object.keys(state.data[type]).forEach(function (id) {
-            var /** @type {?} */ storeResource = state.data[type][id];
-            if (storeResource.state !== 'IN_SYNC' && storeResource.state !== 'NEW') {
-                pending.push(storeResource);
+function collectPendingChange(state, pending, id, include, includeNew) {
+    var /** @type {?} */ storeResource = state[id.type][id.id];
+    if (storeResource.state !== 'IN_SYNC' && (storeResource.state !== 'NEW' || includeNew)) {
+        pending.push(storeResource);
+    }
+    var _loop_3 = function (includeElement) {
+        if (includeElement.length > 0) {
+            var /** @type {?} */ relationshipName_1 = includeElement[0];
+            if (storeResource.relationships && storeResource.relationships[relationshipName_1]) {
+                var /** @type {?} */ data = storeResource.relationships[relationshipName_1].data;
+                if (data) {
+                    var /** @type {?} */ relationInclude_1 = [];
+                    include
+                        .filter(function (relIncludeElem) { return relIncludeElem.length >= 2 && relIncludeElem[0] == relationshipName_1; })
+                        .forEach(function (relIncludeElem) { return relationInclude_1.push(relIncludeElem.slice(1)); });
+                    if (lodash_index.isArray(data)) {
+                        var /** @type {?} */ relationIds = (data);
+                        relationIds.forEach(function (relationId) { return collectPendingChange(state, pending, relationId, relationInclude_1, includeNew); });
+                    }
+                    else {
+                        var /** @type {?} */ relationId = (data);
+                        collectPendingChange(state, pending, relationId, relationInclude_1, includeNew);
+                    }
+                }
             }
+        }
+    };
+    for (var _i = 0, include_1 = include; _i < include_1.length; _i++) {
+        var includeElement = include_1[_i];
+        _loop_3(/** @type {?} */ includeElement);
+    }
+}
+/**
+ * @param {?} state
+ * @param {?} ids
+ * @param {?} include
+ * @param {?=} includeNew
+ * @return {?}
+ */
+function getPendingChanges(state, ids, include, includeNew) {
+    var /** @type {?} */ pending = [];
+    if (lodash_index.isUndefined(ids)) {
+        // check all
+        Object.keys(state).forEach(function (type) {
+            Object.keys(state[type]).forEach(function (id) {
+                var /** @type {?} */ storeResource = state[type][id];
+                if (storeResource.state !== 'IN_SYNC' && (storeResource.state !== 'NEW' || includeNew)) {
+                    pending.push(storeResource);
+                }
+            });
         });
-    });
+    }
+    else {
+        var /** @type {?} */ relationshipInclusions = [];
+        if (include) {
+            for (var _i = 0, include_2 = include; _i < include_2.length; _i++) {
+                var includeElement = include_2[_i];
+                relationshipInclusions.push(includeElement.split('.'));
+            }
+        }
+        for (var _a = 0, ids_1 = ids; _a < ids_1.length; _a++) {
+            var id = ids_1[_a];
+            collectPendingChange(state, pending, id, relationshipInclusions, includeNew);
+        }
+        pending = lodash_index.uniqBy(pending, function (e) {
+            return e.type + '####' + e.id;
+        });
+    }
     return pending;
 }
 var NgrxJsonApiService = (function () {
@@ -1509,7 +1597,7 @@ var NgrxJsonApiService = (function () {
      * @return {?}
      */
     NgrxJsonApiService.prototype.apply = function () {
-        this.store.dispatch(new ApiApplyInitAction());
+        this.store.dispatch(new ApiApplyInitAction({}));
     };
     /**
      * Clear all the contents from the store.
@@ -1892,7 +1980,8 @@ var NgrxJsonApiSelectors = (function () {
      */
     NgrxJsonApiSelectors.prototype.getNgrxJsonApiStore$ = function () {
         return function (state$) {
-            return state$.select('NgrxJsonApi').select('api');
+            // note that upon setup the store may not yet be initialized
+            return state$.select('NgrxJsonApi').map(function (it) { return it ? it['api'] : undefined; });
         };
     };
     /**
@@ -2028,11 +2117,10 @@ var NgrxJsonApiSelectors = (function () {
         };
     };
     /**
-     * @param {?} store
      * @param {?} identifier
      * @return {?}
      */
-    NgrxJsonApiSelectors.prototype.getPersistedResource$ = function (store, identifier) {
+    NgrxJsonApiSelectors.prototype.getPersistedResource$ = function (identifier) {
         var _this = this;
         return function (state$) {
             return state$
@@ -2061,7 +2149,10 @@ var NgrxJsonApiEffects = (function () {
             .mergeMap(function (payload) {
             return _this.jsonApi
                 .create(payload.query, payload.jsonApiData)
-                .mapTo(new ApiPostSuccessAction(payload))
+                .map(function (response) { return new ApiPostSuccessAction({
+                jsonApiData: response.body,
+                query: payload.query,
+            }); })
                 .catch(function (error) { return rxjs_Observable.Observable.of(new ApiPostFailAction(_this.toErrorPayload(payload.query, error))); });
         });
         this.updateResource$ = this.actions$
@@ -2070,7 +2161,10 @@ var NgrxJsonApiEffects = (function () {
             .mergeMap(function (payload) {
             return _this.jsonApi
                 .update(payload.query, payload.jsonApiData)
-                .mapTo(new ApiPatchSuccessAction(payload))
+                .map(function (response) { return new ApiPatchSuccessAction({
+                jsonApiData: response.body,
+                query: payload.query,
+            }); })
                 .catch(function (error) { return rxjs_Observable.Observable.of(new ApiPatchFailAction(_this.toErrorPayload(payload.query, error))); });
         });
         this.readResource$ = this.actions$
@@ -2097,7 +2191,9 @@ var NgrxJsonApiEffects = (function () {
                 jsonApiData: { data: results },
                 query: query,
             }); })
-                .catch(function (error) { return rxjs_Observable.Observable.of(new LocalQueryFailAction(_this.toErrorPayload(query, error))); });
+                .catch(function (error) { return rxjs_Observable.Observable.of(new LocalQueryFailAction(_this.toErrorPayload(query, error))); })
+                .takeUntil(_this.localQueryInitEventFor(query))
+                .takeUntil(_this.removeQueryEventFor(query));
         });
         this.deleteResource$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_DELETE_INIT)
@@ -2153,58 +2249,81 @@ var NgrxJsonApiEffects = (function () {
             .flatMap(function (actions) { return rxjs_Observable.Observable.of.apply(rxjs_Observable.Observable, actions); });
         this.applyResources$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_APPLY_INIT)
-            .mergeMap(function () { return _this.store.let(_this.selectors.getNgrxJsonApiStore$()).take(1); })
-            .mergeMap(function (ngrxstore) {
-            var /** @type {?} */ pending = getPendingChanges(ngrxstore);
-            if (pending.length > 0) {
-                pending = sortPendingChanges(pending);
-                var /** @type {?} */ actions = [];
-                var _loop_3 = function (pendingChange) {
-                    if (pendingChange.state === 'CREATED') {
-                        var /** @type {?} */ payload_1 = _this.generatePayload(pendingChange, 'POST');
-                        actions.push(_this.jsonApi
-                            .create(payload_1.query, payload_1.jsonApiData)
-                            .mapTo(new ApiPostSuccessAction(payload_1))
-                            .catch(function (error) { return rxjs_Observable.Observable.of(new ApiPostFailAction(_this.toErrorPayload(payload_1.query, error))); }));
-                    }
-                    else if (pendingChange.state === 'UPDATED') {
-                        // prepare payload, omit links and meta information
-                        var /** @type {?} */ payload_2 = _this.generatePayload(pendingChange, 'PATCH');
-                        actions.push(_this.jsonApi
-                            .update(payload_2.query, payload_2.jsonApiData)
-                            .map(function (data) { return new ApiPatchSuccessAction({
-                            jsonApiData: data,
-                            query: payload_2.query,
-                        }); })
-                            .catch(function (error) { return rxjs_Observable.Observable.of(new ApiPatchFailAction(_this.toErrorPayload(payload_2.query, error))); }));
-                    }
-                    else if (pendingChange.state === 'DELETED') {
-                        var /** @type {?} */ payload_3 = _this.generatePayload(pendingChange, 'DELETE');
-                        actions.push(_this.jsonApi
-                            .delete(payload_3.query)
-                            .map(function (data) { return new ApiDeleteSuccessAction({
-                            jsonApiData: data,
-                            query: payload_3.query,
-                        }); })
-                            .catch(function (error) { return rxjs_Observable.Observable.of(new ApiDeleteFailAction(_this.toErrorPayload(payload_3.query, error))); }));
-                    }
-                    else {
-                        throw new Error('unknown state ' + pendingChange.state);
-                    }
-                };
-                for (var _i = 0, pending_1 = pending; _i < pending_1.length; _i++) {
-                    var pendingChange = pending_1[_i];
-                    _loop_3(/** @type {?} */ pendingChange);
-                }
-                return rxjs_Observable.Observable.of.apply(rxjs_Observable.Observable, actions).concatAll()
-                    .toArray()
-                    .map(function (actions) { return _this.toApplyAction(actions); });
-            }
-            else {
+            .filter(function () { return _this.jsonApi.config.applyEnabled !== false; })
+            .withLatestFrom(this.store.select(this.selectors.getNgrxJsonApiStore$), function (action, ngrxstore) {
+            var /** @type {?} */ payload = ((action)).payload;
+            var /** @type {?} */ pending = getPendingChanges(ngrxstore.data, payload.ids, payload.include);
+            return pending;
+        })
+            .flatMap(function (pending) {
+            if (pending.length === 0) {
                 return rxjs_Observable.Observable.of(new ApiApplySuccessAction([]));
             }
+            pending = sortPendingChanges(pending);
+            var /** @type {?} */ actions = [];
+            var _loop_4 = function (pendingChange) {
+                if (pendingChange.state === 'CREATED') {
+                    var /** @type {?} */ payload_1 = _this.generatePayload(pendingChange, 'POST');
+                    actions.push(_this.jsonApi
+                        .create(payload_1.query, payload_1.jsonApiData)
+                        .map(function (response) { return new ApiPostSuccessAction({
+                        jsonApiData: response.body,
+                        query: payload_1.query,
+                    }); })
+                        .catch(function (error) { return rxjs_Observable.Observable.of(new ApiPostFailAction(_this.toErrorPayload(payload_1.query, error))); }));
+                }
+                else if (pendingChange.state === 'UPDATED') {
+                    // prepare payload, omit links and meta information
+                    var /** @type {?} */ payload_2 = _this.generatePayload(pendingChange, 'PATCH');
+                    actions.push(_this.jsonApi
+                        .update(payload_2.query, payload_2.jsonApiData)
+                        .map(function (response) { return new ApiPatchSuccessAction({
+                        jsonApiData: response.body,
+                        query: payload_2.query,
+                    }); })
+                        .catch(function (error) { return rxjs_Observable.Observable.of(new ApiPatchFailAction(_this.toErrorPayload(payload_2.query, error))); }));
+                }
+                else if (pendingChange.state === 'DELETED') {
+                    var /** @type {?} */ payload_3 = _this.generatePayload(pendingChange, 'DELETE');
+                    actions.push(_this.jsonApi
+                        .delete(payload_3.query)
+                        .map(function (response) { return new ApiDeleteSuccessAction({
+                        jsonApiData: response.body,
+                        query: payload_3.query,
+                    }); })
+                        .catch(function (error) { return rxjs_Observable.Observable.of(new ApiDeleteFailAction(_this.toErrorPayload(payload_3.query, error))); }));
+                }
+                else {
+                    throw new Error('unknown state ' + pendingChange.state);
+                }
+            };
+            for (var _i = 0, pending_1 = pending; _i < pending_1.length; _i++) {
+                var pendingChange = pending_1[_i];
+                _loop_4(/** @type {?} */ pendingChange);
+            }
+            return rxjs_Observable.Observable.of.apply(rxjs_Observable.Observable, actions).concatAll()
+                .toArray()
+                .map(function (actions) { return _this.toApplyAction(actions); });
         });
     }
+    /**
+     * @param {?} query
+     * @return {?}
+     */
+    NgrxJsonApiEffects.prototype.localQueryInitEventFor = function (query) {
+        return this.actions$.ofType(NgrxJsonApiActionTypes.LOCAL_QUERY_INIT)
+            .map(function (action) { return (action); })
+            .filter(function (action) { return query.queryId == action.payload.queryId; });
+    };
+    /**
+     * @param {?} query
+     * @return {?}
+     */
+    NgrxJsonApiEffects.prototype.removeQueryEventFor = function (query) {
+        return this.actions$.ofType(NgrxJsonApiActionTypes.REMOVE_QUERY)
+            .map(function (action) { return (action); })
+            .filter(function (action) { return query.queryId == action.payload; });
+    };
     /**
      * @return {?}
      */
@@ -2235,13 +2354,13 @@ var NgrxJsonApiEffects = (function () {
             contentType = response.headers.get('Content-Type');
         }
         var /** @type {?} */ document = null;
-        if (contentType === 'application/vnd.api+json') {
+        if (contentType != null && contentType.startsWith('application/vnd.api+json')) {
             document = response;
         }
-        if (document && document.errors && document.errors.length > 0) {
+        if (document && document.error && document.error.errors && document.error.errors.length > 0) {
             return {
                 query: query,
-                jsonApiData: document,
+                jsonApiData: document.error,
             };
         }
         else {
@@ -2439,7 +2558,8 @@ function NgrxJsonApiStoreReducer(state, action) {
             return state;
         }
         case NgrxJsonApiActionTypes.API_APPLY_INIT: {
-            var /** @type {?} */ pending_2 = getPendingChanges(state);
+            var /** @type {?} */ payload = ((action)).payload;
+            var /** @type {?} */ pending_2 = getPendingChanges(state.data, payload.ids, payload.include);
             newState = Object.assign({}, state, { isApplying: state.isApplying + 1 });
             for (var _i = 0, pending_3 = pending_2; _i < pending_3.length; _i++) {
                 var pendingChange = pending_3[_i];
@@ -2471,7 +2591,8 @@ function NgrxJsonApiStoreReducer(state, action) {
             return newState;
         }
         case NgrxJsonApiActionTypes.API_ROLLBACK: {
-            newState = Object.assign({}, state, { data: rollbackStoreResources(state.data) });
+            var /** @type {?} */ payload = ((action)).payload;
+            newState = Object.assign({}, state, { data: rollbackStoreResources(state.data, payload.ids, payload.include) });
             return newState;
         }
         case NgrxJsonApiActionTypes.CLEAR_STORE: {

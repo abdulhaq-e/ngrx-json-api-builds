@@ -1,5 +1,5 @@
 import { NgrxJsonApiActionTypes } from './actions';
-import { deleteStoreResources, clearQueryResult, updateQueryParams, updateQueryResults, updateQueryErrors, updateStoreDataFromPayload, updateStoreDataFromResource, updateResourceState, removeQuery, rollbackStoreResources, updateResourceErrorsForQuery, updateQueriesForDeletedResource, compactStore, updateResourceErrors, removeStoreResource, getPendingChanges, } from './utils';
+import { clearQueryResult, compactStore, deleteStoreResources, getPendingChanges, removeQuery, removeStoreResource, rollbackStoreResources, updateQueriesForDeletedResource, updateQueryErrors, updateQueryParams, updateQueryResults, updateResourceErrors, updateResourceErrorsForQuery, updateResourceState, updateStoreDataFromPayload, updateStoreDataFromResource, } from './utils';
 export const /** @type {?} */ initialNgrxJsonApiState = {
     isCreating: 0,
     isReading: 0,
@@ -145,7 +145,8 @@ export function NgrxJsonApiStoreReducer(state = initialNgrxJsonApiState, action)
             return state;
         }
         case NgrxJsonApiActionTypes.API_APPLY_INIT: {
-            let /** @type {?} */ pending = getPendingChanges(state);
+            let /** @type {?} */ payload = ((action)).payload;
+            let /** @type {?} */ pending = getPendingChanges(state.data, payload.ids, payload.include);
             newState = Object.assign({}, state, { isApplying: state.isApplying + 1 });
             for (let /** @type {?} */ pendingChange of pending) {
                 if (pendingChange.state === 'CREATED') {
@@ -175,7 +176,8 @@ export function NgrxJsonApiStoreReducer(state = initialNgrxJsonApiState, action)
             return newState;
         }
         case NgrxJsonApiActionTypes.API_ROLLBACK: {
-            newState = Object.assign({}, state, { data: rollbackStoreResources(state.data) });
+            let /** @type {?} */ payload = ((action)).payload;
+            newState = Object.assign({}, state, { data: rollbackStoreResources(state.data, payload.ids, payload.include) });
             return newState;
         }
         case NgrxJsonApiActionTypes.CLEAR_STORE: {

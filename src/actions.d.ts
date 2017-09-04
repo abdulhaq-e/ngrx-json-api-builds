@@ -30,8 +30,24 @@ export declare const NgrxJsonApiActionTypes: {
     COMPACT_STORE: string;
     CLEAR_STORE: string;
 };
+export interface ApiApplyInitPayload {
+    /**
+     * optional list of resource identifiers to perform apply. If not specified all change will be applied
+     * to the backend.
+     */
+    ids?: Array<ResourceIdentifier>;
+    /**
+     * if the apply action is restricted to a set of resources with the ids parameter. The include flag allows to
+     * specify which relationships to apply as well. Nested relationships are separated by a dot.
+     */
+    include?: Array<string>;
+}
+export interface ApiApplyRollbackPayload extends ApiApplyInitPayload {
+}
 export declare class ApiApplyInitAction implements Action {
+    payload: ApiApplyInitPayload;
     readonly type: string;
+    constructor(payload: ApiApplyInitPayload);
 }
 export declare class ApiApplySuccessAction implements Action {
     payload: Array<Action>;
@@ -89,8 +105,9 @@ export declare class ApiGetFailAction implements Action {
     constructor(payload: Payload);
 }
 export declare class ApiRollbackAction implements Action {
+    payload: ApiApplyRollbackPayload;
     readonly type: string;
-    constructor();
+    constructor(payload: ApiApplyRollbackPayload);
 }
 export declare class ApiPatchInitAction implements Action {
     payload: Resource;

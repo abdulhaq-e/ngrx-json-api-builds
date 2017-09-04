@@ -1,6 +1,6 @@
 import { Injectable, NgModule, OpaqueToken, Pipe } from '@angular/core';
 import 'rxjs/add/operator/let';
-import { cloneDeep, endsWith, filter, find, findIndex, get, hasIn, includes, isArray, isEmpty, isEqual, isPlainObject, isString, isUndefined, mergeWith, omit, reduce, set, startsWith } from 'lodash/index';
+import { cloneDeep, endsWith, filter, find, findIndex, get, hasIn, includes, isArray, isEmpty, isEqual, isPlainObject, isString, isUndefined, mergeWith, omit, reduce, set, startsWith, uniqBy } from 'lodash/index';
 import * as _ from 'lodash/index';
 import 'rxjs/add/operator/finally';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -20,6 +20,8 @@ import 'rxjs/add/operator/switchMapTo';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/toArray';
 import 'rxjs/add/operator/withLatestFrom';
+import 'rxjs/add/operator/takeWhile';
+import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/observable/concat';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/concat';
@@ -65,7 +67,11 @@ const NgrxJsonApiActionTypes = {
     CLEAR_STORE: '[NgrxJsonApi] CLEAR_STORE',
 };
 class ApiApplyInitAction {
-    constructor() {
+    /**
+     * @param {?} payload
+     */
+    constructor(payload) {
+        this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_APPLY_INIT;
     }
 }
@@ -169,7 +175,11 @@ class ApiGetFailAction {
     }
 }
 class ApiRollbackAction {
-    constructor() {
+    /**
+     * @param {?} payload
+     */
+    constructor(payload) {
+        this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_ROLLBACK;
     }
 }
@@ -608,20 +618,37 @@ const updateResourceErrors = (storeData, id, errors, modificationType) => {
     newState[id.type][id.id] = storeResource;
     return newState;
 };
-const rollbackStoreResources = (storeData) => {
+/**
+ * @param {?} newState
+ * @param {?} type
+ * @param {?} id
+ * @return {?}
+ */
+function rollbackResource(newState, type, id) {
+    let /** @type {?} */ storeResource = newState[type][id];
+    if (!storeResource.persistedResource) {
+        delete newState[type][id];
+    }
+    else if (storeResource.state !== 'IN_SYNC') {
+        newState[type][id] = (Object.assign({}, newState[type][id], { state: 'IN_SYNC', resource: newState[type][id].persistedResource }));
+    }
+}
+const rollbackStoreResources = (storeData, ids, include) => {
     let /** @type {?} */ newState = Object.assign({}, storeData);
-    Object.keys(newState).forEach(type => {
-        newState[type] = Object.assign({}, newState[type]);
-        Object.keys(newState[type]).forEach(id => {
-            let /** @type {?} */ storeResource = newState[type][id];
-            if (!storeResource.persistedResource) {
-                delete newState[type][id];
-            }
-            else if (storeResource.state !== 'IN_SYNC') {
-                newState[type][id] = (Object.assign({}, newState[type][id], { state: 'IN_SYNC', resource: newState[type][id].persistedResource }));
-            }
+    if (isUndefined(ids)) {
+        Object.keys(newState).forEach(type => {
+            newState[type] = Object.assign({}, newState[type]);
+            Object.keys(newState[type]).forEach(id => {
+                rollbackResource(newState, type, id);
+            });
         });
-    });
+    }
+    else {
+        let /** @type {?} */ modifiedResources = getPendingChanges(newState, ids, include, true);
+        for (let /** @type {?} */ modifiedResource of modifiedResources) {
+            rollbackResource(newState, modifiedResource.type, modifiedResource.id);
+        }
+    }
     return newState;
 };
 const deleteStoreResources = (storeData, query) => {
@@ -1189,18 +1216,74 @@ const visitPending = (pendingResource, i, predecessors, context) => {
 };
 /**
  * @param {?} state
+ * @param {?} pending
+ * @param {?} id
+ * @param {?} include
+ * @param {?} includeNew
  * @return {?}
  */
-function getPendingChanges(state) {
-    let /** @type {?} */ pending = [];
-    Object.keys(state.data).forEach(type => {
-        Object.keys(state.data[type]).forEach(id => {
-            let /** @type {?} */ storeResource = state.data[type][id];
-            if (storeResource.state !== 'IN_SYNC' && storeResource.state !== 'NEW') {
-                pending.push(storeResource);
+function collectPendingChange(state, pending, id, include, includeNew) {
+    let /** @type {?} */ storeResource = state[id.type][id.id];
+    if (storeResource.state !== 'IN_SYNC' && (storeResource.state !== 'NEW' || includeNew)) {
+        pending.push(storeResource);
+    }
+    for (let /** @type {?} */ includeElement of include) {
+        if (includeElement.length > 0) {
+            let /** @type {?} */ relationshipName = includeElement[0];
+            if (storeResource.relationships && storeResource.relationships[relationshipName]) {
+                let /** @type {?} */ data = storeResource.relationships[relationshipName].data;
+                if (data) {
+                    let /** @type {?} */ relationInclude = [];
+                    include
+                        .filter(relIncludeElem => relIncludeElem.length >= 2 && relIncludeElem[0] == relationshipName)
+                        .forEach(relIncludeElem => relationInclude.push(relIncludeElem.slice(1)));
+                    if (isArray(data)) {
+                        let /** @type {?} */ relationIds = (data);
+                        relationIds.forEach(relationId => collectPendingChange(state, pending, relationId, relationInclude, includeNew));
+                    }
+                    else {
+                        let /** @type {?} */ relationId = (data);
+                        collectPendingChange(state, pending, relationId, relationInclude, includeNew);
+                    }
+                }
             }
+        }
+    }
+}
+/**
+ * @param {?} state
+ * @param {?} ids
+ * @param {?} include
+ * @param {?=} includeNew
+ * @return {?}
+ */
+function getPendingChanges(state, ids, include, includeNew) {
+    let /** @type {?} */ pending = [];
+    if (isUndefined(ids)) {
+        // check all
+        Object.keys(state).forEach(type => {
+            Object.keys(state[type]).forEach(id => {
+                let /** @type {?} */ storeResource = state[type][id];
+                if (storeResource.state !== 'IN_SYNC' && (storeResource.state !== 'NEW' || includeNew)) {
+                    pending.push(storeResource);
+                }
+            });
         });
-    });
+    }
+    else {
+        let /** @type {?} */ relationshipInclusions = [];
+        if (include) {
+            for (let /** @type {?} */ includeElement of include) {
+                relationshipInclusions.push(includeElement.split('.'));
+            }
+        }
+        for (let /** @type {?} */ id of ids) {
+            collectPendingChange(state, pending, id, relationshipInclusions, includeNew);
+        }
+        pending = uniqBy(pending, function (e) {
+            return e.type + '####' + e.id;
+        });
+    }
     return pending;
 }
 
@@ -1478,7 +1561,7 @@ class NgrxJsonApiService {
      * @return {?}
      */
     apply() {
-        this.store.dispatch(new ApiApplyInitAction());
+        this.store.dispatch(new ApiApplyInitAction({}));
     }
     /**
      * Clear all the contents from the store.
@@ -1857,7 +1940,8 @@ class NgrxJsonApiSelectors {
      */
     getNgrxJsonApiStore$() {
         return (state$) => {
-            return state$.select('NgrxJsonApi').select('api');
+            // note that upon setup the store may not yet be initialized
+            return state$.select('NgrxJsonApi').map(it => it ? it['api'] : undefined);
         };
     }
     /**
@@ -1989,11 +2073,10 @@ class NgrxJsonApiSelectors {
         };
     }
     /**
-     * @param {?} store
      * @param {?} identifier
      * @return {?}
      */
-    getPersistedResource$(store, identifier) {
+    getPersistedResource$(identifier) {
         return (state$) => {
             return state$
                 .let(this.getStoreResource$(identifier))
@@ -2020,7 +2103,10 @@ class NgrxJsonApiEffects {
             .mergeMap((payload) => {
             return this.jsonApi
                 .create(payload.query, payload.jsonApiData)
-                .mapTo(new ApiPostSuccessAction(payload))
+                .map((response) => new ApiPostSuccessAction({
+                jsonApiData: response.body,
+                query: payload.query,
+            }))
                 .catch(error => Observable.of(new ApiPostFailAction(this.toErrorPayload(payload.query, error))));
         });
         this.updateResource$ = this.actions$
@@ -2029,7 +2115,10 @@ class NgrxJsonApiEffects {
             .mergeMap((payload) => {
             return this.jsonApi
                 .update(payload.query, payload.jsonApiData)
-                .mapTo(new ApiPatchSuccessAction(payload))
+                .map((response) => new ApiPatchSuccessAction({
+                jsonApiData: response.body,
+                query: payload.query,
+            }))
                 .catch(error => Observable.of(new ApiPatchFailAction(this.toErrorPayload(payload.query, error))));
         });
         this.readResource$ = this.actions$
@@ -2056,7 +2145,9 @@ class NgrxJsonApiEffects {
                 jsonApiData: { data: results },
                 query: query,
             }))
-                .catch(error => Observable.of(new LocalQueryFailAction(this.toErrorPayload(query, error))));
+                .catch(error => Observable.of(new LocalQueryFailAction(this.toErrorPayload(query, error))))
+                .takeUntil(this.localQueryInitEventFor(query))
+                .takeUntil(this.removeQueryEventFor(query));
         });
         this.deleteResource$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_DELETE_INIT)
@@ -2112,54 +2203,77 @@ class NgrxJsonApiEffects {
             .flatMap(actions => Observable.of(...actions));
         this.applyResources$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_APPLY_INIT)
-            .mergeMap(() => this.store.let(this.selectors.getNgrxJsonApiStore$()).take(1))
-            .mergeMap((ngrxstore) => {
-            let /** @type {?} */ pending = getPendingChanges(ngrxstore);
-            if (pending.length > 0) {
-                pending = sortPendingChanges(pending);
-                let /** @type {?} */ actions = [];
-                for (let /** @type {?} */ pendingChange of pending) {
-                    if (pendingChange.state === 'CREATED') {
-                        let /** @type {?} */ payload = this.generatePayload(pendingChange, 'POST');
-                        actions.push(this.jsonApi
-                            .create(payload.query, payload.jsonApiData)
-                            .mapTo(new ApiPostSuccessAction(payload))
-                            .catch(error => Observable.of(new ApiPostFailAction(this.toErrorPayload(payload.query, error)))));
-                    }
-                    else if (pendingChange.state === 'UPDATED') {
-                        // prepare payload, omit links and meta information
-                        let /** @type {?} */ payload = this.generatePayload(pendingChange, 'PATCH');
-                        actions.push(this.jsonApi
-                            .update(payload.query, payload.jsonApiData)
-                            .map(data => new ApiPatchSuccessAction({
-                            jsonApiData: data,
-                            query: payload.query,
-                        }))
-                            .catch(error => Observable.of(new ApiPatchFailAction(this.toErrorPayload(payload.query, error)))));
-                    }
-                    else if (pendingChange.state === 'DELETED') {
-                        let /** @type {?} */ payload = this.generatePayload(pendingChange, 'DELETE');
-                        actions.push(this.jsonApi
-                            .delete(payload.query)
-                            .map(data => new ApiDeleteSuccessAction({
-                            jsonApiData: data,
-                            query: payload.query,
-                        }))
-                            .catch(error => Observable.of(new ApiDeleteFailAction(this.toErrorPayload(payload.query, error)))));
-                    }
-                    else {
-                        throw new Error('unknown state ' + pendingChange.state);
-                    }
-                }
-                return Observable.of(...actions)
-                    .concatAll()
-                    .toArray()
-                    .map(actions => this.toApplyAction(actions));
-            }
-            else {
+            .filter(() => this.jsonApi.config.applyEnabled !== false)
+            .withLatestFrom(this.store.select(this.selectors.getNgrxJsonApiStore$), (action, ngrxstore) => {
+            let /** @type {?} */ payload = ((action)).payload;
+            const /** @type {?} */ pending = getPendingChanges(ngrxstore.data, payload.ids, payload.include);
+            return pending;
+        })
+            .flatMap(pending => {
+            if (pending.length === 0) {
                 return Observable.of(new ApiApplySuccessAction([]));
             }
+            pending = sortPendingChanges(pending);
+            let /** @type {?} */ actions = [];
+            for (let /** @type {?} */ pendingChange of pending) {
+                if (pendingChange.state === 'CREATED') {
+                    let /** @type {?} */ payload = this.generatePayload(pendingChange, 'POST');
+                    actions.push(this.jsonApi
+                        .create(payload.query, payload.jsonApiData)
+                        .map(response => new ApiPostSuccessAction({
+                        jsonApiData: response.body,
+                        query: payload.query,
+                    }))
+                        .catch(error => Observable.of(new ApiPostFailAction(this.toErrorPayload(payload.query, error)))));
+                }
+                else if (pendingChange.state === 'UPDATED') {
+                    // prepare payload, omit links and meta information
+                    let /** @type {?} */ payload = this.generatePayload(pendingChange, 'PATCH');
+                    actions.push(this.jsonApi
+                        .update(payload.query, payload.jsonApiData)
+                        .map(response => new ApiPatchSuccessAction({
+                        jsonApiData: response.body,
+                        query: payload.query,
+                    }))
+                        .catch(error => Observable.of(new ApiPatchFailAction(this.toErrorPayload(payload.query, error)))));
+                }
+                else if (pendingChange.state === 'DELETED') {
+                    let /** @type {?} */ payload = this.generatePayload(pendingChange, 'DELETE');
+                    actions.push(this.jsonApi
+                        .delete(payload.query)
+                        .map(response => new ApiDeleteSuccessAction({
+                        jsonApiData: response.body,
+                        query: payload.query,
+                    }))
+                        .catch(error => Observable.of(new ApiDeleteFailAction(this.toErrorPayload(payload.query, error)))));
+                }
+                else {
+                    throw new Error('unknown state ' + pendingChange.state);
+                }
+            }
+            return Observable.of(...actions)
+                .concatAll()
+                .toArray()
+                .map(actions => this.toApplyAction(actions));
         });
+    }
+    /**
+     * @param {?} query
+     * @return {?}
+     */
+    localQueryInitEventFor(query) {
+        return this.actions$.ofType(NgrxJsonApiActionTypes.LOCAL_QUERY_INIT)
+            .map(action => (action))
+            .filter(action => query.queryId == action.payload.queryId);
+    }
+    /**
+     * @param {?} query
+     * @return {?}
+     */
+    removeQueryEventFor(query) {
+        return this.actions$.ofType(NgrxJsonApiActionTypes.REMOVE_QUERY)
+            .map(action => (action))
+            .filter(action => query.queryId == action.payload);
     }
     /**
      * @return {?}
@@ -2190,13 +2304,13 @@ class NgrxJsonApiEffects {
             contentType = response.headers.get('Content-Type');
         }
         let /** @type {?} */ document = null;
-        if (contentType === 'application/vnd.api+json') {
+        if (contentType != null && contentType.startsWith('application/vnd.api+json')) {
             document = response;
         }
-        if (document && document.errors && document.errors.length > 0) {
+        if (document && document.error && document.error.errors && document.error.errors.length > 0) {
             return {
                 query: query,
-                jsonApiData: document,
+                jsonApiData: document.error,
             };
         }
         else {
@@ -2393,7 +2507,8 @@ function NgrxJsonApiStoreReducer(state = initialNgrxJsonApiState, action) {
             return state;
         }
         case NgrxJsonApiActionTypes.API_APPLY_INIT: {
-            let /** @type {?} */ pending = getPendingChanges(state);
+            let /** @type {?} */ payload = ((action)).payload;
+            let /** @type {?} */ pending = getPendingChanges(state.data, payload.ids, payload.include);
             newState = Object.assign({}, state, { isApplying: state.isApplying + 1 });
             for (let /** @type {?} */ pendingChange of pending) {
                 if (pendingChange.state === 'CREATED') {
@@ -2423,7 +2538,8 @@ function NgrxJsonApiStoreReducer(state = initialNgrxJsonApiState, action) {
             return newState;
         }
         case NgrxJsonApiActionTypes.API_ROLLBACK: {
-            newState = Object.assign({}, state, { data: rollbackStoreResources(state.data) });
+            let /** @type {?} */ payload = ((action)).payload;
+            newState = Object.assign({}, state, { data: rollbackStoreResources(state.data, payload.ids, payload.include) });
             return newState;
         }
         case NgrxJsonApiActionTypes.CLEAR_STORE: {

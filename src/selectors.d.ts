@@ -13,11 +13,11 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/zip';
 import { Store } from '@ngrx/store';
 import { NgrxJsonApiConfig, NgrxJsonApiStore, NgrxJsonApiStoreData, NgrxJsonApiStoreResources, NgrxJsonApiStoreQueries, Resource, ResourceIdentifier, ResourceError, Query, StoreResource, ManyQueryResult, StoreQuery } from './interfaces';
-export declare class NgrxJsonApiSelectors<T> {
+export declare class NgrxJsonApiSelectors {
     config: NgrxJsonApiConfig;
     constructor(config: NgrxJsonApiConfig);
-    getNgrxJsonApiStore$(): (state$: Store<any>) => Store<any>;
-    getStoreData$(): (state$: Store<NgrxJsonApiStore>) => Store<NgrxJsonApiStoreData>;
+    getNgrxJsonApiStore$(): (state$: Store<any>) => Observable<NgrxJsonApiStore>;
+    getStoreData$(): (state$: Store<NgrxJsonApiStore>) => Observable<NgrxJsonApiStoreData>;
     getStoreResourceOfType$(type: string): (state$: Observable<NgrxJsonApiStore>) => Observable<NgrxJsonApiStoreResources>;
     queryStore$(query: Query): (state$: Observable<NgrxJsonApiStore>) => Observable<any>;
     getStoreQueries$(): (state$: Store<NgrxJsonApiStore>) => Store<NgrxJsonApiStoreQueries>;
@@ -33,5 +33,5 @@ export declare class NgrxJsonApiSelectors<T> {
         links?: any;
         errors: ResourceError[];
     }>;
-    getPersistedResource$(store: Store<T>, identifier: ResourceIdentifier): (state$: Observable<NgrxJsonApiStore>) => Observable<Resource>;
+    getPersistedResource$(identifier: ResourceIdentifier): (state$: Observable<NgrxJsonApiStore>) => Observable<Resource>;
 }

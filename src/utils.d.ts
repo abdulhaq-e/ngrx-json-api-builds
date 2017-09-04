@@ -43,7 +43,7 @@ export declare const updateStoreResource: (state: NgrxJsonApiStoreResources, res
 export declare const updateQueriesForDeletedResource: (state: NgrxJsonApiStoreQueries, deletedId: ResourceIdentifier) => NgrxJsonApiStoreQueries;
 export declare const updateResourceErrorsForQuery: (storeData: NgrxJsonApiStoreData, query: Query, document: Document) => NgrxJsonApiStoreData;
 export declare const updateResourceErrors: (storeData: NgrxJsonApiStoreData, id: ResourceIdentifier, errors: ResourceError[], modificationType: ErrorModificationType) => NgrxJsonApiStoreData;
-export declare const rollbackStoreResources: (storeData: NgrxJsonApiStoreData) => NgrxJsonApiStoreData;
+export declare const rollbackStoreResources: (storeData: NgrxJsonApiStoreData, ids: ResourceIdentifier[], include: string[]) => NgrxJsonApiStoreData;
 export declare const deleteStoreResources: (storeData: NgrxJsonApiStoreData, query: Query) => {
     [id: string]: NgrxJsonApiStoreResources;
 };
@@ -114,4 +114,4 @@ export declare const generatePayload: (resource: StoreResource, operation: Opera
 export declare const uuid: () => string;
 export declare const compactStore: (state: NgrxJsonApiStore) => NgrxJsonApiStore;
 export declare const sortPendingChanges: (pendingResources: StoreResource[]) => StoreResource[];
-export declare function getPendingChanges(state: NgrxJsonApiStore): Array<StoreResource>;
+export declare function getPendingChanges(state: NgrxJsonApiStoreData, ids: Array<ResourceIdentifier>, include: Array<string>, includeNew?: boolean): Array<StoreResource>;

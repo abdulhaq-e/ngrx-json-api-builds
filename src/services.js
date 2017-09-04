@@ -276,7 +276,7 @@ export class NgrxJsonApiService {
      * @return {?}
      */
     apply() {
-        this.store.dispatch(new ApiApplyInitAction());
+        this.store.dispatch(new ApiApplyInitAction({}));
     }
     /**
      * Clear all the contents from the store.

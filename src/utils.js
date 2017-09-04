@@ -304,20 +304,37 @@ export const /** @type {?} */ updateResourceErrors = (storeData, id, errors, mod
     newState[id.type][id.id] = storeResource;
     return newState;
 };
-export const /** @type {?} */ rollbackStoreResources = (storeData) => {
+/**
+ * @param {?} newState
+ * @param {?} type
+ * @param {?} id
+ * @return {?}
+ */
+function rollbackResource(newState, type, id) {
+    let /** @type {?} */ storeResource = newState[type][id];
+    if (!storeResource.persistedResource) {
+        delete newState[type][id];
+    }
+    else if (storeResource.state !== 'IN_SYNC') {
+        newState[type][id] = (Object.assign({}, newState[type][id], { state: 'IN_SYNC', resource: newState[type][id].persistedResource }));
+    }
+}
+export const /** @type {?} */ rollbackStoreResources = (storeData, ids, include) => {
     let /** @type {?} */ newState = Object.assign({}, storeData);
-    Object.keys(newState).forEach(type => {
-        newState[type] = Object.assign({}, newState[type]);
-        Object.keys(newState[type]).forEach(id => {
-            let /** @type {?} */ storeResource = newState[type][id];
-            if (!storeResource.persistedResource) {
-                delete newState[type][id];
-            }
-            else if (storeResource.state !== 'IN_SYNC') {
-                newState[type][id] = (Object.assign({}, newState[type][id], { state: 'IN_SYNC', resource: newState[type][id].persistedResource }));
-            }
+    if (_.isUndefined(ids)) {
+        Object.keys(newState).forEach(type => {
+            newState[type] = Object.assign({}, newState[type]);
+            Object.keys(newState[type]).forEach(id => {
+                rollbackResource(newState, type, id);
+            });
         });
-    });
+    }
+    else {
+        let /** @type {?} */ modifiedResources = getPendingChanges(newState, ids, include, true);
+        for (let /** @type {?} */ modifiedResource of modifiedResources) {
+            rollbackResource(newState, modifiedResource.type, modifiedResource.id);
+        }
+    }
     return newState;
 };
 export const /** @type {?} */ deleteStoreResources = (storeData, query) => {
@@ -885,18 +902,74 @@ const /** @type {?} */ visitPending = (pendingResource, i, predecessors, context
 };
 /**
  * @param {?} state
+ * @param {?} pending
+ * @param {?} id
+ * @param {?} include
+ * @param {?} includeNew
  * @return {?}
  */
-export function getPendingChanges(state) {
-    let /** @type {?} */ pending = [];
-    Object.keys(state.data).forEach(type => {
-        Object.keys(state.data[type]).forEach(id => {
-            let /** @type {?} */ storeResource = state.data[type][id];
-            if (storeResource.state !== 'IN_SYNC' && storeResource.state !== 'NEW') {
-                pending.push(storeResource);
+function collectPendingChange(state, pending, id, include, includeNew) {
+    let /** @type {?} */ storeResource = state[id.type][id.id];
+    if (storeResource.state !== 'IN_SYNC' && (storeResource.state !== 'NEW' || includeNew)) {
+        pending.push(storeResource);
+    }
+    for (let /** @type {?} */ includeElement of include) {
+        if (includeElement.length > 0) {
+            let /** @type {?} */ relationshipName = includeElement[0];
+            if (storeResource.relationships && storeResource.relationships[relationshipName]) {
+                let /** @type {?} */ data = storeResource.relationships[relationshipName].data;
+                if (data) {
+                    let /** @type {?} */ relationInclude = [];
+                    include
+                        .filter(relIncludeElem => relIncludeElem.length >= 2 && relIncludeElem[0] == relationshipName)
+                        .forEach(relIncludeElem => relationInclude.push(relIncludeElem.slice(1)));
+                    if (_.isArray(data)) {
+                        let /** @type {?} */ relationIds = (data);
+                        relationIds.forEach(relationId => collectPendingChange(state, pending, relationId, relationInclude, includeNew));
+                    }
+                    else {
+                        let /** @type {?} */ relationId = (data);
+                        collectPendingChange(state, pending, relationId, relationInclude, includeNew);
+                    }
+                }
             }
+        }
+    }
+}
+/**
+ * @param {?} state
+ * @param {?} ids
+ * @param {?} include
+ * @param {?=} includeNew
+ * @return {?}
+ */
+export function getPendingChanges(state, ids, include, includeNew) {
+    let /** @type {?} */ pending = [];
+    if (_.isUndefined(ids)) {
+        // check all
+        Object.keys(state).forEach(type => {
+            Object.keys(state[type]).forEach(id => {
+                let /** @type {?} */ storeResource = state[type][id];
+                if (storeResource.state !== 'IN_SYNC' && (storeResource.state !== 'NEW' || includeNew)) {
+                    pending.push(storeResource);
+                }
+            });
         });
-    });
+    }
+    else {
+        let /** @type {?} */ relationshipInclusions = [];
+        if (include) {
+            for (let /** @type {?} */ includeElement of include) {
+                relationshipInclusions.push(includeElement.split('.'));
+            }
+        }
+        for (let /** @type {?} */ id of ids) {
+            collectPendingChange(state, pending, id, relationshipInclusions, includeNew);
+        }
+        pending = _.uniqBy(pending, function (e) {
+            return e.type + '####' + e.id;
+        });
+    }
     return pending;
 }
 //# sourceMappingURL=utils.js.map
