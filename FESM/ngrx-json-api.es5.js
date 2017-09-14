@@ -2274,7 +2274,7 @@ var NgrxJsonApiEffects = (function () {
         this.applyResources$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_APPLY_INIT)
             .filter(function () { return _this.jsonApi.config.applyEnabled !== false; })
-            .withLatestFrom(this.store.select(this.selectors.getNgrxJsonApiStore$), function (action, ngrxstore) {
+            .withLatestFrom(this.store.select(this.selectors.getNgrxJsonApiStore$()), function (action, ngrxstore) {
             var /** @type {?} */ payload = ((action)).payload;
             var /** @type {?} */ pending = getPendingChanges(ngrxstore.data, payload.ids, payload.include);
             return pending;

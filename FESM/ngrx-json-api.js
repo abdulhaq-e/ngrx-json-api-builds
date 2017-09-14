@@ -2204,7 +2204,7 @@ class NgrxJsonApiEffects {
         this.applyResources$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_APPLY_INIT)
             .filter(() => this.jsonApi.config.applyEnabled !== false)
-            .withLatestFrom(this.store.select(this.selectors.getNgrxJsonApiStore$), (action, ngrxstore) => {
+            .withLatestFrom(this.store.select(this.selectors.getNgrxJsonApiStore$()), (action, ngrxstore) => {
             let /** @type {?} */ payload = ((action)).payload;
             const /** @type {?} */ pending = getPendingChanges(ngrxstore.data, payload.ids, payload.include);
             return pending;
