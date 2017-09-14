@@ -197,7 +197,8 @@ export class NgrxJsonApiEffects {
      * @return {?}
      */
     localQueryInitEventFor(query) {
-        return this.actions$.ofType(NgrxJsonApiActionTypes.LOCAL_QUERY_INIT)
+        return this.actions$
+            .ofType(NgrxJsonApiActionTypes.LOCAL_QUERY_INIT)
             .map(action => (action))
             .filter(action => query.queryId == action.payload.queryId);
     }
@@ -206,7 +207,8 @@ export class NgrxJsonApiEffects {
      * @return {?}
      */
     removeQueryEventFor(query) {
-        return this.actions$.ofType(NgrxJsonApiActionTypes.REMOVE_QUERY)
+        return this.actions$
+            .ofType(NgrxJsonApiActionTypes.REMOVE_QUERY)
             .map(action => (action))
             .filter(action => query.queryId == action.payload);
     }
@@ -239,10 +241,14 @@ export class NgrxJsonApiEffects {
             contentType = response.headers.get('Content-Type');
         }
         let /** @type {?} */ document = null;
-        if (contentType != null && contentType.startsWith('application/vnd.api+json')) {
+        if (contentType != null &&
+            contentType.startsWith('application/vnd.api+json')) {
             document = response;
         }
-        if (document && document.error && document.error.errors && document.error.errors.length > 0) {
+        if (document &&
+            document.error &&
+            document.error.errors &&
+            document.error.errors.length > 0) {
             return {
                 query: query,
                 jsonApiData: document.error,

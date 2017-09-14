@@ -1224,18 +1224,21 @@ const visitPending = (pendingResource, i, predecessors, context) => {
  */
 function collectPendingChange(state, pending, id, include, includeNew) {
     let /** @type {?} */ storeResource = state[id.type][id.id];
-    if (storeResource.state !== 'IN_SYNC' && (storeResource.state !== 'NEW' || includeNew)) {
+    if (storeResource.state !== 'IN_SYNC' &&
+        (storeResource.state !== 'NEW' || includeNew)) {
         pending.push(storeResource);
     }
     for (let /** @type {?} */ includeElement of include) {
         if (includeElement.length > 0) {
             let /** @type {?} */ relationshipName = includeElement[0];
-            if (storeResource.relationships && storeResource.relationships[relationshipName]) {
+            if (storeResource.relationships &&
+                storeResource.relationships[relationshipName]) {
                 let /** @type {?} */ data = storeResource.relationships[relationshipName].data;
                 if (data) {
                     let /** @type {?} */ relationInclude = [];
                     include
-                        .filter(relIncludeElem => relIncludeElem.length >= 2 && relIncludeElem[0] == relationshipName)
+                        .filter(relIncludeElem => relIncludeElem.length >= 2 &&
+                        relIncludeElem[0] == relationshipName)
                         .forEach(relIncludeElem => relationInclude.push(relIncludeElem.slice(1)));
                     if (isArray(data)) {
                         let /** @type {?} */ relationIds = (data);
@@ -1264,7 +1267,8 @@ function getPendingChanges(state, ids, include, includeNew) {
         Object.keys(state).forEach(type => {
             Object.keys(state[type]).forEach(id => {
                 let /** @type {?} */ storeResource = state[type][id];
-                if (storeResource.state !== 'IN_SYNC' && (storeResource.state !== 'NEW' || includeNew)) {
+                if (storeResource.state !== 'IN_SYNC' &&
+                    (storeResource.state !== 'NEW' || includeNew)) {
                     pending.push(storeResource);
                 }
             });
@@ -1941,7 +1945,9 @@ class NgrxJsonApiSelectors {
     getNgrxJsonApiStore$() {
         return (state$) => {
             // note that upon setup the store may not yet be initialized
-            return state$.select('NgrxJsonApi').map(it => it ? it['api'] : undefined);
+            return state$
+                .select('NgrxJsonApi')
+                .map(it => (it ? it['api'] : undefined));
         };
     }
     /**
@@ -2262,7 +2268,8 @@ class NgrxJsonApiEffects {
      * @return {?}
      */
     localQueryInitEventFor(query) {
-        return this.actions$.ofType(NgrxJsonApiActionTypes.LOCAL_QUERY_INIT)
+        return this.actions$
+            .ofType(NgrxJsonApiActionTypes.LOCAL_QUERY_INIT)
             .map(action => (action))
             .filter(action => query.queryId == action.payload.queryId);
     }
@@ -2271,7 +2278,8 @@ class NgrxJsonApiEffects {
      * @return {?}
      */
     removeQueryEventFor(query) {
-        return this.actions$.ofType(NgrxJsonApiActionTypes.REMOVE_QUERY)
+        return this.actions$
+            .ofType(NgrxJsonApiActionTypes.REMOVE_QUERY)
             .map(action => (action))
             .filter(action => query.queryId == action.payload);
     }
@@ -2304,10 +2312,14 @@ class NgrxJsonApiEffects {
             contentType = response.headers.get('Content-Type');
         }
         let /** @type {?} */ document = null;
-        if (contentType != null && contentType.startsWith('application/vnd.api+json')) {
+        if (contentType != null &&
+            contentType.startsWith('application/vnd.api+json')) {
             document = response;
         }
-        if (document && document.error && document.error.errors && document.error.errors.length > 0) {
+        if (document &&
+            document.error &&
+            document.error.errors &&
+            document.error.errors.length > 0) {
             return {
                 query: query,
                 jsonApiData: document.error,
@@ -2646,5 +2658,5 @@ NgrxJsonApiModule.ctorParameters = () => [];
  * Generated bundle index. Do not edit.
  */
 
-export { SelectStoreResourcePipe, DenormaliseStoreResourcePipe, GetDenormalisedValuePipe, NgrxJsonApiService, NgrxJsonApiModule, Direction, NgrxJsonApiActionTypes, ApiApplyInitAction, ApiApplySuccessAction, ApiApplyFailAction, ApiPostInitAction, ApiPostSuccessAction, ApiPostFailAction, ApiDeleteInitAction, ApiDeleteSuccessAction, ApiDeleteFailAction, ApiGetInitAction, ApiGetSuccessAction, ApiGetFailAction, ApiRollbackAction, ApiPatchInitAction, ApiPatchSuccessAction, ApiPatchFailAction, DeleteStoreResourceAction, PatchStoreResourceAction, NewStoreResourceAction, PostStoreResourceAction, RemoveQueryAction, LocalQueryInitAction, LocalQuerySuccessAction, LocalQueryFailAction, CompactStoreAction, ClearStoreAction, ApiQueryRefreshAction, ModifyStoreResourceErrorsAction, NgrxJsonApi as ɵh, NgrxJsonApiEffects as ɵg, NGRX_JSON_API_CONFIG as ɵa, apiFactory as ɵb, configure as ɵe, selectorsFactory as ɵc, serviceFactory as ɵd, NgrxJsonApiStoreReducer as ɵi, reducer as ɵj, NgrxJsonApiSelectors as ɵf };
+export { SelectStoreResourcePipe, DenormaliseStoreResourcePipe, GetDenormalisedValuePipe, NgrxJsonApiService, NgrxJsonApiModule, NgrxJsonApiSelectors, uuid, Direction, NgrxJsonApiActionTypes, ApiApplyInitAction, ApiApplySuccessAction, ApiApplyFailAction, ApiPostInitAction, ApiPostSuccessAction, ApiPostFailAction, ApiDeleteInitAction, ApiDeleteSuccessAction, ApiDeleteFailAction, ApiGetInitAction, ApiGetSuccessAction, ApiGetFailAction, ApiRollbackAction, ApiPatchInitAction, ApiPatchSuccessAction, ApiPatchFailAction, DeleteStoreResourceAction, PatchStoreResourceAction, NewStoreResourceAction, PostStoreResourceAction, RemoveQueryAction, LocalQueryInitAction, LocalQuerySuccessAction, LocalQueryFailAction, CompactStoreAction, ClearStoreAction, ApiQueryRefreshAction, ModifyStoreResourceErrorsAction, NgrxJsonApi as ɵg, NgrxJsonApiEffects as ɵf, NGRX_JSON_API_CONFIG as ɵa, apiFactory as ɵb, configure as ɵe, selectorsFactory as ɵc, serviceFactory as ɵd, NgrxJsonApiStoreReducer as ɵh, reducer as ɵi };
 //# sourceMappingURL=ngrx-json-api.js.map

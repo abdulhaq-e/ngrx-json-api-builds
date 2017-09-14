@@ -26,7 +26,9 @@ export class NgrxJsonApiSelectors {
     getNgrxJsonApiStore$() {
         return (state$) => {
             // note that upon setup the store may not yet be initialized
-            return state$.select('NgrxJsonApi').map(it => it ? it['api'] : undefined);
+            return state$
+                .select('NgrxJsonApi')
+                .map(it => (it ? it['api'] : undefined));
         };
     }
     /**

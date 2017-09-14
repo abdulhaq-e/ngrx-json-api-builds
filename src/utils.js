@@ -910,18 +910,21 @@ const /** @type {?} */ visitPending = (pendingResource, i, predecessors, context
  */
 function collectPendingChange(state, pending, id, include, includeNew) {
     let /** @type {?} */ storeResource = state[id.type][id.id];
-    if (storeResource.state !== 'IN_SYNC' && (storeResource.state !== 'NEW' || includeNew)) {
+    if (storeResource.state !== 'IN_SYNC' &&
+        (storeResource.state !== 'NEW' || includeNew)) {
         pending.push(storeResource);
     }
     for (let /** @type {?} */ includeElement of include) {
         if (includeElement.length > 0) {
             let /** @type {?} */ relationshipName = includeElement[0];
-            if (storeResource.relationships && storeResource.relationships[relationshipName]) {
+            if (storeResource.relationships &&
+                storeResource.relationships[relationshipName]) {
                 let /** @type {?} */ data = storeResource.relationships[relationshipName].data;
                 if (data) {
                     let /** @type {?} */ relationInclude = [];
                     include
-                        .filter(relIncludeElem => relIncludeElem.length >= 2 && relIncludeElem[0] == relationshipName)
+                        .filter(relIncludeElem => relIncludeElem.length >= 2 &&
+                        relIncludeElem[0] == relationshipName)
                         .forEach(relIncludeElem => relationInclude.push(relIncludeElem.slice(1)));
                     if (_.isArray(data)) {
                         let /** @type {?} */ relationIds = (data);
@@ -950,7 +953,8 @@ export function getPendingChanges(state, ids, include, includeNew) {
         Object.keys(state).forEach(type => {
             Object.keys(state[type]).forEach(id => {
                 let /** @type {?} */ storeResource = state[type][id];
-                if (storeResource.state !== 'IN_SYNC' && (storeResource.state !== 'NEW' || includeNew)) {
+                if (storeResource.state !== 'IN_SYNC' &&
+                    (storeResource.state !== 'NEW' || includeNew)) {
                     pending.push(storeResource);
                 }
             });

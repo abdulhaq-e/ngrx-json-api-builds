@@ -1,4 +1,4 @@
-import { NgrxJsonApiActionTypes } from './actions';
+import { NgrxJsonApiActionTypes, } from './actions';
 import { clearQueryResult, compactStore, deleteStoreResources, getPendingChanges, removeQuery, removeStoreResource, rollbackStoreResources, updateQueriesForDeletedResource, updateQueryErrors, updateQueryParams, updateQueryResults, updateResourceErrors, updateResourceErrorsForQuery, updateResourceState, updateStoreDataFromPayload, updateStoreDataFromResource, } from './utils';
 export const /** @type {?} */ initialNgrxJsonApiState = {
     isCreating: 0,
