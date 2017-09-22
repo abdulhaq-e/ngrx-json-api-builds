@@ -1461,7 +1461,9 @@ class NgrxJsonApiService {
      * @return {?} observable of the resource
      */
     selectStoreResource(identifier) {
-        return this.store.let(this.selectors.getStoreResource$(identifier));
+        return this.store
+            .let(this.selectors.getNgrxJsonApiStore$())
+            .let(this.selectors.getStoreResource$(identifier));
     }
     /**
      * @param {?} storeResource$

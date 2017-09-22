@@ -1497,7 +1497,9 @@ var NgrxJsonApiService = (function () {
      * @return {?} observable of the resource
      */
     NgrxJsonApiService.prototype.selectStoreResource = function (identifier) {
-        return this.store.let(this.selectors.getStoreResource$(identifier));
+        return this.store
+            .let(this.selectors.getNgrxJsonApiStore$())
+            .let(this.selectors.getStoreResource$(identifier));
     };
     /**
      * @param {?} storeResource$
