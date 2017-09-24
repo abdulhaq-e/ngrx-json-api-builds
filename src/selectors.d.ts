@@ -13,6 +13,7 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/zip';
 import { Store } from '@ngrx/store';
 import { NgrxJsonApiConfig, NgrxJsonApiStore, NgrxJsonApiStoreData, NgrxJsonApiStoreResources, NgrxJsonApiStoreQueries, Resource, ResourceIdentifier, ResourceError, Query, StoreResource, ManyQueryResult, StoreQuery } from './interfaces';
+export declare function getNgrxJsonApiStore(state$: Store<any>): Observable<NgrxJsonApiStore>;
 export declare class NgrxJsonApiSelectors {
     config: NgrxJsonApiConfig;
     constructor(config: NgrxJsonApiConfig);

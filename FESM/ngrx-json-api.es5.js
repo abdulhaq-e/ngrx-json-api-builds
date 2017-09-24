@@ -1998,6 +1998,13 @@ var NgrxJsonApi = (function () {
     };
     return NgrxJsonApi;
 }());
+/**
+ * @param {?} state$
+ * @return {?}
+ */
+function getNgrxJsonApiStore(state$) {
+    return state$.select('NgrxJsonApi').filter(function (it) { return !isUndefined(it); }).map(function (it) { return it.api; });
+}
 var NgrxJsonApiSelectors = (function () {
     /**
      * @param {?} config
@@ -2011,9 +2018,7 @@ var NgrxJsonApiSelectors = (function () {
     NgrxJsonApiSelectors.prototype.getNgrxJsonApiStore$ = function () {
         return function (state$) {
             // note that upon setup the store may not yet be initialized
-            return state$
-                .select('NgrxJsonApi')
-                .map(function (it) { return (it ? it['api'] : undefined); });
+            return state$.select('NgrxJsonApi').filter(function (it) { return !isUndefined(it); }).map(function (it) { return it.api; });
         };
     };
     /**
@@ -2282,7 +2287,7 @@ var NgrxJsonApiEffects = (function () {
         this.applyResources$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_APPLY_INIT)
             .filter(function () { return _this.jsonApi.config.applyEnabled !== false; })
-            .withLatestFrom(this.store.select(this.selectors.getNgrxJsonApiStore$()), function (action, ngrxstore) {
+            .withLatestFrom(this.store.let(getNgrxJsonApiStore), function (action, ngrxstore) {
             var /** @type {?} */ payload = ((action)).payload;
             var /** @type {?} */ pending = getPendingChanges(ngrxstore.data, payload.ids, payload.include);
             return pending;
@@ -2737,5 +2742,5 @@ NgrxJsonApiModule.ctorParameters = function () { return []; };
 /**
  * Generated bundle index. Do not edit.
  */
-export { SelectStoreResourcePipe, DenormaliseStoreResourcePipe, GetDenormalisedValuePipe, NgrxJsonApiService, NgrxJsonApiModule, NgrxJsonApiSelectors, uuid, Direction, NgrxJsonApiActionTypes, ApiApplyInitAction, ApiApplySuccessAction, ApiApplyFailAction, ApiPostInitAction, ApiPostSuccessAction, ApiPostFailAction, ApiDeleteInitAction, ApiDeleteSuccessAction, ApiDeleteFailAction, ApiGetInitAction, ApiGetSuccessAction, ApiGetFailAction, ApiRollbackAction, ApiPatchInitAction, ApiPatchSuccessAction, ApiPatchFailAction, DeleteStoreResourceAction, PatchStoreResourceAction, NewStoreResourceAction, PostStoreResourceAction, RemoveQueryAction, LocalQueryInitAction, LocalQuerySuccessAction, LocalQueryFailAction, CompactStoreAction, ClearStoreAction, ApiQueryRefreshAction, ModifyStoreResourceErrorsAction, NgrxJsonApi as ɵg, NgrxJsonApiEffects as ɵf, NGRX_JSON_API_CONFIG as ɵa, apiFactory as ɵb, configure as ɵe, selectorsFactory as ɵc, serviceFactory as ɵd, NgrxJsonApiStoreReducer as ɵh, reducer as ɵi };
+export { SelectStoreResourcePipe, DenormaliseStoreResourcePipe, GetDenormalisedValuePipe, NgrxJsonApiService, NgrxJsonApiModule, NGRX_JSON_API_CONFIG, uuid, Direction, NgrxJsonApiActionTypes, ApiApplyInitAction, ApiApplySuccessAction, ApiApplyFailAction, ApiPostInitAction, ApiPostSuccessAction, ApiPostFailAction, ApiDeleteInitAction, ApiDeleteSuccessAction, ApiDeleteFailAction, ApiGetInitAction, ApiGetSuccessAction, ApiGetFailAction, ApiRollbackAction, ApiPatchInitAction, ApiPatchSuccessAction, ApiPatchFailAction, DeleteStoreResourceAction, PatchStoreResourceAction, NewStoreResourceAction, PostStoreResourceAction, RemoveQueryAction, LocalQueryInitAction, LocalQuerySuccessAction, LocalQueryFailAction, CompactStoreAction, ClearStoreAction, ApiQueryRefreshAction, ModifyStoreResourceErrorsAction, getNgrxJsonApiStore, NgrxJsonApiSelectors, NgrxJsonApi as ɵf, NgrxJsonApiEffects as ɵe, apiFactory as ɵa, configure as ɵd, selectorsFactory as ɵb, serviceFactory as ɵc, NgrxJsonApiStoreReducer as ɵg, reducer as ɵh };
 //# sourceMappingURL=ngrx-json-api.es5.js.map

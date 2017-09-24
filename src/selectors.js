@@ -13,6 +13,13 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/zip';
 import { filterResources, denormaliseStoreResource, denormaliseStoreResources, } from './utils';
+/**
+ * @param {?} state$
+ * @return {?}
+ */
+export function getNgrxJsonApiStore(state$) {
+    return state$.select('NgrxJsonApi').filter(it => !_.isUndefined(it)).map(it => it.api);
+}
 export class NgrxJsonApiSelectors {
     /**
      * @param {?} config
@@ -26,9 +33,7 @@ export class NgrxJsonApiSelectors {
     getNgrxJsonApiStore$() {
         return (state$) => {
             // note that upon setup the store may not yet be initialized
-            return state$
-                .select('NgrxJsonApi')
-                .map(it => (it ? it['api'] : undefined));
+            return state$.select('NgrxJsonApi').filter(it => !_.isUndefined(it)).map(it => it.api);
         };
     }
     /**

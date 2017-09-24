@@ -18,7 +18,7 @@ import 'rxjs/add/operator/takeWhile';
 import 'rxjs/add/operator/takeUntil';
 import { ApiApplyFailAction, ApiApplySuccessAction, ApiDeleteFailAction, ApiDeleteSuccessAction, ApiGetFailAction, ApiGetInitAction, ApiGetSuccessAction, ApiPatchFailAction, ApiPatchSuccessAction, ApiPostFailAction, ApiPostSuccessAction, ApiQueryRefreshAction, LocalQueryFailAction, LocalQuerySuccessAction, NgrxJsonApiActionTypes, } from './actions';
 import { NgrxJsonApi } from './api';
-import { NgrxJsonApiSelectors } from './selectors';
+import { getNgrxJsonApiStore, NgrxJsonApiSelectors } from './selectors';
 import { generatePayload, getPendingChanges, sortPendingChanges, } from './utils';
 export class NgrxJsonApiEffects {
     /**
@@ -139,7 +139,7 @@ export class NgrxJsonApiEffects {
         this.applyResources$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_APPLY_INIT)
             .filter(() => this.jsonApi.config.applyEnabled !== false)
-            .withLatestFrom(this.store.select(this.selectors.getNgrxJsonApiStore$()), (action, ngrxstore) => {
+            .withLatestFrom(this.store.let(getNgrxJsonApiStore), (action, ngrxstore) => {
             let /** @type {?} */ payload = ((action)).payload;
             const /** @type {?} */ pending = getPendingChanges(ngrxstore.data, payload.ids, payload.include);
             return pending;

@@ -1974,6 +1974,13 @@ var NgrxJsonApi = (function () {
     };
     return NgrxJsonApi;
 }());
+/**
+ * @param {?} state$
+ * @return {?}
+ */
+function getNgrxJsonApiStore(state$) {
+    return state$.select('NgrxJsonApi').filter(function (it) { return !lodash_index.isUndefined(it); }).map(function (it) { return it.api; });
+}
 var NgrxJsonApiSelectors = (function () {
     /**
      * @param {?} config
@@ -1987,9 +1994,7 @@ var NgrxJsonApiSelectors = (function () {
     NgrxJsonApiSelectors.prototype.getNgrxJsonApiStore$ = function () {
         return function (state$) {
             // note that upon setup the store may not yet be initialized
-            return state$
-                .select('NgrxJsonApi')
-                .map(function (it) { return (it ? it['api'] : undefined); });
+            return state$.select('NgrxJsonApi').filter(function (it) { return !lodash_index.isUndefined(it); }).map(function (it) { return it.api; });
         };
     };
     /**
@@ -2258,7 +2263,7 @@ var NgrxJsonApiEffects = (function () {
         this.applyResources$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_APPLY_INIT)
             .filter(function () { return _this.jsonApi.config.applyEnabled !== false; })
-            .withLatestFrom(this.store.select(this.selectors.getNgrxJsonApiStore$()), function (action, ngrxstore) {
+            .withLatestFrom(this.store.let(getNgrxJsonApiStore), function (action, ngrxstore) {
             var /** @type {?} */ payload = ((action)).payload;
             var /** @type {?} */ pending = getPendingChanges(ngrxstore.data, payload.ids, payload.include);
             return pending;
@@ -2716,7 +2721,7 @@ exports.DenormaliseStoreResourcePipe = DenormaliseStoreResourcePipe;
 exports.GetDenormalisedValuePipe = GetDenormalisedValuePipe;
 exports.NgrxJsonApiService = NgrxJsonApiService;
 exports.NgrxJsonApiModule = NgrxJsonApiModule;
-exports.NgrxJsonApiSelectors = NgrxJsonApiSelectors;
+exports.NGRX_JSON_API_CONFIG = NGRX_JSON_API_CONFIG;
 exports.uuid = uuid;
 exports.Direction = Direction;
 exports.NgrxJsonApiActionTypes = NgrxJsonApiActionTypes;
@@ -2748,15 +2753,16 @@ exports.CompactStoreAction = CompactStoreAction;
 exports.ClearStoreAction = ClearStoreAction;
 exports.ApiQueryRefreshAction = ApiQueryRefreshAction;
 exports.ModifyStoreResourceErrorsAction = ModifyStoreResourceErrorsAction;
-exports.ɵg = NgrxJsonApi;
-exports.ɵf = NgrxJsonApiEffects;
-exports.ɵa = NGRX_JSON_API_CONFIG;
-exports.ɵb = apiFactory;
-exports.ɵe = configure;
-exports.ɵc = selectorsFactory;
-exports.ɵd = serviceFactory;
-exports.ɵh = NgrxJsonApiStoreReducer;
-exports.ɵi = reducer;
+exports.getNgrxJsonApiStore = getNgrxJsonApiStore;
+exports.NgrxJsonApiSelectors = NgrxJsonApiSelectors;
+exports.ɵf = NgrxJsonApi;
+exports.ɵe = NgrxJsonApiEffects;
+exports.ɵa = apiFactory;
+exports.ɵd = configure;
+exports.ɵb = selectorsFactory;
+exports.ɵc = serviceFactory;
+exports.ɵg = NgrxJsonApiStoreReducer;
+exports.ɵh = reducer;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
