@@ -20,109 +20,130 @@ import { ApiApplyFailAction, ApiApplySuccessAction, ApiDeleteFailAction, ApiDele
 import { NgrxJsonApi } from './api';
 import { getNgrxJsonApiStore, NgrxJsonApiSelectors } from './selectors';
 import { generatePayload, getPendingChanges, sortPendingChanges, } from './utils';
-export class NgrxJsonApiEffects {
+var NgrxJsonApiEffects = (function () {
     /**
      * @param {?} actions$
      * @param {?} jsonApi
      * @param {?} store
      * @param {?} selectors
      */
-    constructor(actions$, jsonApi, store, selectors) {
+    function NgrxJsonApiEffects(actions$, jsonApi, store, selectors) {
+        var _this = this;
         this.actions$ = actions$;
         this.jsonApi = jsonApi;
         this.store = store;
         this.selectors = selectors;
         this.createResource$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_POST_INIT)
-            .map(it => this.generatePayload(it.payload, 'POST'))
-            .mergeMap((payload) => {
-            return this.jsonApi
+            .map(function (it) { return _this.generatePayload(it.payload, 'POST'); })
+            .mergeMap(function (payload) {
+            return _this.jsonApi
                 .create(payload.query, payload.jsonApiData)
-                .map((response) => new ApiPostSuccessAction({
-                jsonApiData: response.body,
-                query: payload.query,
-            }))
-                .catch(error => Observable.of(new ApiPostFailAction(this.toErrorPayload(payload.query, error))));
+                .map(function (response) {
+                return new ApiPostSuccessAction({
+                    jsonApiData: response.body,
+                    query: payload.query,
+                });
+            })
+                .catch(function (error) {
+                return Observable.of(new ApiPostFailAction(_this.toErrorPayload(payload.query, error)));
+            });
         });
         this.updateResource$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_PATCH_INIT)
-            .map(it => this.generatePayload(it.payload, 'PATCH'))
-            .mergeMap((payload) => {
-            return this.jsonApi
+            .map(function (it) { return _this.generatePayload(it.payload, 'PATCH'); })
+            .mergeMap(function (payload) {
+            return _this.jsonApi
                 .update(payload.query, payload.jsonApiData)
-                .map((response) => new ApiPatchSuccessAction({
-                jsonApiData: response.body,
-                query: payload.query,
-            }))
-                .catch(error => Observable.of(new ApiPatchFailAction(this.toErrorPayload(payload.query, error))));
+                .map(function (response) {
+                return new ApiPatchSuccessAction({
+                    jsonApiData: response.body,
+                    query: payload.query,
+                });
+            })
+                .catch(function (error) {
+                return Observable.of(new ApiPatchFailAction(_this.toErrorPayload(payload.query, error)));
+            });
         });
         this.readResource$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_GET_INIT)
-            .map(it => it.payload)
-            .mergeMap((query) => {
-            return this.jsonApi
+            .map(function (it) { return it.payload; })
+            .mergeMap(function (query) {
+            return _this.jsonApi
                 .find(query)
-                .map((response) => response.body)
-                .map(data => new ApiGetSuccessAction({
-                jsonApiData: data,
-                query: query,
-            }))
-                .catch(error => Observable.of(new ApiGetFailAction(this.toErrorPayload(query, error))));
+                .map(function (response) { return response.body; })
+                .map(function (data) {
+                return new ApiGetSuccessAction({
+                    jsonApiData: data,
+                    query: query,
+                });
+            })
+                .catch(function (error) {
+                return Observable.of(new ApiGetFailAction(_this.toErrorPayload(query, error)));
+            });
         });
         this.queryStore$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.LOCAL_QUERY_INIT)
-            .map(it => it.payload)
-            .mergeMap((query) => {
-            return this.store
-                .let(this.selectors.getNgrxJsonApiStore$())
-                .let(this.selectors.queryStore$(query))
-                .map(results => new LocalQuerySuccessAction({
-                jsonApiData: { data: results },
-                query: query,
-            }))
-                .catch(error => Observable.of(new LocalQueryFailAction(this.toErrorPayload(query, error))))
-                .takeUntil(this.localQueryInitEventFor(query))
-                .takeUntil(this.removeQueryEventFor(query));
+            .map(function (it) { return it.payload; })
+            .mergeMap(function (query) {
+            return _this.store
+                .let(_this.selectors.getNgrxJsonApiStore$())
+                .let(_this.selectors.queryStore$(query))
+                .map(function (results) {
+                return new LocalQuerySuccessAction({
+                    jsonApiData: { data: results },
+                    query: query,
+                });
+            })
+                .catch(function (error) {
+                return Observable.of(new LocalQueryFailAction(_this.toErrorPayload(query, error)));
+            })
+                .takeUntil(_this.localQueryInitEventFor(query))
+                .takeUntil(_this.removeQueryEventFor(query));
         });
         this.deleteResource$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_DELETE_INIT)
-            .map(it => it.payload)
-            .map(it => this.generatePayload(it, 'DELETE'))
-            .mergeMap((payload) => {
-            return this.jsonApi
+            .map(function (it) { return it.payload; })
+            .map(function (it) { return _this.generatePayload(it, 'DELETE'); })
+            .mergeMap(function (payload) {
+            return _this.jsonApi
                 .delete(payload.query)
-                .map((response) => response.body)
-                .map(data => new ApiDeleteSuccessAction({
-                jsonApiData: data,
-                query: payload.query,
-            }))
-                .catch(error => Observable.of(new ApiDeleteFailAction(this.toErrorPayload(payload.query, error))));
+                .map(function (response) { return response.body; })
+                .map(function (data) {
+                return new ApiDeleteSuccessAction({
+                    jsonApiData: data,
+                    query: payload.query,
+                });
+            })
+                .catch(function (error) {
+                return Observable.of(new ApiDeleteFailAction(_this.toErrorPayload(payload.query, error)));
+            });
         });
         this.triggerReadOnQueryRefresh$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_QUERY_REFRESH)
-            .withLatestFrom(this.store, (action, store) => {
-            let /** @type {?} */ queryId = action.payload;
-            let /** @type {?} */ state = (store['NgrxJsonApi']['api']);
-            let /** @type {?} */ query = state.queries[queryId].query;
+            .withLatestFrom(this.store, function (action, store) {
+            var /** @type {?} */ queryId = action.payload;
+            var /** @type {?} */ state = (store['NgrxJsonApi']['api']);
+            var /** @type {?} */ query = state.queries[queryId].query;
             return new ApiGetInitAction(query);
         });
         this.refreshQueriesOnDelete$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_DELETE_SUCCESS)
-            .withLatestFrom(this.store, (action, store) => {
-            let /** @type {?} */ id = { id: action.payload.query.id, type: action.payload.query.type };
+            .withLatestFrom(this.store, function (action, store) {
+            var /** @type {?} */ id = { id: action.payload.query.id, type: action.payload.query.type };
             if (!id.id || !id.type) {
                 throw new Error('API_DELETE_SUCCESS did not carry resource id and type information');
             }
-            let /** @type {?} */ state = (store['NgrxJsonApi']['api']);
-            let /** @type {?} */ actions = [];
-            for (let /** @type {?} */ queryId in state.queries) {
+            var /** @type {?} */ state = (store['NgrxJsonApi']['api']);
+            var /** @type {?} */ actions = [];
+            for (var /** @type {?} */ queryId in state.queries) {
                 if (state.queries.hasOwnProperty(queryId)) {
-                    let /** @type {?} */ query = state.queries[queryId];
+                    var /** @type {?} */ query = state.queries[queryId];
                     if (query.resultIds) {
-                        let /** @type {?} */ needsRefresh = _.findIndex(query.resultIds, function (o) {
+                        var /** @type {?} */ needsRefresh = _.findIndex(query.resultIds, function (o) {
                             return _.isEqual(id, o);
                         }) !== -1;
-                        let /** @type {?} */ sameIdRequested = query.query.id === id.id && query.query.type === id.type;
+                        var /** @type {?} */ sameIdRequested = query.query.id === id.id && query.query.type === id.type;
                         if (sameIdRequested && (needsRefresh || _.isEmpty(query.errors))) {
                             throw new Error('store is in invalid state, queries for deleted' +
                                 ' resource should have been emptied and marked with 404 error');
@@ -135,93 +156,109 @@ export class NgrxJsonApiEffects {
             }
             return actions;
         })
-            .flatMap(actions => Observable.of(...actions));
+            .flatMap(function (actions) { return Observable.of.apply(Observable, actions); });
         this.applyResources$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_APPLY_INIT)
-            .filter(() => this.jsonApi.config.applyEnabled !== false)
-            .withLatestFrom(this.store.let(getNgrxJsonApiStore), (action, ngrxstore) => {
-            let /** @type {?} */ payload = ((action)).payload;
-            const /** @type {?} */ pending = getPendingChanges(ngrxstore.data, payload.ids, payload.include);
+            .filter(function () { return _this.jsonApi.config.applyEnabled !== false; })
+            .withLatestFrom(this.store.let(getNgrxJsonApiStore), function (action, ngrxstore) {
+            var /** @type {?} */ payload = ((action)).payload;
+            var /** @type {?} */ pending = getPendingChanges(ngrxstore.data, payload.ids, payload.include);
             return pending;
         })
-            .flatMap(pending => {
+            .flatMap(function (pending) {
             if (pending.length === 0) {
                 return Observable.of(new ApiApplySuccessAction([]));
             }
             pending = sortPendingChanges(pending);
-            let /** @type {?} */ actions = [];
-            for (let /** @type {?} */ pendingChange of pending) {
+            var /** @type {?} */ actions = [];
+            var _loop_1 = function (pendingChange) {
                 if (pendingChange.state === 'CREATED') {
-                    let /** @type {?} */ payload = this.generatePayload(pendingChange, 'POST');
-                    actions.push(this.jsonApi
-                        .create(payload.query, payload.jsonApiData)
-                        .map(response => new ApiPostSuccessAction({
-                        jsonApiData: response.body,
-                        query: payload.query,
-                    }))
-                        .catch(error => Observable.of(new ApiPostFailAction(this.toErrorPayload(payload.query, error)))));
+                    var /** @type {?} */ payload_1 = _this.generatePayload(pendingChange, 'POST');
+                    actions.push(_this.jsonApi
+                        .create(payload_1.query, payload_1.jsonApiData)
+                        .map(function (response) {
+                        return new ApiPostSuccessAction({
+                            jsonApiData: response.body,
+                            query: payload_1.query,
+                        });
+                    })
+                        .catch(function (error) {
+                        return Observable.of(new ApiPostFailAction(_this.toErrorPayload(payload_1.query, error)));
+                    }));
                 }
                 else if (pendingChange.state === 'UPDATED') {
                     // prepare payload, omit links and meta information
-                    let /** @type {?} */ payload = this.generatePayload(pendingChange, 'PATCH');
-                    actions.push(this.jsonApi
-                        .update(payload.query, payload.jsonApiData)
-                        .map(response => new ApiPatchSuccessAction({
-                        jsonApiData: response.body,
-                        query: payload.query,
-                    }))
-                        .catch(error => Observable.of(new ApiPatchFailAction(this.toErrorPayload(payload.query, error)))));
+                    var /** @type {?} */ payload_2 = _this.generatePayload(pendingChange, 'PATCH');
+                    actions.push(_this.jsonApi
+                        .update(payload_2.query, payload_2.jsonApiData)
+                        .map(function (response) {
+                        return new ApiPatchSuccessAction({
+                            jsonApiData: response.body,
+                            query: payload_2.query,
+                        });
+                    })
+                        .catch(function (error) {
+                        return Observable.of(new ApiPatchFailAction(_this.toErrorPayload(payload_2.query, error)));
+                    }));
                 }
                 else if (pendingChange.state === 'DELETED') {
-                    let /** @type {?} */ payload = this.generatePayload(pendingChange, 'DELETE');
-                    actions.push(this.jsonApi
-                        .delete(payload.query)
-                        .map(response => new ApiDeleteSuccessAction({
-                        jsonApiData: response.body,
-                        query: payload.query,
-                    }))
-                        .catch(error => Observable.of(new ApiDeleteFailAction(this.toErrorPayload(payload.query, error)))));
+                    var /** @type {?} */ payload_3 = _this.generatePayload(pendingChange, 'DELETE');
+                    actions.push(_this.jsonApi
+                        .delete(payload_3.query)
+                        .map(function (response) {
+                        return new ApiDeleteSuccessAction({
+                            jsonApiData: response.body,
+                            query: payload_3.query,
+                        });
+                    })
+                        .catch(function (error) {
+                        return Observable.of(new ApiDeleteFailAction(_this.toErrorPayload(payload_3.query, error)));
+                    }));
                 }
                 else {
                     throw new Error('unknown state ' + pendingChange.state);
                 }
+            };
+            for (var _i = 0, pending_1 = pending; _i < pending_1.length; _i++) {
+                var pendingChange = pending_1[_i];
+                _loop_1(/** @type {?} */ pendingChange);
             }
-            return Observable.of(...actions)
-                .concatAll()
+            return Observable.of.apply(Observable, actions).concatAll()
                 .toArray()
-                .map(actions => this.toApplyAction(actions));
+                .map(function (actions) { return _this.toApplyAction(actions); });
         });
     }
     /**
      * @param {?} query
      * @return {?}
      */
-    localQueryInitEventFor(query) {
+    NgrxJsonApiEffects.prototype.localQueryInitEventFor = function (query) {
         return this.actions$
             .ofType(NgrxJsonApiActionTypes.LOCAL_QUERY_INIT)
-            .map(action => (action))
-            .filter(action => query.queryId == action.payload.queryId);
-    }
+            .map(function (action) { /** @type {?} */ return (action); })
+            .filter(function (action) { return query.queryId == action.payload.queryId; });
+    };
     /**
      * @param {?} query
      * @return {?}
      */
-    removeQueryEventFor(query) {
+    NgrxJsonApiEffects.prototype.removeQueryEventFor = function (query) {
         return this.actions$
             .ofType(NgrxJsonApiActionTypes.REMOVE_QUERY)
-            .map(action => (action))
-            .filter(action => query.queryId == action.payload);
-    }
+            .map(function (action) { /** @type {?} */ return (action); })
+            .filter(function (action) { return query.queryId == action.payload; });
+    };
     /**
      * @return {?}
      */
-    ngOnDestroy() { }
+    NgrxJsonApiEffects.prototype.ngOnDestroy = function () { };
     /**
      * @param {?} actions
      * @return {?}
      */
-    toApplyAction(actions) {
-        for (let /** @type {?} */ action of actions) {
+    NgrxJsonApiEffects.prototype.toApplyAction = function (actions) {
+        for (var _i = 0, actions_1 = actions; _i < actions_1.length; _i++) {
+            var action = actions_1[_i];
             if (action.type === NgrxJsonApiActionTypes.API_POST_FAIL ||
                 action.type === NgrxJsonApiActionTypes.API_PATCH_FAIL ||
                 action.type === NgrxJsonApiActionTypes.API_DELETE_FAIL) {
@@ -229,18 +266,18 @@ export class NgrxJsonApiEffects {
             }
         }
         return new ApiApplySuccessAction(actions);
-    }
+    };
     /**
      * @param {?} query
      * @param {?} response
      * @return {?}
      */
-    toErrorPayload(query, response) {
-        let /** @type {?} */ contentType = null;
+    NgrxJsonApiEffects.prototype.toErrorPayload = function (query, response) {
+        var /** @type {?} */ contentType = null;
         if (response && response.headers) {
             contentType = response.headers.get('Content-Type');
         }
-        let /** @type {?} */ document = null;
+        var /** @type {?} */ document = null;
         if (contentType != null &&
             contentType.startsWith('application/vnd.api+json')) {
             document = response;
@@ -256,8 +293,8 @@ export class NgrxJsonApiEffects {
         }
         else {
             // transform http to json api error
-            let /** @type {?} */ errors = [];
-            let /** @type {?} */ error = {
+            var /** @type {?} */ errors = [];
+            var /** @type {?} */ error = {
                 status: String(response.status),
                 code: response.statusText,
             };
@@ -270,38 +307,40 @@ export class NgrxJsonApiEffects {
                 },
             };
         }
-    }
+    };
     /**
      * @param {?} resource
      * @param {?} operation
      * @return {?}
      */
-    generatePayload(resource, operation) {
+    NgrxJsonApiEffects.prototype.generatePayload = function (resource, operation) {
         return generatePayload(resource, operation);
-    }
-}
-NgrxJsonApiEffects.decorators = [
-    { type: Injectable },
-];
-/**
- * @nocollapse
- */
-NgrxJsonApiEffects.ctorParameters = () => [
-    { type: Actions, },
-    { type: NgrxJsonApi, },
-    { type: Store, },
-    { type: NgrxJsonApiSelectors, },
-];
-NgrxJsonApiEffects.propDecorators = {
-    'createResource$': [{ type: Effect },],
-    'updateResource$': [{ type: Effect },],
-    'readResource$': [{ type: Effect },],
-    'queryStore$': [{ type: Effect },],
-    'deleteResource$': [{ type: Effect },],
-    'triggerReadOnQueryRefresh$': [{ type: Effect },],
-    'refreshQueriesOnDelete$': [{ type: Effect },],
-    'applyResources$': [{ type: Effect },],
-};
+    };
+    NgrxJsonApiEffects.decorators = [
+        { type: Injectable },
+    ];
+    /**
+     * @nocollapse
+     */
+    NgrxJsonApiEffects.ctorParameters = function () { return [
+        { type: Actions, },
+        { type: NgrxJsonApi, },
+        { type: Store, },
+        { type: NgrxJsonApiSelectors, },
+    ]; };
+    NgrxJsonApiEffects.propDecorators = {
+        'createResource$': [{ type: Effect },],
+        'updateResource$': [{ type: Effect },],
+        'readResource$': [{ type: Effect },],
+        'queryStore$': [{ type: Effect },],
+        'deleteResource$': [{ type: Effect },],
+        'triggerReadOnQueryRefresh$': [{ type: Effect },],
+        'refreshQueriesOnDelete$': [{ type: Effect },],
+        'applyResources$': [{ type: Effect },],
+    };
+    return NgrxJsonApiEffects;
+}());
+export { NgrxJsonApiEffects };
 function NgrxJsonApiEffects_tsickle_Closure_declarations() {
     /** @type {?} */
     NgrxJsonApiEffects.decorators;

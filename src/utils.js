@@ -1,45 +1,58 @@
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 import * as _ from 'lodash/index';
 import { Direction, } from './interfaces';
-export const /** @type {?} */ denormaliseObject = (resource, storeData, bag) => {
+export var /** @type {?} */ denormaliseObject = function (resource, storeData, bag) {
     // this function MUST MUTATE resource
-    let /** @type {?} */ denormalised = resource;
+    var /** @type {?} */ denormalised = resource;
     if (resource.hasOwnProperty('relationships')) {
-        Object.keys(resource.relationships).forEach(relation => {
+        Object.keys(resource.relationships).forEach(function (relation) {
             resource.relationships[relation]['reference'] = ({});
-            let /** @type {?} */ data = resource.relationships[relation].data;
+            var /** @type {?} */ data = resource.relationships[relation].data;
             // denormalised relation
-            let /** @type {?} */ relationDenorm;
+            var /** @type {?} */ relationDenorm;
             if (data === null || _.isEqual(data, [])) {
                 relationDenorm = data;
             }
             else if (_.isPlainObject(data)) {
                 // hasOne relation
-                let /** @type {?} */ relatedRS = getSingleStoreResource(/** @type {?} */ (data), storeData);
+                var /** @type {?} */ relatedRS = getSingleStoreResource(/** @type {?} */ (data), storeData);
                 relationDenorm = denormaliseStoreResource(relatedRS, storeData, bag);
             }
             else if (_.isArray(data)) {
                 // hasMany relation
-                let /** @type {?} */ relatedRSs = getMultipleStoreResource(/** @type {?} */ (data), storeData);
-                relationDenorm = relatedRSs.map(r => denormaliseStoreResource(r, storeData, bag));
+                var /** @type {?} */ relatedRSs = getMultipleStoreResource(/** @type {?} */ (data), storeData);
+                relationDenorm = relatedRSs.map(function (r) {
+                    return denormaliseStoreResource(r, storeData, bag);
+                });
             }
-            let /** @type {?} */ relationDenormPath = 'relationships.' + relation + '.reference';
+            var /** @type {?} */ relationDenormPath = 'relationships.' + relation + '.reference';
             denormalised = (_.set(denormalised, relationDenormPath, relationDenorm));
         });
     }
     return denormalised;
 };
-export const /** @type {?} */ denormaliseStoreResources = (items, storeData, bag = {}) => {
-    let /** @type {?} */ results = [];
-    for (let /** @type {?} */ item of items) {
+export var /** @type {?} */ denormaliseStoreResources = function (items, storeData, bag) {
+    if (bag === void 0) { bag = {}; }
+    var /** @type {?} */ results = [];
+    for (var _i = 0, items_1 = items; _i < items_1.length; _i++) {
+        var item = items_1[_i];
         results.push(denormaliseStoreResource(item, storeData, bag));
     }
     return results;
 };
-export const /** @type {?} */ denormaliseStoreResource = (item, storeData, bag = {}) => {
+export var /** @type {?} */ denormaliseStoreResource = function (item, storeData, bag) {
+    if (bag === void 0) { bag = {}; }
     if (!item) {
         return null;
     }
-    let /** @type {?} */ storeResource = _.cloneDeep(/** @type {?} */ (item));
+    var /** @type {?} */ storeResource = _.cloneDeep(/** @type {?} */ (item));
     if (_.isUndefined(bag[storeResource.type])) {
         bag[storeResource.type] = {};
     }
@@ -52,21 +65,21 @@ export const /** @type {?} */ denormaliseStoreResource = (item, storeData, bag =
     }
     return bag[storeResource.type][storeResource.id];
 };
-export const /** @type {?} */ getSingleStoreResource = (resourceId, storeData) => {
+export var /** @type {?} */ getSingleStoreResource = function (resourceId, storeData) {
     return _.get(storeData, [resourceId.type, resourceId.id], null);
 };
-export const /** @type {?} */ getMultipleStoreResource = (resourceIds, resources) => {
-    return resourceIds.map(id => getSingleStoreResource(id, resources));
+export var /** @type {?} */ getMultipleStoreResource = function (resourceIds, resources) {
+    return resourceIds.map(function (id) { return getSingleStoreResource(id, resources); });
 };
-export const /** @type {?} */ getDenormalisedPath = (path, baseResourceType, resourceDefinitions, pathSeparator) => {
-    let /** @type {?} */ denormPath = [];
+export var /** @type {?} */ getDenormalisedPath = function (path, baseResourceType, resourceDefinitions, pathSeparator) {
+    var /** @type {?} */ denormPath = [];
     if (_.isUndefined(pathSeparator)) {
         pathSeparator = '.';
     }
-    let /** @type {?} */ fields = path.split(pathSeparator);
-    let /** @type {?} */ currentResourceType = baseResourceType;
-    for (let /** @type {?} */ i = 0; i < fields.length; i++) {
-        let /** @type {?} */ definition = _.find(resourceDefinitions, { type: currentResourceType });
+    var /** @type {?} */ fields = path.split(pathSeparator);
+    var /** @type {?} */ currentResourceType = baseResourceType;
+    for (var /** @type {?} */ i = 0; i < fields.length; i++) {
+        var /** @type {?} */ definition = _.find(resourceDefinitions, { type: currentResourceType });
         if (_.isUndefined(definition)) {
             throw new Error('Definition not found');
         }
@@ -80,7 +93,7 @@ export const /** @type {?} */ getDenormalisedPath = (path, baseResourceType, res
             break;
         }
         else if (definition.relationships.hasOwnProperty(fields[i])) {
-            let /** @type {?} */ resourceRelation = definition.relationships[fields[i]];
+            var /** @type {?} */ resourceRelation = definition.relationships[fields[i]];
             if (resourceRelation.relationType === 'hasMany') {
                 if (i !== fields.length - 1) {
                     throw new Error('Cannot filter past a hasMany relation');
@@ -100,15 +113,15 @@ export const /** @type {?} */ getDenormalisedPath = (path, baseResourceType, res
     }
     return denormPath.join(pathSeparator);
 };
-export const /** @type {?} */ getDenormalisedValue = (path, storeResource, resourceDefinitions, pathSeparator) => {
-    let /** @type {?} */ denormalisedPath = getDenormalisedPath(path, storeResource.type, resourceDefinitions, pathSeparator);
+export var /** @type {?} */ getDenormalisedValue = function (path, storeResource, resourceDefinitions, pathSeparator) {
+    var /** @type {?} */ denormalisedPath = getDenormalisedPath(path, storeResource.type, resourceDefinitions, pathSeparator);
     return _.get(storeResource, denormalisedPath);
 };
 /**
  * Given two objects, it will merge the second in the first.
  *
  */
-export const updateResourceObject = (original, source) => {
+export var updateResourceObject = function (original, source) {
     // by default arrays would make use of concat.
     function customizer(objValue, srcValue) {
         if (_.isArray(objValue)) {
@@ -121,13 +134,13 @@ export const updateResourceObject = (original, source) => {
  * Insert a StoreResource given the Resource and the StoreResources
  *
  */
-export const insertStoreResource = (storeResources, resource, fromServer) => {
-    let newStoreResources = Object.assign({}, storeResources);
+export var insertStoreResource = function (storeResources, resource, fromServer) {
+    var newStoreResources = __assign({}, storeResources);
     if (fromServer) {
-        newStoreResources[resource.id] = Object.assign({}, resource, { persistedResource: resource, state: 'IN_SYNC', errors: [], loading: false });
+        newStoreResources[resource.id] = __assign({}, resource, { persistedResource: resource, state: 'IN_SYNC', errors: [], loading: false });
     }
     else {
-        newStoreResources[resource.id] = Object.assign({}, resource, { persistedResource: null, state: 'CREATED', errors: [], loading: false });
+        newStoreResources[resource.id] = __assign({}, resource, { persistedResource: null, state: 'CREATED', errors: [], loading: false });
     }
     return _.isEqual(storeResources, newStoreResources)
         ? storeResources
@@ -137,10 +150,10 @@ export const insertStoreResource = (storeResources, resource, fromServer) => {
  * Removes a StoreResource given the Resource and the StoreResources
  *
  */
-export const removeStoreResource = (storeData, resourceId) => {
+export var removeStoreResource = function (storeData, resourceId) {
     if (storeData[resourceId.type][resourceId.id]) {
-        let newState = Object.assign({}, storeData);
-        newState[resourceId.type] = Object.assign({}, newState[resourceId.type]);
+        var newState = __assign({}, storeData);
+        newState[resourceId.type] = __assign({}, newState[resourceId.type]);
         delete newState[resourceId.type][resourceId.id];
         return newState;
     }
@@ -154,28 +167,28 @@ export const removeStoreResource = (storeData, resourceId) => {
  * @param resourceState
  * @param loading
  */
-export const updateResourceState = (storeData, resourceId, resourceState, loading) => {
+export var updateResourceState = function (storeData, resourceId, resourceState, loading) {
     if (_.isUndefined(storeData[resourceId.type]) ||
         _.isUndefined(storeData[resourceId.type][resourceId.id])) {
         if (resourceState === 'DELETED') {
-            let newState = Object.assign({}, storeData);
-            newState[resourceId.type] = Object.assign({}, newState[resourceId.type]);
-            newState[resourceId.type][resourceId.id] = Object.assign({}, newState[resourceId.type][resourceId.id]);
-            newState[resourceId.type][resourceId.id] = {
+            var newState_1 = __assign({}, storeData);
+            newState_1[resourceId.type] = __assign({}, newState_1[resourceId.type]);
+            newState_1[resourceId.type][resourceId.id] = __assign({}, newState_1[resourceId.type][resourceId.id]);
+            newState_1[resourceId.type][resourceId.id] = {
                 type: resourceId.type,
                 id: resourceId.id,
                 persistedResource: null,
             };
-            newState[resourceId.type][resourceId.id].state = 'NOT_LOADED';
-            return newState;
+            newState_1[resourceId.type][resourceId.id].state = 'NOT_LOADED';
+            return newState_1;
         }
         else {
             return storeData;
         }
     }
-    let newState = Object.assign({}, storeData);
-    newState[resourceId.type] = Object.assign({}, newState[resourceId.type]);
-    newState[resourceId.type][resourceId.id] = Object.assign({}, newState[resourceId.type][resourceId.id]);
+    var newState = __assign({}, storeData);
+    newState[resourceId.type] = __assign({}, newState[resourceId.type]);
+    newState[resourceId.type][resourceId.id] = __assign({}, newState[resourceId.type][resourceId.id]);
     if (resourceState !== null) {
         newState[resourceId.type][resourceId.id].state = resourceState;
     }
@@ -190,7 +203,7 @@ export const updateResourceState = (storeData, resourceId, resourceState, loadin
  * @param resource0
  * @param resource1
  */
-export const isEqualResource = (resource0, resource1) => {
+export var isEqualResource = function (resource0, resource1) {
     if (resource0 === resource1) {
         return true;
     }
@@ -204,11 +217,11 @@ export const isEqualResource = (resource0, resource1) => {
         _.isEqual(resource0.links, resource1.links) &&
         _.isEqual(resource0.relationships, resource1.relationships));
 };
-export const /** @type {?} */ updateStoreResource = (state, resource, fromServer) => {
-    let /** @type {?} */ foundStoreResource = state[resource.id];
-    let /** @type {?} */ persistedResource = state[resource.id].persistedResource;
-    let /** @type {?} */ newResource;
-    let /** @type {?} */ newResourceState;
+export var /** @type {?} */ updateStoreResource = function (state, resource, fromServer) {
+    var /** @type {?} */ foundStoreResource = state[resource.id];
+    var /** @type {?} */ persistedResource = state[resource.id].persistedResource;
+    var /** @type {?} */ newResource;
+    var /** @type {?} */ newResourceState;
     if (fromServer) {
         // form server, override everything
         // TODO need to handle check and keep local updates?
@@ -217,7 +230,7 @@ export const /** @type {?} */ updateStoreResource = (state, resource, fromServer
         newResourceState = 'IN_SYNC';
     }
     else {
-        let /** @type {?} */ mergedResource = updateResourceObject(foundStoreResource, resource);
+        var /** @type {?} */ mergedResource = updateResourceObject(foundStoreResource, resource);
         if (isEqualResource(mergedResource, persistedResource)) {
             // no changes anymore, do nothing
             newResource = persistedResource;
@@ -238,71 +251,76 @@ export const /** @type {?} */ updateStoreResource = (state, resource, fromServer
             }
         }
     }
-    let /** @type {?} */ newState = Object.assign({}, state);
-    newState[resource.id] = (Object.assign({}, newResource, { persistedResource: persistedResource, state: newResourceState, errors: [], loading: false }));
+    var /** @type {?} */ newState = __assign({}, state);
+    newState[resource.id] = (__assign({}, newResource, { persistedResource: persistedResource, state: newResourceState, errors: [], loading: false }));
     return _.isEqual(newState[resource.id], state[resource.id])
         ? state
         : newState;
 };
-export const /** @type {?} */ updateQueriesForDeletedResource = (state, deletedId) => {
-    let /** @type {?} */ newState = state;
-    for (let /** @type {?} */ queryId in state) {
+export var /** @type {?} */ updateQueriesForDeletedResource = function (state, deletedId) {
+    var /** @type {?} */ newState = state;
+    for (var /** @type {?} */ queryId in state) {
         if (state.hasOwnProperty(queryId)) {
-            let /** @type {?} */ queryState = state[queryId];
+            var /** @type {?} */ queryState = state[queryId];
             if (queryState.query.id === deletedId.id &&
                 queryState.query.type === deletedId.type) {
                 // found a query for a resource that was deleted => modify to 404
                 newState = clearQueryResult(newState, queryState.query.queryId);
-                let /** @type {?} */ notFoundError = { code: '404', status: 'Not Found' };
+                var /** @type {?} */ notFoundError = { code: '404', status: 'Not Found' };
                 newState[queryState.query.queryId].errors = [notFoundError];
             }
         }
     }
     return newState;
 };
-export const /** @type {?} */ updateResourceErrorsForQuery = (storeData, query, document) => {
+export var /** @type {?} */ updateResourceErrorsForQuery = function (storeData, query, document) {
     if (!query.type || !query.id || document.data instanceof Array) {
         throw new Error('invalid parameters');
     }
     return updateResourceErrors(storeData, { id: query.id, type: query.type }, document.errors, 'SET');
 };
-export const /** @type {?} */ updateResourceErrors = (storeData, id, errors, modificationType) => {
+export var /** @type {?} */ updateResourceErrors = function (storeData, id, errors, modificationType) {
     if (!storeData[id.type] || !storeData[id.type][id.id]) {
         return storeData;
     }
-    let /** @type {?} */ newState = Object.assign({}, storeData);
-    newState[id.type] = Object.assign({}, newState[id.type]);
-    let /** @type {?} */ storeResource = Object.assign({}, newState[id.type][id.id]);
+    var /** @type {?} */ newState = __assign({}, storeData);
+    newState[id.type] = __assign({}, newState[id.type]);
+    var /** @type {?} */ storeResource = __assign({}, newState[id.type][id.id]);
     if (modificationType === 'SET') {
         storeResource.errors = [];
         if (errors) {
-            storeResource.errors.push(...errors);
+            (_a = storeResource.errors).push.apply(_a, errors);
         }
     }
     else if (modificationType === 'ADD') {
-        let /** @type {?} */ currentErrors = storeResource.errors;
+        var /** @type {?} */ currentErrors = storeResource.errors;
         storeResource.errors = [];
         if (currentErrors) {
-            storeResource.errors.push(...currentErrors);
+            (_b = storeResource.errors).push.apply(_b, currentErrors);
         }
         if (errors) {
-            storeResource.errors.push(...errors);
+            (_c = storeResource.errors).push.apply(_c, errors);
         }
     }
     else {
-        let /** @type {?} */ currentErrors = storeResource.errors;
+        var /** @type {?} */ currentErrors = storeResource.errors;
         storeResource.errors = [];
         if (currentErrors) {
-            for (let /** @type {?} */ currentError of currentErrors) {
-                let /** @type {?} */ remove = errors && errors.filter(it => _.isEqual(it, currentError)).length > 0;
+            var _loop_1 = function (currentError) {
+                var /** @type {?} */ remove = errors && errors.filter(function (it) { return _.isEqual(it, currentError); }).length > 0;
                 if (!remove) {
                     storeResource.errors.push(currentError);
                 }
+            };
+            for (var _i = 0, currentErrors_1 = currentErrors; _i < currentErrors_1.length; _i++) {
+                var currentError = currentErrors_1[_i];
+                _loop_1(/** @type {?} */ currentError);
             }
         }
     }
     newState[id.type][id.id] = storeResource;
     return newState;
+    var _a, _b, _c;
 };
 /**
  * @param {?} newState
@@ -311,34 +329,35 @@ export const /** @type {?} */ updateResourceErrors = (storeData, id, errors, mod
  * @return {?}
  */
 function rollbackResource(newState, type, id) {
-    let /** @type {?} */ storeResource = newState[type][id];
+    var /** @type {?} */ storeResource = newState[type][id];
     if (!storeResource.persistedResource) {
         delete newState[type][id];
     }
     else if (storeResource.state !== 'IN_SYNC') {
-        newState[type][id] = (Object.assign({}, newState[type][id], { state: 'IN_SYNC', resource: newState[type][id].persistedResource }));
+        newState[type][id] = (__assign({}, newState[type][id], { state: 'IN_SYNC', resource: newState[type][id].persistedResource }));
     }
 }
-export const /** @type {?} */ rollbackStoreResources = (storeData, ids, include) => {
-    let /** @type {?} */ newState = Object.assign({}, storeData);
+export var /** @type {?} */ rollbackStoreResources = function (storeData, ids, include) {
+    var /** @type {?} */ newState = __assign({}, storeData);
     if (_.isUndefined(ids)) {
-        Object.keys(newState).forEach(type => {
-            newState[type] = Object.assign({}, newState[type]);
-            Object.keys(newState[type]).forEach(id => {
+        Object.keys(newState).forEach(function (type) {
+            newState[type] = __assign({}, newState[type]);
+            Object.keys(newState[type]).forEach(function (id) {
                 rollbackResource(newState, type, id);
             });
         });
     }
     else {
-        let /** @type {?} */ modifiedResources = getPendingChanges(newState, ids, include, true);
-        for (let /** @type {?} */ modifiedResource of modifiedResources) {
+        var /** @type {?} */ modifiedResources = getPendingChanges(newState, ids, include, true);
+        for (var _i = 0, modifiedResources_1 = modifiedResources; _i < modifiedResources_1.length; _i++) {
+            var modifiedResource = modifiedResources_1[_i];
             rollbackResource(newState, modifiedResource.type, modifiedResource.id);
         }
     }
     return newState;
 };
-export const /** @type {?} */ deleteStoreResources = (storeData, query) => {
-    let /** @type {?} */ newState = Object.assign({}, storeData);
+export var /** @type {?} */ deleteStoreResources = function (storeData, query) {
+    var /** @type {?} */ newState = __assign({}, storeData);
     // if an id is not provided, all resources of the provided type will be deleted
     if (typeof query.id === 'undefined') {
         newState[query.type] = {};
@@ -350,13 +369,13 @@ export const /** @type {?} */ deleteStoreResources = (storeData, query) => {
     }
     return newState;
 };
-export const /** @type {?} */ clearQueryResult = (storeData, queryId) => {
-    let /** @type {?} */ newQuery = Object.assign({}, storeData[queryId]);
+export var /** @type {?} */ clearQueryResult = function (storeData, queryId) {
+    var /** @type {?} */ newQuery = __assign({}, storeData[queryId]);
     delete newQuery.resultIds;
     delete newQuery.errors;
     delete newQuery.meta;
     delete newQuery.links;
-    let /** @type {?} */ newState = Object.assign({}, storeData);
+    var /** @type {?} */ newState = __assign({}, storeData);
     newState[queryId] = newQuery;
     return newState;
 };
@@ -371,45 +390,45 @@ export const /** @type {?} */ clearQueryResult = (storeData, queryId) => {
  *
  * @return a new NgrxJsonApiStoreData with an inserted/updated resource.
  */
-export const updateStoreDataFromResource = (storeData, resource, fromServer, override) => {
+export var updateStoreDataFromResource = function (storeData, resource, fromServer, override) {
     if (_.isUndefined(storeData[resource.type])) {
-        let newStoreData = Object.assign({}, storeData);
+        var newStoreData = __assign({}, storeData);
         newStoreData[resource.type] = {};
         newStoreData[resource.type] = insertStoreResource(newStoreData[resource.type], resource, fromServer);
         return newStoreData;
     }
     else if (_.isUndefined(storeData[resource.type][resource.id]) || override) {
-        let updatedStoreResources = insertStoreResource(storeData[resource.type], resource, fromServer);
+        var updatedStoreResources = insertStoreResource(storeData[resource.type], resource, fromServer);
         // check if nothing has changed
         if (updatedStoreResources !== storeData[resource.type]) {
-            let newStoreData = Object.assign({}, storeData);
+            var newStoreData = __assign({}, storeData);
             newStoreData[resource.type] = updatedStoreResources;
             return newStoreData;
         }
         return storeData;
     }
     else {
-        let updatedStoreResources = updateStoreResource(storeData[resource.type], resource, fromServer);
+        var updatedStoreResources = updateStoreResource(storeData[resource.type], resource, fromServer);
         // check if nothing has changed
         if (updatedStoreResources !== storeData[resource.type]) {
-            let newStoreData = Object.assign({}, storeData);
+            var newStoreData = __assign({}, storeData);
             newStoreData[resource.type] = updatedStoreResources;
             return newStoreData;
         }
         return storeData;
     }
 };
-export const /** @type {?} */ updateStoreDataFromPayload = (storeData, payload) => {
-    let /** @type {?} */ data = (_.get(payload, 'data'));
+export var /** @type {?} */ updateStoreDataFromPayload = function (storeData, payload) {
+    var /** @type {?} */ data = (_.get(payload, 'data'));
     if (_.isUndefined(data)) {
         return storeData;
     }
     data = _.isArray(data) ? (data) : ([data]);
-    let /** @type {?} */ included = (_.get(payload, 'included'));
+    var /** @type {?} */ included = (_.get(payload, 'included'));
     if (!_.isUndefined(included)) {
-        data = [...data, ...included];
+        data = data.concat(included);
     }
-    return (_.reduce(data, (result, resource) => {
+    return (_.reduce(data, function (result, resource) {
         // let resourcePath: string = getResourcePath(
         //   result.resourcesDefinitions, resource.type);
         // Extremely ugly, needs refactoring!
@@ -433,29 +452,29 @@ export const /** @type {?} */ updateStoreDataFromPayload = (storeData, payload) 
  * @return a new NgrxJsonApiStoreQueries with the inserted/modified
  * ResourceQueryStore
  */
-export const updateQueryParams = (storeQueries, query) => {
+export var updateQueryParams = function (storeQueries, query) {
     if (!query.queryId) {
         return storeQueries;
     }
-    let newStoreQuery = Object.assign({}, storeQueries[query.queryId]);
+    var newStoreQuery = __assign({}, storeQueries[query.queryId]);
     newStoreQuery.loading = true;
     newStoreQuery.query = _.cloneDeep(query);
     if (_.isUndefined(newStoreQuery.errors)) {
         newStoreQuery.errors = [];
     }
-    let newStoreQueries = Object.assign({}, storeQueries);
+    var newStoreQueries = __assign({}, storeQueries);
     newStoreQueries[newStoreQuery.query.queryId] = newStoreQuery;
     return newStoreQueries;
 };
 /**
  * Updates the query results for given a queryId and the results.
  */
-export const updateQueryResults = (storeQueries, queryId, document) => {
-    let storeQuery = storeQueries[queryId];
+export var updateQueryResults = function (storeQueries, queryId, document) {
+    var storeQuery = storeQueries[queryId];
     if (storeQuery) {
-        let data = _.isArray(document.data) ? document.data : [document.data];
-        let newQueryStore = Object.assign({}, storeQuery, { resultIds: data.map(it => (it ? toResourceIdentifier(it) : [])), meta: document.meta, links: document.links, loading: false });
-        let newState = Object.assign({}, storeQueries);
+        var data = _.isArray(document.data) ? document.data : [document.data];
+        var newQueryStore = __assign({}, storeQuery, { resultIds: data.map(function (it) { return (it ? toResourceIdentifier(it) : []); }), meta: document.meta, links: document.links, loading: false });
+        var newState = __assign({}, storeQueries);
         newState[queryId] = newQueryStore;
         return newState;
     }
@@ -467,31 +486,32 @@ export const updateQueryResults = (storeQueries, queryId, document) => {
  *
  *
  */
-export const updateQueryErrors = (storeQueries, queryId, document) => {
+export var updateQueryErrors = function (storeQueries, queryId, document) {
     if (!queryId || !storeQueries[queryId]) {
         return storeQueries;
     }
-    let newState = Object.assign({}, storeQueries);
-    let newStoreQuery = Object.assign({}, newState[queryId]);
+    var newState = __assign({}, storeQueries);
+    var newStoreQuery = __assign({}, newState[queryId]);
     newStoreQuery.errors = [];
     if (document.errors) {
-        newStoreQuery.errors.push(...document.errors);
+        (_a = newStoreQuery.errors).push.apply(_a, document.errors);
     }
     newState[queryId] = newStoreQuery;
     return newState;
+    var _a;
 };
 /**
  * Removes a query given its queryId from the NgrxJsonApiStoreQueries.
  */
-export const removeQuery = (storeQueries, queryId) => {
-    let newState = Object.assign({}, storeQueries);
+export var removeQuery = function (storeQueries, queryId) {
+    var newState = __assign({}, storeQueries);
     delete newState[queryId];
     return newState;
 };
 /**
  * Given a resource, it will return an object containing the resource id and type.
  */
-export const toResourceIdentifier = (resource) => {
+export var toResourceIdentifier = function (resource) {
     return { type: resource.type, id: resource.id };
 };
 /**
@@ -504,14 +524,14 @@ export const toResourceIdentifier = (resource) => {
  * @param pathSepartor
  * @return the value of the last field in the path.
  */
-export const getResourceFieldValueFromPath = (path, baseStoreResource, storeData, resourceDefinitions, pathSeparator) => {
+export var getResourceFieldValueFromPath = function (path, baseStoreResource, storeData, resourceDefinitions, pathSeparator) {
     if (_.isUndefined(pathSeparator)) {
         pathSeparator = '.';
     }
-    let fields = path.split(pathSeparator);
-    let currentStoreResource = baseStoreResource;
-    for (let i = 0; i < fields.length; i++) {
-        let definition = _.find(resourceDefinitions, {
+    var fields = path.split(pathSeparator);
+    var currentStoreResource = baseStoreResource;
+    for (var i = 0; i < fields.length; i++) {
+        var definition = _.find(resourceDefinitions, {
             type: currentStoreResource.type,
         });
         if (_.isUndefined(definition)) {
@@ -529,17 +549,17 @@ export const getResourceFieldValueFromPath = (path, baseStoreResource, storeData
             if (i === fields.length - 1) {
                 throw new Error('The last field in the filtering path cannot be a relation');
             }
-            let resourceRelation = definition.relationships[fields[i]];
+            var resourceRelation = definition.relationships[fields[i]];
             if (resourceRelation.relationType === 'hasMany') {
                 throw new Error('Cannot filter past a hasMany relation');
             }
             else {
-                let relation = _.get(currentStoreResource, 'relationships.' + fields[i], null);
+                var relation = _.get(currentStoreResource, 'relationships.' + fields[i], null);
                 if (!relation || !relation.data) {
                     return null;
                 }
                 else {
-                    let relatedPath = [resourceRelation.type, relation.data.id];
+                    var relatedPath = [resourceRelation.type, relation.data.id];
                     currentStoreResource = _.get(storeData, relatedPath);
                 }
             }
@@ -552,23 +572,23 @@ export const getResourceFieldValueFromPath = (path, baseStoreResource, storeData
         }
     }
 };
-export const /** @type {?} */ filterResources = (resources, storeData, query, resourceDefinitions, filteringConfig) => {
-    return _.filter(resources, resource => {
+export var /** @type {?} */ filterResources = function (resources, storeData, query, resourceDefinitions, filteringConfig) {
+    return _.filter(resources, function (resource) {
         if (query.hasOwnProperty('params') &&
             query.params.hasOwnProperty('filtering')) {
-            return query.params.filtering.every(element => {
-                let /** @type {?} */ pathSeparator;
-                let /** @type {?} */ filteringOperators;
+            return query.params.filtering.every(function (element) {
+                var /** @type {?} */ pathSeparator;
+                var /** @type {?} */ filteringOperators;
                 if (!_.isUndefined(filteringConfig)) {
                     pathSeparator = (_.get(filteringConfig, 'pathSeparator'));
                     filteringOperators = (_.get(filteringConfig, 'filteringOperators'));
                 }
                 // resource type and attribute
-                let /** @type {?} */ resourceFieldValue = getResourceFieldValueFromPath(element.path, resource, storeData, resourceDefinitions, pathSeparator);
+                var /** @type {?} */ resourceFieldValue = getResourceFieldValueFromPath(element.path, resource, storeData, resourceDefinitions, pathSeparator);
                 if (!resourceFieldValue) {
                     return false;
                 }
-                let /** @type {?} */ operator = (_.find(filteringOperators, {
+                var /** @type {?} */ operator = (_.find(filteringOperators, {
                     name: element.operator,
                 }));
                 if (operator) {
@@ -624,23 +644,23 @@ export const /** @type {?} */ filterResources = (resources, storeData, query, re
         }
     });
 };
-export const /** @type {?} */ generateIncludedQueryParams = (included) => {
+export var /** @type {?} */ generateIncludedQueryParams = function (included) {
     if (_.isEmpty(included)) {
         return '';
     }
     return 'include=' + included.join();
 };
-export const /** @type {?} */ generateFieldsQueryParams = (fields) => {
+export var /** @type {?} */ generateFieldsQueryParams = function (fields) {
     if (_.isEmpty(fields)) {
         return '';
     }
     return 'fields=' + fields.join();
 };
-export const /** @type {?} */ generateFilteringQueryParams = (filtering) => {
+export var /** @type {?} */ generateFilteringQueryParams = function (filtering) {
     if (_.isEmpty(filtering)) {
         return '';
     }
-    let /** @type {?} */ filteringParams = filtering.map(f => {
+    var /** @type {?} */ filteringParams = filtering.map(function (f) {
         return ('filter[' +
             f.path +
             ']' +
@@ -650,17 +670,21 @@ export const /** @type {?} */ generateFilteringQueryParams = (filtering) => {
     });
     return filteringParams.join('&');
 };
-export const /** @type {?} */ generateSortingQueryParams = (sorting) => {
+export var /** @type {?} */ generateSortingQueryParams = function (sorting) {
     if (_.isEmpty(sorting)) {
         return '';
     }
     return ('sort=' +
         sorting
-            .map(f => (f.direction === Direction.ASC ? '' : '-') + f.api)
+            .map(function (f) { return (f.direction === Direction.ASC ? '' : '-') + f.api; })
             .join(','));
 };
-export const /** @type {?} */ generateQueryParams = (...params) => {
-    let /** @type {?} */ newParams = params.filter(p => p !== '');
+export var /** @type {?} */ generateQueryParams = function () {
+    var params = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        params[_i] = arguments[_i];
+    }
+    var /** @type {?} */ newParams = params.filter(function (p) { return p !== ''; });
     if (newParams.length !== 0) {
         return '?' + newParams.join('&');
     }
@@ -668,8 +692,8 @@ export const /** @type {?} */ generateQueryParams = (...params) => {
         return '';
     }
 };
-export const /** @type {?} */ generatePayload = (resource, operation) => {
-    let /** @type {?} */ payload = {
+export var /** @type {?} */ generatePayload = function (resource, operation) {
+    var /** @type {?} */ payload = {
         query: {
             type: resource.type,
         },
@@ -697,15 +721,15 @@ export const /** @type {?} */ generatePayload = (resource, operation) => {
     return payload;
 };
 /* tslint:disable */
-export const /** @type {?} */ uuid = () => {
-    let /** @type {?} */ lut = [];
-    for (let /** @type {?} */ i = 0; i < 256; i++) {
+export var /** @type {?} */ uuid = function () {
+    var /** @type {?} */ lut = [];
+    for (var /** @type {?} */ i = 0; i < 256; i++) {
         lut[i] = (i < 16 ? '0' : '') + i.toString(16);
     }
-    let /** @type {?} */ d0 = (Math.random() * 0xffffffff) | 0;
-    let /** @type {?} */ d1 = (Math.random() * 0xffffffff) | 0;
-    let /** @type {?} */ d2 = (Math.random() * 0xffffffff) | 0;
-    let /** @type {?} */ d3 = (Math.random() * 0xffffffff) | 0;
+    var /** @type {?} */ d0 = (Math.random() * 0xffffffff) | 0;
+    var /** @type {?} */ d1 = (Math.random() * 0xffffffff) | 0;
+    var /** @type {?} */ d2 = (Math.random() * 0xffffffff) | 0;
+    var /** @type {?} */ d3 = (Math.random() * 0xffffffff) | 0;
     return (lut[d0 & 0xff] +
         lut[(d0 >> 8) & 0xff] +
         lut[(d0 >> 16) & 0xff] +
@@ -728,28 +752,29 @@ export const /** @type {?} */ uuid = () => {
         lut[(d3 >> 24) & 0xff]);
 };
 /* tslint:enable */
-const /** @type {?} */ toKey = (id) => {
+var /** @type {?} */ toKey = function (id) {
     return id.id + '@' + id.type;
 };
-const /** @type {?} */ collectQueryResults = (state, usedResources) => {
-    for (let /** @type {?} */ queryName in state.queries) {
+var /** @type {?} */ collectQueryResults = function (state, usedResources) {
+    for (var /** @type {?} */ queryName in state.queries) {
         if (state.queries.hasOwnProperty(queryName)) {
-            let /** @type {?} */ query = state.queries[queryName];
+            var /** @type {?} */ query = state.queries[queryName];
             if (query.resultIds) {
-                for (let /** @type {?} */ resultId of query.resultIds) {
+                for (var _i = 0, _a = query.resultIds; _i < _a.length; _i++) {
+                    var resultId = _a[_i];
                     usedResources[toKey(resultId)] = true;
                 }
             }
         }
     }
 };
-const /** @type {?} */ collectPendingChanges = (state, usedResources) => {
-    for (let /** @type {?} */ type in state.data) {
+var /** @type {?} */ collectPendingChanges = function (state, usedResources) {
+    for (var /** @type {?} */ type in state.data) {
         if (state.data.hasOwnProperty(type)) {
-            let /** @type {?} */ resources = state.data[type];
-            for (let /** @type {?} */ id in resources) {
+            var /** @type {?} */ resources = state.data[type];
+            for (var /** @type {?} */ id in resources) {
                 if (resources.hasOwnProperty(id)) {
-                    let /** @type {?} */ resource = resources[id];
+                    var /** @type {?} */ resource = resources[id];
                     if (resource.state !== 'IN_SYNC') {
                         usedResources[toKey(resource)] = true;
                     }
@@ -758,15 +783,16 @@ const /** @type {?} */ collectPendingChanges = (state, usedResources) => {
         }
     }
 };
-const /** @type {?} */ collectReferencesForResource = (state, usedResources, resource) => {
-    let /** @type {?} */ hasChanges;
-    for (let /** @type {?} */ relationshipName in resource.relationships) {
+var /** @type {?} */ collectReferencesForResource = function (state, usedResources, resource) {
+    var /** @type {?} */ hasChanges;
+    for (var /** @type {?} */ relationshipName in resource.relationships) {
         if (resource.relationships.hasOwnProperty(relationshipName)) {
-            let /** @type {?} */ data = resource.relationships[relationshipName].data;
+            var /** @type {?} */ data = resource.relationships[relationshipName].data;
             if (data) {
-                let /** @type {?} */ dependencyIds = data instanceof Array ? data : [data];
-                for (let /** @type {?} */ dependencyId of dependencyIds) {
-                    let /** @type {?} */ dependencyKey = toKey(dependencyId);
+                var /** @type {?} */ dependencyIds = data instanceof Array ? data : [data];
+                for (var _i = 0, dependencyIds_1 = dependencyIds; _i < dependencyIds_1.length; _i++) {
+                    var dependencyId = dependencyIds_1[_i];
+                    var /** @type {?} */ dependencyKey = toKey(dependencyId);
                     if (!usedResources[dependencyKey]) {
                         // change found, an other iteration will be necssary to detect
                         // transitive dependencies
@@ -779,15 +805,15 @@ const /** @type {?} */ collectReferencesForResource = (state, usedResources, res
     }
     return hasChanges;
 };
-const /** @type {?} */ collectReferences = (state, usedResources) => {
+var /** @type {?} */ collectReferences = function (state, usedResources) {
     while (true) {
-        let /** @type {?} */ hasChanges = false;
-        for (let /** @type {?} */ type in state.data) {
+        var /** @type {?} */ hasChanges = false;
+        for (var /** @type {?} */ type in state.data) {
             if (state.data.hasOwnProperty(type)) {
-                let /** @type {?} */ resources = state.data[type];
-                for (let /** @type {?} */ id in resources) {
+                var /** @type {?} */ resources = state.data[type];
+                for (var /** @type {?} */ id in resources) {
                     if (resources.hasOwnProperty(id)) {
-                        let /** @type {?} */ resource = resources[id];
+                        var /** @type {?} */ resource = resources[id];
                         if (usedResources[toKey(resource)]) {
                             // in use, do not collect its relations
                             hasChanges =
@@ -803,15 +829,15 @@ const /** @type {?} */ collectReferences = (state, usedResources) => {
         }
     }
 };
-const /** @type {?} */ sweepUnusedResources = (state, usedResources) => {
-    let /** @type {?} */ hasDeletions = false;
-    let /** @type {?} */ newState = _.cloneDeep(state);
-    for (let /** @type {?} */ type in newState.data) {
+var /** @type {?} */ sweepUnusedResources = function (state, usedResources) {
+    var /** @type {?} */ hasDeletions = false;
+    var /** @type {?} */ newState = _.cloneDeep(state);
+    for (var /** @type {?} */ type in newState.data) {
         if (newState.data.hasOwnProperty(type)) {
-            let /** @type {?} */ resources = newState.data[type];
-            for (let /** @type {?} */ id in resources) {
+            var /** @type {?} */ resources = newState.data[type];
+            for (var /** @type {?} */ id in resources) {
                 if (resources.hasOwnProperty(id)) {
-                    let /** @type {?} */ resource = resources[id];
+                    var /** @type {?} */ resource = resources[id];
                     if (!usedResources[toKey(resource)]) {
                         hasDeletions = true;
                         delete resources[id];
@@ -825,8 +851,8 @@ const /** @type {?} */ sweepUnusedResources = (state, usedResources) => {
     }
     return hasDeletions ? newState : state;
 };
-export const /** @type {?} */ compactStore = (state) => {
-    let /** @type {?} */ usedResources = {};
+export var /** @type {?} */ compactStore = function (state) {
+    var /** @type {?} */ usedResources = {};
     // query results can not be collected
     collectQueryResults(state, usedResources);
     // pending changes cannot be collected
@@ -836,46 +862,52 @@ export const /** @type {?} */ compactStore = (state) => {
     // remove everything that is not collected
     return sweepUnusedResources(state, usedResources);
 };
-export const /** @type {?} */ sortPendingChanges = (pendingResources) => {
+export var /** @type {?} */ sortPendingChanges = function (pendingResources) {
     // allocate dependency
-    let /** @type {?} */ dependencies = {};
-    let /** @type {?} */ pendingMap = {};
-    for (let /** @type {?} */ pendingResource of pendingResources) {
-        let /** @type {?} */ resource = pendingResource;
-        let /** @type {?} */ key = toKey(resource);
+    var /** @type {?} */ dependencies = {};
+    var /** @type {?} */ pendingMap = {};
+    for (var _i = 0, pendingResources_1 = pendingResources; _i < pendingResources_1.length; _i++) {
+        var pendingResource = pendingResources_1[_i];
+        var /** @type {?} */ resource = pendingResource;
+        var /** @type {?} */ key = toKey(resource);
         dependencies[key] = [];
         pendingMap[key] = pendingResource;
     }
-    // extract dependencies
-    for (let /** @type {?} */ pendingResource of pendingResources) {
-        let /** @type {?} */ resource = pendingResource;
+    var _loop_2 = function (pendingResource) {
+        var /** @type {?} */ resource = pendingResource;
         if (resource.relationships) {
-            let /** @type {?} */ key = toKey(resource);
-            Object.keys(resource.relationships).forEach(relationshipName => {
-                let /** @type {?} */ data = resource.relationships[relationshipName].data;
+            var /** @type {?} */ key_1 = toKey(resource);
+            Object.keys(resource.relationships).forEach(function (relationshipName) {
+                var /** @type {?} */ data = resource.relationships[relationshipName].data;
                 if (data) {
-                    let /** @type {?} */ dependencyIds = data instanceof Array ? data : [data];
-                    for (let /** @type {?} */ dependencyId of dependencyIds) {
-                        let /** @type {?} */ dependencyKey = toKey(dependencyId);
+                    var /** @type {?} */ dependencyIds = data instanceof Array ? data : [data];
+                    for (var _i = 0, dependencyIds_2 = dependencyIds; _i < dependencyIds_2.length; _i++) {
+                        var dependencyId = dependencyIds_2[_i];
+                        var /** @type {?} */ dependencyKey = toKey(dependencyId);
                         if (pendingMap[dependencyKey] &&
                             pendingMap[dependencyKey].state === 'CREATED') {
                             // we have a dependency between two unsaved objects
-                            dependencies[key].push(pendingMap[dependencyKey]);
+                            dependencies[key_1].push(pendingMap[dependencyKey]);
                         }
                     }
                 }
             });
         }
+    };
+    // extract dependencies
+    for (var _a = 0, pendingResources_2 = pendingResources; _a < pendingResources_2.length; _a++) {
+        var pendingResource = pendingResources_2[_a];
+        _loop_2(/** @type {?} */ pendingResource);
     }
     // order
-    let /** @type {?} */ context = {
+    var /** @type {?} */ context = {
         pendingResources: pendingResources,
         cursor: pendingResources.length,
         sorted: new Array(pendingResources.length),
         dependencies: dependencies,
         visited: /** @type {?} */ ([]),
     };
-    let /** @type {?} */ i = context.cursor;
+    var /** @type {?} */ i = context.cursor;
     while (i--) {
         if (!context.visited[i]) {
             visitPending(pendingResources[i], i, [], context);
@@ -883,8 +915,8 @@ export const /** @type {?} */ sortPendingChanges = (pendingResources) => {
     }
     return context.sorted;
 };
-const /** @type {?} */ visitPending = (pendingResource, i, predecessors, context) => {
-    let /** @type {?} */ key = toKey(pendingResource);
+var /** @type {?} */ visitPending = function (pendingResource, i, predecessors, context) {
+    var /** @type {?} */ key = toKey(pendingResource);
     if (predecessors.indexOf(key) >= 0) {
         throw new Error('Cyclic dependency: ' + key + ' with ' + JSON.stringify(predecessors));
     }
@@ -893,9 +925,10 @@ const /** @type {?} */ visitPending = (pendingResource, i, predecessors, context
     }
     context.visited[i] = true;
     // outgoing edges
-    let /** @type {?} */ outgoing = context.dependencies[key];
-    let /** @type {?} */ preds = predecessors.concat(key);
-    for (let /** @type {?} */ child of outgoing) {
+    var /** @type {?} */ outgoing = context.dependencies[key];
+    var /** @type {?} */ preds = predecessors.concat(key);
+    for (var _i = 0, outgoing_1 = outgoing; _i < outgoing_1.length; _i++) {
+        var child = outgoing_1[_i];
         visitPending(child, context.pendingResources.indexOf(child), preds, context);
     }
     context.sorted[--context.cursor] = pendingResource;
@@ -909,34 +942,44 @@ const /** @type {?} */ visitPending = (pendingResource, i, predecessors, context
  * @return {?}
  */
 function collectPendingChange(state, pending, id, include, includeNew) {
-    let /** @type {?} */ storeResource = state[id.type][id.id];
+    var /** @type {?} */ storeResource = state[id.type][id.id];
     if (storeResource.state !== 'IN_SYNC' &&
         (storeResource.state !== 'NEW' || includeNew)) {
         pending.push(storeResource);
     }
-    for (let /** @type {?} */ includeElement of include) {
+    var _loop_3 = function (includeElement) {
         if (includeElement.length > 0) {
-            let /** @type {?} */ relationshipName = includeElement[0];
+            var /** @type {?} */ relationshipName_1 = includeElement[0];
             if (storeResource.relationships &&
-                storeResource.relationships[relationshipName]) {
-                let /** @type {?} */ data = storeResource.relationships[relationshipName].data;
+                storeResource.relationships[relationshipName_1]) {
+                var /** @type {?} */ data = storeResource.relationships[relationshipName_1].data;
                 if (data) {
-                    let /** @type {?} */ relationInclude = [];
+                    var /** @type {?} */ relationInclude_1 = [];
                     include
-                        .filter(relIncludeElem => relIncludeElem.length >= 2 &&
-                        relIncludeElem[0] == relationshipName)
-                        .forEach(relIncludeElem => relationInclude.push(relIncludeElem.slice(1)));
+                        .filter(function (relIncludeElem) {
+                        return relIncludeElem.length >= 2 &&
+                            relIncludeElem[0] == relationshipName_1;
+                    })
+                        .forEach(function (relIncludeElem) {
+                        return relationInclude_1.push(relIncludeElem.slice(1));
+                    });
                     if (_.isArray(data)) {
-                        let /** @type {?} */ relationIds = (data);
-                        relationIds.forEach(relationId => collectPendingChange(state, pending, relationId, relationInclude, includeNew));
+                        var /** @type {?} */ relationIds = (data);
+                        relationIds.forEach(function (relationId) {
+                            return collectPendingChange(state, pending, relationId, relationInclude_1, includeNew);
+                        });
                     }
                     else {
-                        let /** @type {?} */ relationId = (data);
-                        collectPendingChange(state, pending, relationId, relationInclude, includeNew);
+                        var /** @type {?} */ relationId = (data);
+                        collectPendingChange(state, pending, relationId, relationInclude_1, includeNew);
                     }
                 }
             }
         }
+    };
+    for (var _i = 0, include_1 = include; _i < include_1.length; _i++) {
+        var includeElement = include_1[_i];
+        _loop_3(/** @type {?} */ includeElement);
     }
 }
 /**
@@ -947,12 +990,12 @@ function collectPendingChange(state, pending, id, include, includeNew) {
  * @return {?}
  */
 export function getPendingChanges(state, ids, include, includeNew) {
-    let /** @type {?} */ pending = [];
+    var /** @type {?} */ pending = [];
     if (_.isUndefined(ids)) {
         // check all
-        Object.keys(state).forEach(type => {
-            Object.keys(state[type]).forEach(id => {
-                let /** @type {?} */ storeResource = state[type][id];
+        Object.keys(state).forEach(function (type) {
+            Object.keys(state[type]).forEach(function (id) {
+                var /** @type {?} */ storeResource = state[type][id];
                 if (storeResource.state !== 'IN_SYNC' &&
                     (storeResource.state !== 'NEW' || includeNew)) {
                     pending.push(storeResource);
@@ -961,13 +1004,15 @@ export function getPendingChanges(state, ids, include, includeNew) {
         });
     }
     else {
-        let /** @type {?} */ relationshipInclusions = [];
+        var /** @type {?} */ relationshipInclusions = [];
         if (include) {
-            for (let /** @type {?} */ includeElement of include) {
+            for (var _i = 0, include_2 = include; _i < include_2.length; _i++) {
+                var includeElement = include_2[_i];
                 relationshipInclusions.push(includeElement.split('.'));
             }
         }
-        for (let /** @type {?} */ id of ids) {
+        for (var _a = 0, ids_1 = ids; _a < ids_1.length; _a++) {
+            var id = ids_1[_a];
             collectPendingChange(state, pending, id, relationshipInclusions, includeNew);
         }
         pending = _.uniqBy(pending, function (e) {

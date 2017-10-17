@@ -1,4 +1,4 @@
-export let Direction = {};
+export var Direction = {};
 Direction.ASC = 0;
 Direction.DESC = 1;
 Direction[Direction.ASC] = "ASC";

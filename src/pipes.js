@@ -1,30 +1,32 @@
 import { Pipe } from '@angular/core';
 import 'rxjs/add/operator/let';
 import { NgrxJsonApiService } from './services';
-export class SelectStoreResourcePipe {
+var SelectStoreResourcePipe = (function () {
     /**
      * @param {?} service
      */
-    constructor(service) {
+    function SelectStoreResourcePipe(service) {
         this.service = service;
     }
     /**
      * @param {?} id
      * @return {?}
      */
-    transform(id) {
+    SelectStoreResourcePipe.prototype.transform = function (id) {
         return this.service.selectStoreResource(id);
-    }
-}
-SelectStoreResourcePipe.decorators = [
-    { type: Pipe, args: [{ name: 'jaSelectStoreResource' },] },
-];
-/**
- * @nocollapse
- */
-SelectStoreResourcePipe.ctorParameters = () => [
-    { type: NgrxJsonApiService, },
-];
+    };
+    SelectStoreResourcePipe.decorators = [
+        { type: Pipe, args: [{ name: 'jaSelectStoreResource' },] },
+    ];
+    /**
+     * @nocollapse
+     */
+    SelectStoreResourcePipe.ctorParameters = function () { return [
+        { type: NgrxJsonApiService, },
+    ]; };
+    return SelectStoreResourcePipe;
+}());
+export { SelectStoreResourcePipe };
 function SelectStoreResourcePipe_tsickle_Closure_declarations() {
     /** @type {?} */
     SelectStoreResourcePipe.decorators;
@@ -36,30 +38,32 @@ function SelectStoreResourcePipe_tsickle_Closure_declarations() {
     /** @type {?} */
     SelectStoreResourcePipe.prototype.service;
 }
-export class DenormaliseStoreResourcePipe {
+var DenormaliseStoreResourcePipe = (function () {
     /**
      * @param {?} service
      */
-    constructor(service) {
+    function DenormaliseStoreResourcePipe(service) {
         this.service = service;
     }
     /**
      * @param {?} obs
      * @return {?}
      */
-    transform(obs) {
+    DenormaliseStoreResourcePipe.prototype.transform = function (obs) {
         return this.service.denormaliseResource(obs);
-    }
-}
-DenormaliseStoreResourcePipe.decorators = [
-    { type: Pipe, args: [{ name: 'denormaliseStoreResource' },] },
-];
-/**
- * @nocollapse
- */
-DenormaliseStoreResourcePipe.ctorParameters = () => [
-    { type: NgrxJsonApiService, },
-];
+    };
+    DenormaliseStoreResourcePipe.decorators = [
+        { type: Pipe, args: [{ name: 'denormaliseStoreResource' },] },
+    ];
+    /**
+     * @nocollapse
+     */
+    DenormaliseStoreResourcePipe.ctorParameters = function () { return [
+        { type: NgrxJsonApiService, },
+    ]; };
+    return DenormaliseStoreResourcePipe;
+}());
+export { DenormaliseStoreResourcePipe };
 function DenormaliseStoreResourcePipe_tsickle_Closure_declarations() {
     /** @type {?} */
     DenormaliseStoreResourcePipe.decorators;
@@ -71,11 +75,11 @@ function DenormaliseStoreResourcePipe_tsickle_Closure_declarations() {
     /** @type {?} */
     DenormaliseStoreResourcePipe.prototype.service;
 }
-export class GetDenormalisedValuePipe {
+var GetDenormalisedValuePipe = (function () {
     /**
      * @param {?} service
      */
-    constructor(service) {
+    function GetDenormalisedValuePipe(service) {
         this.service = service;
     }
     /**
@@ -83,19 +87,21 @@ export class GetDenormalisedValuePipe {
      * @param {?} storeResource
      * @return {?}
      */
-    transform(path, storeResource) {
+    GetDenormalisedValuePipe.prototype.transform = function (path, storeResource) {
         return this.service.getDenormalisedValue(path, storeResource);
-    }
-}
-GetDenormalisedValuePipe.decorators = [
-    { type: Pipe, args: [{ name: 'getDenormalisedValue' },] },
-];
-/**
- * @nocollapse
- */
-GetDenormalisedValuePipe.ctorParameters = () => [
-    { type: NgrxJsonApiService, },
-];
+    };
+    GetDenormalisedValuePipe.decorators = [
+        { type: Pipe, args: [{ name: 'getDenormalisedValue' },] },
+    ];
+    /**
+     * @nocollapse
+     */
+    GetDenormalisedValuePipe.ctorParameters = function () { return [
+        { type: NgrxJsonApiService, },
+    ]; };
+    return GetDenormalisedValuePipe;
+}());
+export { GetDenormalisedValuePipe };
 function GetDenormalisedValuePipe_tsickle_Closure_declarations() {
     /** @type {?} */
     GetDenormalisedValuePipe.decorators;

@@ -1,3 +1,11 @@
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 import * as _ from 'lodash/index';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/concat';
@@ -18,164 +26,173 @@ import { filterResources, denormaliseStoreResource, denormaliseStoreResources, }
  * @return {?}
  */
 export function getNgrxJsonApiStore(state$) {
-    return state$.select('NgrxJsonApi').filter(it => !_.isUndefined(it)).map(it => it.api);
+    return state$.select('NgrxJsonApi').filter(function (it) { return !_.isUndefined(it); }).map(function (it) { return it.api; });
 }
-export class NgrxJsonApiSelectors {
+var NgrxJsonApiSelectors = (function () {
     /**
      * @param {?} config
      */
-    constructor(config) {
+    function NgrxJsonApiSelectors(config) {
         this.config = config;
     }
     /**
      * @return {?}
      */
-    getNgrxJsonApiStore$() {
-        return (state$) => {
+    NgrxJsonApiSelectors.prototype.getNgrxJsonApiStore$ = function () {
+        return function (state$) {
             // note that upon setup the store may not yet be initialized
-            return state$.select('NgrxJsonApi').filter(it => !_.isUndefined(it)).map(it => it.api);
+            return state$.select('NgrxJsonApi').filter(function (it) { return !_.isUndefined(it); }).map(function (it) { return it.api; });
         };
-    }
+    };
     /**
      * @return {?}
      */
-    getStoreData$() {
-        return (state$) => {
+    NgrxJsonApiSelectors.prototype.getStoreData$ = function () {
+        return function (state$) {
             return state$.select('data');
         };
-    }
+    };
     /**
      * @param {?} type
      * @return {?}
      */
-    getStoreResourceOfType$(type) {
-        return (state$) => {
+    NgrxJsonApiSelectors.prototype.getStoreResourceOfType$ = function (type) {
+        var _this = this;
+        return function (state$) {
             return state$
-                .let(this.getStoreData$())
-                .map(resources => (resources ? resources[type] : undefined));
+                .let(_this.getStoreData$())
+                .map(function (resources) { return (resources ? resources[type] : undefined); });
         };
-    }
+    };
     /**
      * @param {?} query
      * @return {?}
      */
-    queryStore$(query) {
-        return (state$) => {
-            let /** @type {?} */ selected$;
+    NgrxJsonApiSelectors.prototype.queryStore$ = function (query) {
+        var _this = this;
+        return function (state$) {
+            var /** @type {?} */ selected$;
             if (!query.type) {
-                return state$.map(() => Observable.throw('Unknown query'));
+                return state$.map(function () { return Observable.throw('Unknown query'); });
             }
             else if (query.type && query.id) {
-                selected$ = state$.let(this.getStoreResource$({ type: query.type, id: query.id }));
+                selected$ = state$.let(_this.getStoreResource$({ type: query.type, id: query.id }));
             }
             else {
                 selected$ = state$
-                    .let(this.getStoreResourceOfType$(query.type))
-                    .combineLatest(state$.let(this.getStoreData$()), (resources, storeData) => filterResources(resources, storeData, query, this.config.resourceDefinitions, this.config.filteringConfig));
+                    .let(_this.getStoreResourceOfType$(query.type))
+                    .combineLatest(state$.let(_this.getStoreData$()), function (resources, storeData) {
+                    return filterResources(resources, storeData, query, _this.config.resourceDefinitions, _this.config.filteringConfig);
+                });
             }
             return selected$.distinctUntilChanged();
         };
-    }
+    };
     /**
      * @return {?}
      */
-    getStoreQueries$() {
-        return (state$) => {
+    NgrxJsonApiSelectors.prototype.getStoreQueries$ = function () {
+        return function (state$) {
             return state$.select('queries');
         };
-    }
+    };
     /**
      * @param {?} queryId
      * @return {?}
      */
-    getResourceQuery$(queryId) {
-        return (state$) => {
+    NgrxJsonApiSelectors.prototype.getResourceQuery$ = function (queryId) {
+        var _this = this;
+        return function (state$) {
             return state$
-                .let(this.getStoreQueries$())
-                .map(it => (it ? it[queryId] : undefined));
+                .let(_this.getStoreQueries$())
+                .map(function (it) { return (it ? it[queryId] : undefined); });
         };
-    }
+    };
     /**
      * @param {?} identifier
      * @return {?}
      */
-    getStoreResource$(identifier) {
-        return (state$) => {
+    NgrxJsonApiSelectors.prototype.getStoreResource$ = function (identifier) {
+        var _this = this;
+        return function (state$) {
             return state$
-                .let(this.getStoreResourceOfType$(identifier.type))
-                .map(resources => ((resources ? resources[identifier.id] : undefined)));
+                .let(_this.getStoreResourceOfType$(identifier.type))
+                .map(function (resources) { /** @type {?} */ return ((resources ? resources[identifier.id] : undefined)); });
         };
-    }
+    };
     /**
      * @param {?} queryId
      * @param {?} denormalize
      * @return {?}
      */
-    getManyResults$(queryId, denormalize) {
-        return (state$) => {
-            return state$.map(state => {
-                let /** @type {?} */ storeQuery = state.queries[queryId];
+    NgrxJsonApiSelectors.prototype.getManyResults$ = function (queryId, denormalize) {
+        return function (state$) {
+            return state$.map(function (state) {
+                var /** @type {?} */ storeQuery = state.queries[queryId];
                 if (!storeQuery) {
                     return undefined;
                 }
                 if (_.isEmpty(storeQuery.resultIds)) {
-                    let /** @type {?} */ queryResult = Object.assign({}, storeQuery, { data: _.isUndefined(storeQuery.resultIds) ? undefined : [] });
+                    var /** @type {?} */ queryResult = __assign({}, storeQuery, { data: _.isUndefined(storeQuery.resultIds) ? undefined : [] });
                     return queryResult;
                 }
                 else {
-                    let /** @type {?} */ results = storeQuery.resultIds.map(id => (state.data[id.type] ? state.data[id.type][id.id] : undefined));
+                    var /** @type {?} */ results = storeQuery.resultIds.map(function (id) { return (state.data[id.type] ? state.data[id.type][id.id] : undefined); });
                     if (denormalize) {
                         results = denormaliseStoreResources(results, state.data);
                     }
-                    return Object.assign({}, storeQuery, { data: /** @type {?} */ (results) });
+                    return __assign({}, storeQuery, { data: /** @type {?} */ (results) });
                 }
             });
         };
-    }
+    };
     /**
      * @param {?} queryId
      * @param {?} denormalize
      * @return {?}
      */
-    getOneResult$(queryId, denormalize) {
-        return (state$) => {
-            return state$.map(state => {
-                let /** @type {?} */ storeQuery = state.queries[queryId];
+    NgrxJsonApiSelectors.prototype.getOneResult$ = function (queryId, denormalize) {
+        return function (state$) {
+            return state$.map(function (state) {
+                var /** @type {?} */ storeQuery = state.queries[queryId];
                 if (!storeQuery) {
                     return undefined;
                 }
                 if (_.isEmpty(storeQuery.resultIds)) {
-                    let /** @type {?} */ queryResult = Object.assign({}, storeQuery, { data: _.isUndefined(storeQuery.resultIds) ? undefined : null });
+                    var /** @type {?} */ queryResult = __assign({}, storeQuery, { data: _.isUndefined(storeQuery.resultIds) ? undefined : null });
                     return queryResult;
                 }
                 else {
                     if (storeQuery.resultIds.length >= 2) {
                         throw new Error('expected single result for query ' + storeQuery.query.queryId);
                     }
-                    let /** @type {?} */ resultId = storeQuery.resultIds[0];
-                    let /** @type {?} */ result = state.data[resultId.type]
+                    var /** @type {?} */ resultId = storeQuery.resultIds[0];
+                    var /** @type {?} */ result = state.data[resultId.type]
                         ? state.data[resultId.type][resultId.id]
                         : undefined;
                     if (denormalize) {
                         result = denormaliseStoreResource(result, state.data);
                     }
-                    return Object.assign({}, storeQuery, { data: result });
+                    return __assign({}, storeQuery, { data: result });
                 }
             });
         };
-    }
+    };
     /**
      * @param {?} identifier
      * @return {?}
      */
-    getPersistedResource$(identifier) {
-        return (state$) => {
+    NgrxJsonApiSelectors.prototype.getPersistedResource$ = function (identifier) {
+        var _this = this;
+        return function (state$) {
             return state$
-                .let(this.getStoreResource$(identifier))
-                .map(it => (it ? it.persistedResource : undefined));
+                .let(_this.getStoreResource$(identifier))
+                .map(function (it) { return (it ? it.persistedResource : undefined); });
         };
-    }
-}
+    };
+    return NgrxJsonApiSelectors;
+}());
+export { NgrxJsonApiSelectors };
 function NgrxJsonApiSelectors_tsickle_Closure_declarations() {
     /** @type {?} */
     NgrxJsonApiSelectors.prototype.config;

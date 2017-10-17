@@ -8,7 +8,7 @@ import { NgrxJsonApiSelectors } from './selectors';
 import { NgrxJsonApiService } from './services';
 import { reducer } from './reducers';
 import { DenormaliseStoreResourcePipe, GetDenormalisedValuePipe, SelectStoreResourcePipe, } from './pipes';
-export const /** @type {?} */ NGRX_JSON_API_CONFIG = new OpaqueToken('NGRX_JSON_API_CONFIG');
+export var /** @type {?} */ NGRX_JSON_API_CONFIG = new OpaqueToken('NGRX_JSON_API_CONFIG');
 /**
  * @param {?} http
  * @param {?} config
@@ -59,40 +59,44 @@ export function configure(config) {
         },
     ];
 }
-export class NgrxJsonApiModule {
+var NgrxJsonApiModule = (function () {
+    function NgrxJsonApiModule() {
+    }
     /**
      * @param {?} config
      * @return {?}
      */
-    static configure(config) {
+    NgrxJsonApiModule.configure = function (config) {
         return {
             ngModule: NgrxJsonApiModule,
             providers: configure(config),
         };
-    }
-}
-NgrxJsonApiModule.decorators = [
-    { type: NgModule, args: [{
-                declarations: [
-                    DenormaliseStoreResourcePipe,
-                    GetDenormalisedValuePipe,
-                    SelectStoreResourcePipe,
-                ],
-                imports: [
-                    EffectsModule.forFeature([NgrxJsonApiEffects]),
-                    StoreModule.forFeature('NgrxJsonApi', reducer, {}),
-                ],
-                exports: [
-                    DenormaliseStoreResourcePipe,
-                    GetDenormalisedValuePipe,
-                    SelectStoreResourcePipe,
-                ],
-            },] },
-];
-/**
- * @nocollapse
- */
-NgrxJsonApiModule.ctorParameters = () => [];
+    };
+    NgrxJsonApiModule.decorators = [
+        { type: NgModule, args: [{
+                    declarations: [
+                        DenormaliseStoreResourcePipe,
+                        GetDenormalisedValuePipe,
+                        SelectStoreResourcePipe,
+                    ],
+                    imports: [
+                        EffectsModule.forFeature([NgrxJsonApiEffects]),
+                        StoreModule.forFeature('NgrxJsonApi', reducer, {}),
+                    ],
+                    exports: [
+                        DenormaliseStoreResourcePipe,
+                        GetDenormalisedValuePipe,
+                        SelectStoreResourcePipe,
+                    ],
+                },] },
+    ];
+    /**
+     * @nocollapse
+     */
+    NgrxJsonApiModule.ctorParameters = function () { return []; };
+    return NgrxJsonApiModule;
+}());
+export { NgrxJsonApiModule };
 function NgrxJsonApiModule_tsickle_Closure_declarations() {
     /** @type {?} */
     NgrxJsonApiModule.decorators;

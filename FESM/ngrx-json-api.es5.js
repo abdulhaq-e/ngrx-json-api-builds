@@ -338,6 +338,15 @@ var ModifyStoreResourceErrorsAction = (function () {
     }
     return ModifyStoreResourceErrorsAction;
 }());
+var __assign$1 = (undefined && undefined.__assign) || Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s)
+            if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+    }
+    return t;
+};
 var denormaliseObject = function (resource, storeData, bag) {
     // this function MUST MUTATE resource
     var /** @type {?} */ denormalised = resource;
@@ -358,7 +367,9 @@ var denormaliseObject = function (resource, storeData, bag) {
             else if (isArray(data)) {
                 // hasMany relation
                 var /** @type {?} */ relatedRSs = getMultipleStoreResource(/** @type {?} */ (data), storeData);
-                relationDenorm = relatedRSs.map(function (r) { return denormaliseStoreResource(r, storeData, bag); });
+                relationDenorm = relatedRSs.map(function (r) {
+                    return denormaliseStoreResource(r, storeData, bag);
+                });
             }
             var /** @type {?} */ relationDenormPath = 'relationships.' + relation + '.reference';
             denormalised = (set(denormalised, relationDenormPath, relationDenorm));
@@ -367,7 +378,9 @@ var denormaliseObject = function (resource, storeData, bag) {
     return denormalised;
 };
 var denormaliseStoreResources = function (items, storeData, bag) {
-    if (bag === void 0) { bag = {}; }
+    if (bag === void 0) {
+        bag = {};
+    }
     var /** @type {?} */ results = [];
     for (var _i = 0, items_1 = items; _i < items_1.length; _i++) {
         var item = items_1[_i];
@@ -376,7 +389,9 @@ var denormaliseStoreResources = function (items, storeData, bag) {
     return results;
 };
 var denormaliseStoreResource = function (item, storeData, bag) {
-    if (bag === void 0) { bag = {}; }
+    if (bag === void 0) {
+        bag = {};
+    }
     if (!item) {
         return null;
     }
@@ -463,12 +478,12 @@ var updateResourceObject = function (original, source) {
  *
  */
 var insertStoreResource = function (storeResources, resource, fromServer) {
-    var newStoreResources = Object.assign({}, storeResources);
+    var newStoreResources = __assign$1({}, storeResources);
     if (fromServer) {
-        newStoreResources[resource.id] = Object.assign({}, resource, { persistedResource: resource, state: 'IN_SYNC', errors: [], loading: false });
+        newStoreResources[resource.id] = __assign$1({}, resource, { persistedResource: resource, state: 'IN_SYNC', errors: [], loading: false });
     }
     else {
-        newStoreResources[resource.id] = Object.assign({}, resource, { persistedResource: null, state: 'CREATED', errors: [], loading: false });
+        newStoreResources[resource.id] = __assign$1({}, resource, { persistedResource: null, state: 'CREATED', errors: [], loading: false });
     }
     return isEqual(storeResources, newStoreResources)
         ? storeResources
@@ -480,8 +495,8 @@ var insertStoreResource = function (storeResources, resource, fromServer) {
  */
 var removeStoreResource = function (storeData, resourceId) {
     if (storeData[resourceId.type][resourceId.id]) {
-        var newState = Object.assign({}, storeData);
-        newState[resourceId.type] = Object.assign({}, newState[resourceId.type]);
+        var newState = __assign$1({}, storeData);
+        newState[resourceId.type] = __assign$1({}, newState[resourceId.type]);
         delete newState[resourceId.type][resourceId.id];
         return newState;
     }
@@ -499,9 +514,9 @@ var updateResourceState = function (storeData, resourceId, resourceState, loadin
     if (isUndefined(storeData[resourceId.type]) ||
         isUndefined(storeData[resourceId.type][resourceId.id])) {
         if (resourceState === 'DELETED') {
-            var newState_1 = Object.assign({}, storeData);
-            newState_1[resourceId.type] = Object.assign({}, newState_1[resourceId.type]);
-            newState_1[resourceId.type][resourceId.id] = Object.assign({}, newState_1[resourceId.type][resourceId.id]);
+            var newState_1 = __assign$1({}, storeData);
+            newState_1[resourceId.type] = __assign$1({}, newState_1[resourceId.type]);
+            newState_1[resourceId.type][resourceId.id] = __assign$1({}, newState_1[resourceId.type][resourceId.id]);
             newState_1[resourceId.type][resourceId.id] = {
                 type: resourceId.type,
                 id: resourceId.id,
@@ -514,9 +529,9 @@ var updateResourceState = function (storeData, resourceId, resourceState, loadin
             return storeData;
         }
     }
-    var newState = Object.assign({}, storeData);
-    newState[resourceId.type] = Object.assign({}, newState[resourceId.type]);
-    newState[resourceId.type][resourceId.id] = Object.assign({}, newState[resourceId.type][resourceId.id]);
+    var newState = __assign$1({}, storeData);
+    newState[resourceId.type] = __assign$1({}, newState[resourceId.type]);
+    newState[resourceId.type][resourceId.id] = __assign$1({}, newState[resourceId.type][resourceId.id]);
     if (resourceState !== null) {
         newState[resourceId.type][resourceId.id].state = resourceState;
     }
@@ -579,8 +594,8 @@ var updateStoreResource = function (state, resource, fromServer) {
             }
         }
     }
-    var /** @type {?} */ newState = Object.assign({}, state);
-    newState[resource.id] = (Object.assign({}, newResource, { persistedResource: persistedResource, state: newResourceState, errors: [], loading: false }));
+    var /** @type {?} */ newState = __assign$1({}, state);
+    newState[resource.id] = (__assign$1({}, newResource, { persistedResource: persistedResource, state: newResourceState, errors: [], loading: false }));
     return isEqual(newState[resource.id], state[resource.id])
         ? state
         : newState;
@@ -611,9 +626,9 @@ var updateResourceErrors = function (storeData, id, errors, modificationType) {
     if (!storeData[id.type] || !storeData[id.type][id.id]) {
         return storeData;
     }
-    var /** @type {?} */ newState = Object.assign({}, storeData);
-    newState[id.type] = Object.assign({}, newState[id.type]);
-    var /** @type {?} */ storeResource = Object.assign({}, newState[id.type][id.id]);
+    var /** @type {?} */ newState = __assign$1({}, storeData);
+    newState[id.type] = __assign$1({}, newState[id.type]);
+    var /** @type {?} */ storeResource = __assign$1({}, newState[id.type][id.id]);
     if (modificationType === 'SET') {
         storeResource.errors = [];
         if (errors) {
@@ -662,14 +677,14 @@ function rollbackResource(newState, type, id) {
         delete newState[type][id];
     }
     else if (storeResource.state !== 'IN_SYNC') {
-        newState[type][id] = (Object.assign({}, newState[type][id], { state: 'IN_SYNC', resource: newState[type][id].persistedResource }));
+        newState[type][id] = (__assign$1({}, newState[type][id], { state: 'IN_SYNC', resource: newState[type][id].persistedResource }));
     }
 }
 var rollbackStoreResources = function (storeData, ids, include) {
-    var /** @type {?} */ newState = Object.assign({}, storeData);
+    var /** @type {?} */ newState = __assign$1({}, storeData);
     if (isUndefined(ids)) {
         Object.keys(newState).forEach(function (type) {
-            newState[type] = Object.assign({}, newState[type]);
+            newState[type] = __assign$1({}, newState[type]);
             Object.keys(newState[type]).forEach(function (id) {
                 rollbackResource(newState, type, id);
             });
@@ -685,7 +700,7 @@ var rollbackStoreResources = function (storeData, ids, include) {
     return newState;
 };
 var deleteStoreResources = function (storeData, query) {
-    var /** @type {?} */ newState = Object.assign({}, storeData);
+    var /** @type {?} */ newState = __assign$1({}, storeData);
     // if an id is not provided, all resources of the provided type will be deleted
     if (typeof query.id === 'undefined') {
         newState[query.type] = {};
@@ -698,12 +713,12 @@ var deleteStoreResources = function (storeData, query) {
     return newState;
 };
 var clearQueryResult = function (storeData, queryId) {
-    var /** @type {?} */ newQuery = Object.assign({}, storeData[queryId]);
+    var /** @type {?} */ newQuery = __assign$1({}, storeData[queryId]);
     delete newQuery.resultIds;
     delete newQuery.errors;
     delete newQuery.meta;
     delete newQuery.links;
-    var /** @type {?} */ newState = Object.assign({}, storeData);
+    var /** @type {?} */ newState = __assign$1({}, storeData);
     newState[queryId] = newQuery;
     return newState;
 };
@@ -720,7 +735,7 @@ var clearQueryResult = function (storeData, queryId) {
  */
 var updateStoreDataFromResource = function (storeData, resource, fromServer, override) {
     if (isUndefined(storeData[resource.type])) {
-        var newStoreData = Object.assign({}, storeData);
+        var newStoreData = __assign$1({}, storeData);
         newStoreData[resource.type] = {};
         newStoreData[resource.type] = insertStoreResource(newStoreData[resource.type], resource, fromServer);
         return newStoreData;
@@ -729,7 +744,7 @@ var updateStoreDataFromResource = function (storeData, resource, fromServer, ove
         var updatedStoreResources = insertStoreResource(storeData[resource.type], resource, fromServer);
         // check if nothing has changed
         if (updatedStoreResources !== storeData[resource.type]) {
-            var newStoreData = Object.assign({}, storeData);
+            var newStoreData = __assign$1({}, storeData);
             newStoreData[resource.type] = updatedStoreResources;
             return newStoreData;
         }
@@ -739,7 +754,7 @@ var updateStoreDataFromResource = function (storeData, resource, fromServer, ove
         var updatedStoreResources = updateStoreResource(storeData[resource.type], resource, fromServer);
         // check if nothing has changed
         if (updatedStoreResources !== storeData[resource.type]) {
-            var newStoreData = Object.assign({}, storeData);
+            var newStoreData = __assign$1({}, storeData);
             newStoreData[resource.type] = updatedStoreResources;
             return newStoreData;
         }
@@ -784,13 +799,13 @@ var updateQueryParams = function (storeQueries, query) {
     if (!query.queryId) {
         return storeQueries;
     }
-    var newStoreQuery = Object.assign({}, storeQueries[query.queryId]);
+    var newStoreQuery = __assign$1({}, storeQueries[query.queryId]);
     newStoreQuery.loading = true;
     newStoreQuery.query = cloneDeep(query);
     if (isUndefined(newStoreQuery.errors)) {
         newStoreQuery.errors = [];
     }
-    var newStoreQueries = Object.assign({}, storeQueries);
+    var newStoreQueries = __assign$1({}, storeQueries);
     newStoreQueries[newStoreQuery.query.queryId] = newStoreQuery;
     return newStoreQueries;
 };
@@ -801,8 +816,8 @@ var updateQueryResults = function (storeQueries, queryId, document) {
     var storeQuery = storeQueries[queryId];
     if (storeQuery) {
         var data = isArray(document.data) ? document.data : [document.data];
-        var newQueryStore = Object.assign({}, storeQuery, { resultIds: data.map(function (it) { return (it ? toResourceIdentifier(it) : []); }), meta: document.meta, links: document.links, loading: false });
-        var newState = Object.assign({}, storeQueries);
+        var newQueryStore = __assign$1({}, storeQuery, { resultIds: data.map(function (it) { return (it ? toResourceIdentifier(it) : []); }), meta: document.meta, links: document.links, loading: false });
+        var newState = __assign$1({}, storeQueries);
         newState[queryId] = newQueryStore;
         return newState;
     }
@@ -818,8 +833,8 @@ var updateQueryErrors = function (storeQueries, queryId, document) {
     if (!queryId || !storeQueries[queryId]) {
         return storeQueries;
     }
-    var newState = Object.assign({}, storeQueries);
-    var newStoreQuery = Object.assign({}, newState[queryId]);
+    var newState = __assign$1({}, storeQueries);
+    var newStoreQuery = __assign$1({}, newState[queryId]);
     newStoreQuery.errors = [];
     if (document.errors) {
         (_a = newStoreQuery.errors).push.apply(_a, document.errors);
@@ -832,7 +847,7 @@ var updateQueryErrors = function (storeQueries, queryId, document) {
  * Removes a query given its queryId from the NgrxJsonApiStoreQueries.
  */
 var removeQuery = function (storeQueries, queryId) {
-    var newState = Object.assign({}, storeQueries);
+    var newState = __assign$1({}, storeQueries);
     delete newState[queryId];
     return newState;
 };
@@ -1284,12 +1299,18 @@ function collectPendingChange(state, pending, id, include, includeNew) {
                 if (data) {
                     var /** @type {?} */ relationInclude_1 = [];
                     include
-                        .filter(function (relIncludeElem) { return relIncludeElem.length >= 2 &&
-                        relIncludeElem[0] == relationshipName_1; })
-                        .forEach(function (relIncludeElem) { return relationInclude_1.push(relIncludeElem.slice(1)); });
+                        .filter(function (relIncludeElem) {
+                        return relIncludeElem.length >= 2 &&
+                            relIncludeElem[0] == relationshipName_1;
+                    })
+                        .forEach(function (relIncludeElem) {
+                        return relationInclude_1.push(relIncludeElem.slice(1));
+                    });
                     if (isArray(data)) {
                         var /** @type {?} */ relationIds = (data);
-                        relationIds.forEach(function (relationId) { return collectPendingChange(state, pending, relationId, relationInclude_1, includeNew); });
+                        relationIds.forEach(function (relationId) {
+                            return collectPendingChange(state, pending, relationId, relationInclude_1, includeNew);
+                        });
                     }
                     else {
                         var /** @type {?} */ relationId = (data);
@@ -1343,6 +1364,15 @@ function getPendingChanges(state, ids, include, includeNew) {
     }
     return pending;
 }
+var __assign = (undefined && undefined.__assign) || Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s)
+            if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+    }
+    return t;
+};
 var NgrxJsonApiService = (function () {
     /**
      * @param {?} store
@@ -1437,7 +1467,7 @@ var NgrxJsonApiService = (function () {
             : options.denormalise;
         var /** @type {?} */ newQuery;
         if (!query.queryId) {
-            newQuery = Object.assign({}, query, { queryId: this.uuid() });
+            newQuery = __assign({}, query, { queryId: this.uuid() });
         }
         else {
             newQuery = query;
@@ -1450,7 +1480,9 @@ var NgrxJsonApiService = (function () {
         else {
             queryResult$ = this.selectOneResults(newQuery.queryId, denormalise);
         }
-        return (queryResult$.finally(function () { return _this.removeQuery(newQuery.queryId); }));
+        return (queryResult$.finally(function () {
+            return _this.removeQuery(newQuery.queryId);
+        }));
     };
     /**
      * @return {?}
@@ -1496,7 +1528,9 @@ var NgrxJsonApiService = (function () {
      * @return {?} observable holding the data as array of resources.
      */
     NgrxJsonApiService.prototype.selectManyResults = function (queryId, denormalize) {
-        if (denormalize === void 0) { denormalize = false; }
+        if (denormalize === void 0) {
+            denormalize = false;
+        }
         var /** @type {?} */ queryResult$ = this.store
             .let(this.selectors.getNgrxJsonApiStore$())
             .let(this.selectors.getManyResults$(queryId, denormalize));
@@ -1510,7 +1544,9 @@ var NgrxJsonApiService = (function () {
      * @return {?} observable holding the data as array of resources.
      */
     NgrxJsonApiService.prototype.selectOneResults = function (queryId, denormalize) {
-        if (denormalize === void 0) { denormalize = false; }
+        if (denormalize === void 0) {
+            denormalize = false;
+        }
         var /** @type {?} */ queryResult$ = this.store
             .let(this.selectors.getNgrxJsonApiStore$())
             .let(this.selectors.getOneResult$(queryId, denormalize));
@@ -1698,17 +1734,19 @@ var SelectStoreResourcePipe = (function () {
     SelectStoreResourcePipe.prototype.transform = function (id) {
         return this.service.selectStoreResource(id);
     };
+    SelectStoreResourcePipe.decorators = [
+        { type: Pipe, args: [{ name: 'jaSelectStoreResource' },] },
+    ];
+    /**
+     * @nocollapse
+     */
+    SelectStoreResourcePipe.ctorParameters = function () {
+        return [
+            { type: NgrxJsonApiService, },
+        ];
+    };
     return SelectStoreResourcePipe;
 }());
-SelectStoreResourcePipe.decorators = [
-    { type: Pipe, args: [{ name: 'jaSelectStoreResource' },] },
-];
-/**
- * @nocollapse
- */
-SelectStoreResourcePipe.ctorParameters = function () { return [
-    { type: NgrxJsonApiService, },
-]; };
 var DenormaliseStoreResourcePipe = (function () {
     /**
      * @param {?} service
@@ -1723,17 +1761,19 @@ var DenormaliseStoreResourcePipe = (function () {
     DenormaliseStoreResourcePipe.prototype.transform = function (obs) {
         return this.service.denormaliseResource(obs);
     };
+    DenormaliseStoreResourcePipe.decorators = [
+        { type: Pipe, args: [{ name: 'denormaliseStoreResource' },] },
+    ];
+    /**
+     * @nocollapse
+     */
+    DenormaliseStoreResourcePipe.ctorParameters = function () {
+        return [
+            { type: NgrxJsonApiService, },
+        ];
+    };
     return DenormaliseStoreResourcePipe;
 }());
-DenormaliseStoreResourcePipe.decorators = [
-    { type: Pipe, args: [{ name: 'denormaliseStoreResource' },] },
-];
-/**
- * @nocollapse
- */
-DenormaliseStoreResourcePipe.ctorParameters = function () { return [
-    { type: NgrxJsonApiService, },
-]; };
 var GetDenormalisedValuePipe = (function () {
     /**
      * @param {?} service
@@ -1749,17 +1789,28 @@ var GetDenormalisedValuePipe = (function () {
     GetDenormalisedValuePipe.prototype.transform = function (path, storeResource) {
         return this.service.getDenormalisedValue(path, storeResource);
     };
+    GetDenormalisedValuePipe.decorators = [
+        { type: Pipe, args: [{ name: 'getDenormalisedValue' },] },
+    ];
+    /**
+     * @nocollapse
+     */
+    GetDenormalisedValuePipe.ctorParameters = function () {
+        return [
+            { type: NgrxJsonApiService, },
+        ];
+    };
     return GetDenormalisedValuePipe;
 }());
-GetDenormalisedValuePipe.decorators = [
-    { type: Pipe, args: [{ name: 'getDenormalisedValue' },] },
-];
-/**
- * @nocollapse
- */
-GetDenormalisedValuePipe.ctorParameters = function () { return [
-    { type: NgrxJsonApiService, },
-]; };
+var __assign$2 = (undefined && undefined.__assign) || Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s)
+            if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+    }
+    return t;
+};
 var __rest = (undefined && undefined.__rest) || function (s, e) {
     var t = {};
     for (var p in s)
@@ -1978,7 +2029,7 @@ var NgrxJsonApi = (function () {
      */
     NgrxJsonApi.prototype.request = function (requestOptions) {
         var /** @type {?} */ request;
-        var /** @type {?} */ newRequestOptions = Object.assign({}, requestOptions, { headers: this.headers, observe: 'response' });
+        var /** @type {?} */ newRequestOptions = __assign$2({}, requestOptions, { headers: this.headers, observe: 'response' });
         if (requestOptions.method === 'GET') {
             var method = newRequestOptions.method, url = newRequestOptions.url, init = __rest(newRequestOptions, ["method", "url"]);
             return this.http.get(url, init);
@@ -1998,6 +2049,15 @@ var NgrxJsonApi = (function () {
     };
     return NgrxJsonApi;
 }());
+var __assign$3 = (undefined && undefined.__assign) || Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s)
+            if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+    }
+    return t;
+};
 /**
  * @param {?} state$
  * @return {?}
@@ -2058,7 +2118,9 @@ var NgrxJsonApiSelectors = (function () {
             else {
                 selected$ = state$
                     .let(_this.getStoreResourceOfType$(query.type))
-                    .combineLatest(state$.let(_this.getStoreData$()), function (resources, storeData) { return filterResources(resources, storeData, query, _this.config.resourceDefinitions, _this.config.filteringConfig); });
+                    .combineLatest(state$.let(_this.getStoreData$()), function (resources, storeData) {
+                    return filterResources(resources, storeData, query, _this.config.resourceDefinitions, _this.config.filteringConfig);
+                });
             }
             return selected$.distinctUntilChanged();
         };
@@ -2092,7 +2154,7 @@ var NgrxJsonApiSelectors = (function () {
         return function (state$) {
             return state$
                 .let(_this.getStoreResourceOfType$(identifier.type))
-                .map(function (resources) { return ((resources ? resources[identifier.id] : undefined)); });
+                .map(function (resources) { /** @type {?} */ return ((resources ? resources[identifier.id] : undefined)); });
         };
     };
     /**
@@ -2108,7 +2170,7 @@ var NgrxJsonApiSelectors = (function () {
                     return undefined;
                 }
                 if (isEmpty(storeQuery.resultIds)) {
-                    var /** @type {?} */ queryResult = Object.assign({}, storeQuery, { data: isUndefined(storeQuery.resultIds) ? undefined : [] });
+                    var /** @type {?} */ queryResult = __assign$3({}, storeQuery, { data: isUndefined(storeQuery.resultIds) ? undefined : [] });
                     return queryResult;
                 }
                 else {
@@ -2116,7 +2178,7 @@ var NgrxJsonApiSelectors = (function () {
                     if (denormalize) {
                         results = denormaliseStoreResources(results, state.data);
                     }
-                    return Object.assign({}, storeQuery, { data: /** @type {?} */ (results) });
+                    return __assign$3({}, storeQuery, { data: /** @type {?} */ (results) });
                 }
             });
         };
@@ -2134,7 +2196,7 @@ var NgrxJsonApiSelectors = (function () {
                     return undefined;
                 }
                 if (isEmpty(storeQuery.resultIds)) {
-                    var /** @type {?} */ queryResult = Object.assign({}, storeQuery, { data: isUndefined(storeQuery.resultIds) ? undefined : null });
+                    var /** @type {?} */ queryResult = __assign$3({}, storeQuery, { data: isUndefined(storeQuery.resultIds) ? undefined : null });
                     return queryResult;
                 }
                 else {
@@ -2148,7 +2210,7 @@ var NgrxJsonApiSelectors = (function () {
                     if (denormalize) {
                         result = denormaliseStoreResource(result, state.data);
                     }
-                    return Object.assign({}, storeQuery, { data: result });
+                    return __assign$3({}, storeQuery, { data: result });
                 }
             });
         };
@@ -2186,11 +2248,15 @@ var NgrxJsonApiEffects = (function () {
             .mergeMap(function (payload) {
             return _this.jsonApi
                 .create(payload.query, payload.jsonApiData)
-                .map(function (response) { return new ApiPostSuccessAction({
-                jsonApiData: response.body,
-                query: payload.query,
-            }); })
-                .catch(function (error) { return Observable.of(new ApiPostFailAction(_this.toErrorPayload(payload.query, error))); });
+                .map(function (response) {
+                return new ApiPostSuccessAction({
+                    jsonApiData: response.body,
+                    query: payload.query,
+                });
+            })
+                .catch(function (error) {
+                return Observable.of(new ApiPostFailAction(_this.toErrorPayload(payload.query, error)));
+            });
         });
         this.updateResource$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_PATCH_INIT)
@@ -2198,11 +2264,15 @@ var NgrxJsonApiEffects = (function () {
             .mergeMap(function (payload) {
             return _this.jsonApi
                 .update(payload.query, payload.jsonApiData)
-                .map(function (response) { return new ApiPatchSuccessAction({
-                jsonApiData: response.body,
-                query: payload.query,
-            }); })
-                .catch(function (error) { return Observable.of(new ApiPatchFailAction(_this.toErrorPayload(payload.query, error))); });
+                .map(function (response) {
+                return new ApiPatchSuccessAction({
+                    jsonApiData: response.body,
+                    query: payload.query,
+                });
+            })
+                .catch(function (error) {
+                return Observable.of(new ApiPatchFailAction(_this.toErrorPayload(payload.query, error)));
+            });
         });
         this.readResource$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_GET_INIT)
@@ -2211,11 +2281,15 @@ var NgrxJsonApiEffects = (function () {
             return _this.jsonApi
                 .find(query)
                 .map(function (response) { return response.body; })
-                .map(function (data) { return new ApiGetSuccessAction({
-                jsonApiData: data,
-                query: query,
-            }); })
-                .catch(function (error) { return Observable.of(new ApiGetFailAction(_this.toErrorPayload(query, error))); });
+                .map(function (data) {
+                return new ApiGetSuccessAction({
+                    jsonApiData: data,
+                    query: query,
+                });
+            })
+                .catch(function (error) {
+                return Observable.of(new ApiGetFailAction(_this.toErrorPayload(query, error)));
+            });
         });
         this.queryStore$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.LOCAL_QUERY_INIT)
@@ -2224,11 +2298,15 @@ var NgrxJsonApiEffects = (function () {
             return _this.store
                 .let(_this.selectors.getNgrxJsonApiStore$())
                 .let(_this.selectors.queryStore$(query))
-                .map(function (results) { return new LocalQuerySuccessAction({
-                jsonApiData: { data: results },
-                query: query,
-            }); })
-                .catch(function (error) { return Observable.of(new LocalQueryFailAction(_this.toErrorPayload(query, error))); })
+                .map(function (results) {
+                return new LocalQuerySuccessAction({
+                    jsonApiData: { data: results },
+                    query: query,
+                });
+            })
+                .catch(function (error) {
+                return Observable.of(new LocalQueryFailAction(_this.toErrorPayload(query, error)));
+            })
                 .takeUntil(_this.localQueryInitEventFor(query))
                 .takeUntil(_this.removeQueryEventFor(query));
         });
@@ -2240,11 +2318,15 @@ var NgrxJsonApiEffects = (function () {
             return _this.jsonApi
                 .delete(payload.query)
                 .map(function (response) { return response.body; })
-                .map(function (data) { return new ApiDeleteSuccessAction({
-                jsonApiData: data,
-                query: payload.query,
-            }); })
-                .catch(function (error) { return Observable.of(new ApiDeleteFailAction(_this.toErrorPayload(payload.query, error))); });
+                .map(function (data) {
+                return new ApiDeleteSuccessAction({
+                    jsonApiData: data,
+                    query: payload.query,
+                });
+            })
+                .catch(function (error) {
+                return Observable.of(new ApiDeleteFailAction(_this.toErrorPayload(payload.query, error)));
+            });
         });
         this.triggerReadOnQueryRefresh$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_QUERY_REFRESH)
@@ -2298,37 +2380,49 @@ var NgrxJsonApiEffects = (function () {
             }
             pending = sortPendingChanges(pending);
             var /** @type {?} */ actions = [];
-            var _loop_4 = function (pendingChange) {
+            var _loop_1 = function (pendingChange) {
                 if (pendingChange.state === 'CREATED') {
                     var /** @type {?} */ payload_1 = _this.generatePayload(pendingChange, 'POST');
                     actions.push(_this.jsonApi
                         .create(payload_1.query, payload_1.jsonApiData)
-                        .map(function (response) { return new ApiPostSuccessAction({
-                        jsonApiData: response.body,
-                        query: payload_1.query,
-                    }); })
-                        .catch(function (error) { return Observable.of(new ApiPostFailAction(_this.toErrorPayload(payload_1.query, error))); }));
+                        .map(function (response) {
+                        return new ApiPostSuccessAction({
+                            jsonApiData: response.body,
+                            query: payload_1.query,
+                        });
+                    })
+                        .catch(function (error) {
+                        return Observable.of(new ApiPostFailAction(_this.toErrorPayload(payload_1.query, error)));
+                    }));
                 }
                 else if (pendingChange.state === 'UPDATED') {
                     // prepare payload, omit links and meta information
                     var /** @type {?} */ payload_2 = _this.generatePayload(pendingChange, 'PATCH');
                     actions.push(_this.jsonApi
                         .update(payload_2.query, payload_2.jsonApiData)
-                        .map(function (response) { return new ApiPatchSuccessAction({
-                        jsonApiData: response.body,
-                        query: payload_2.query,
-                    }); })
-                        .catch(function (error) { return Observable.of(new ApiPatchFailAction(_this.toErrorPayload(payload_2.query, error))); }));
+                        .map(function (response) {
+                        return new ApiPatchSuccessAction({
+                            jsonApiData: response.body,
+                            query: payload_2.query,
+                        });
+                    })
+                        .catch(function (error) {
+                        return Observable.of(new ApiPatchFailAction(_this.toErrorPayload(payload_2.query, error)));
+                    }));
                 }
                 else if (pendingChange.state === 'DELETED') {
                     var /** @type {?} */ payload_3 = _this.generatePayload(pendingChange, 'DELETE');
                     actions.push(_this.jsonApi
                         .delete(payload_3.query)
-                        .map(function (response) { return new ApiDeleteSuccessAction({
-                        jsonApiData: response.body,
-                        query: payload_3.query,
-                    }); })
-                        .catch(function (error) { return Observable.of(new ApiDeleteFailAction(_this.toErrorPayload(payload_3.query, error))); }));
+                        .map(function (response) {
+                        return new ApiDeleteSuccessAction({
+                            jsonApiData: response.body,
+                            query: payload_3.query,
+                        });
+                    })
+                        .catch(function (error) {
+                        return Observable.of(new ApiDeleteFailAction(_this.toErrorPayload(payload_3.query, error)));
+                    }));
                 }
                 else {
                     throw new Error('unknown state ' + pendingChange.state);
@@ -2336,7 +2430,7 @@ var NgrxJsonApiEffects = (function () {
             };
             for (var _i = 0, pending_1 = pending; _i < pending_1.length; _i++) {
                 var pendingChange = pending_1[_i];
-                _loop_4(/** @type {?} */ pendingChange);
+                _loop_1(/** @type {?} */ pendingChange);
             }
             return Observable.of.apply(Observable, actions).concatAll()
                 .toArray()
@@ -2350,7 +2444,7 @@ var NgrxJsonApiEffects = (function () {
     NgrxJsonApiEffects.prototype.localQueryInitEventFor = function (query) {
         return this.actions$
             .ofType(NgrxJsonApiActionTypes.LOCAL_QUERY_INIT)
-            .map(function (action) { return (action); })
+            .map(function (action) { /** @type {?} */ return (action); })
             .filter(function (action) { return query.queryId == action.payload.queryId; });
     };
     /**
@@ -2360,7 +2454,7 @@ var NgrxJsonApiEffects = (function () {
     NgrxJsonApiEffects.prototype.removeQueryEventFor = function (query) {
         return this.actions$
             .ofType(NgrxJsonApiActionTypes.REMOVE_QUERY)
-            .map(function (action) { return (action); })
+            .map(function (action) { /** @type {?} */ return (action); })
             .filter(function (action) { return query.queryId == action.payload; });
     };
     /**
@@ -2431,29 +2525,40 @@ var NgrxJsonApiEffects = (function () {
     NgrxJsonApiEffects.prototype.generatePayload = function (resource, operation) {
         return generatePayload(resource, operation);
     };
+    NgrxJsonApiEffects.decorators = [
+        { type: Injectable },
+    ];
+    /**
+     * @nocollapse
+     */
+    NgrxJsonApiEffects.ctorParameters = function () {
+        return [
+            { type: Actions, },
+            { type: NgrxJsonApi, },
+            { type: Store, },
+            { type: NgrxJsonApiSelectors, },
+        ];
+    };
+    NgrxJsonApiEffects.propDecorators = {
+        'createResource$': [{ type: Effect },],
+        'updateResource$': [{ type: Effect },],
+        'readResource$': [{ type: Effect },],
+        'queryStore$': [{ type: Effect },],
+        'deleteResource$': [{ type: Effect },],
+        'triggerReadOnQueryRefresh$': [{ type: Effect },],
+        'refreshQueriesOnDelete$': [{ type: Effect },],
+        'applyResources$': [{ type: Effect },],
+    };
     return NgrxJsonApiEffects;
 }());
-NgrxJsonApiEffects.decorators = [
-    { type: Injectable },
-];
-/**
- * @nocollapse
- */
-NgrxJsonApiEffects.ctorParameters = function () { return [
-    { type: Actions, },
-    { type: NgrxJsonApi, },
-    { type: Store, },
-    { type: NgrxJsonApiSelectors, },
-]; };
-NgrxJsonApiEffects.propDecorators = {
-    'createResource$': [{ type: Effect },],
-    'updateResource$': [{ type: Effect },],
-    'readResource$': [{ type: Effect },],
-    'queryStore$': [{ type: Effect },],
-    'deleteResource$': [{ type: Effect },],
-    'triggerReadOnQueryRefresh$': [{ type: Effect },],
-    'refreshQueriesOnDelete$': [{ type: Effect },],
-    'applyResources$': [{ type: Effect },],
+var __assign$4 = (undefined && undefined.__assign) || Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s)
+            if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+    }
+    return t;
 };
 var initialNgrxJsonApiState = {
     isCreating: 0,
@@ -2470,42 +2575,44 @@ var initialNgrxJsonApiState = {
  * @return {?}
  */
 function NgrxJsonApiStoreReducer(state, action) {
-    if (state === void 0) { state = initialNgrxJsonApiState; }
+    if (state === void 0) {
+        state = initialNgrxJsonApiState;
+    }
     var /** @type {?} */ newState;
     switch (action.type) {
         case NgrxJsonApiActionTypes.API_POST_INIT: {
             var /** @type {?} */ updatedData = updateStoreDataFromResource(state.data, action.payload, false, true);
-            newState = Object.assign({}, state, { data: updatedData, isCreating: state.isCreating + 1 });
+            newState = __assign$4({}, state, { data: updatedData, isCreating: state.isCreating + 1 });
             return newState;
         }
         case NgrxJsonApiActionTypes.API_GET_INIT: {
             var /** @type {?} */ query = (action.payload);
-            newState = Object.assign({}, state, { queries: updateQueryParams(state.queries, query), isReading: state.isReading + 1 });
+            newState = __assign$4({}, state, { queries: updateQueryParams(state.queries, query), isReading: state.isReading + 1 });
             return newState;
         }
         case NgrxJsonApiActionTypes.API_PATCH_INIT: {
             var /** @type {?} */ updatedData = updateStoreDataFromResource(state.data, action.payload, false, false);
-            newState = Object.assign({}, state, { data: updatedData, isUpdating: state.isUpdating + 1 });
+            newState = __assign$4({}, state, { data: updatedData, isUpdating: state.isUpdating + 1 });
             return newState;
         }
         case NgrxJsonApiActionTypes.API_DELETE_INIT: {
-            newState = Object.assign({}, state, { data: updateResourceState(state.data, action.payload, 'DELETED'), isDeleting: state.isDeleting + 1 });
+            newState = __assign$4({}, state, { data: updateResourceState(state.data, action.payload, 'DELETED'), isDeleting: state.isDeleting + 1 });
             return newState;
         }
         case NgrxJsonApiActionTypes.API_POST_SUCCESS: {
-            newState = Object.assign({}, state, { data: updateStoreDataFromPayload(state.data, action.payload.jsonApiData), isCreating: state.isCreating - 1 });
+            newState = __assign$4({}, state, { data: updateStoreDataFromPayload(state.data, action.payload.jsonApiData), isCreating: state.isCreating - 1 });
             return newState;
         }
         case NgrxJsonApiActionTypes.API_GET_SUCCESS: {
-            newState = Object.assign({}, state, { data: updateStoreDataFromPayload(state.data, action.payload.jsonApiData), queries: updateQueryResults(state.queries, action.payload.query.queryId, action.payload.jsonApiData), isReading: state.isReading - 1 });
+            newState = __assign$4({}, state, { data: updateStoreDataFromPayload(state.data, action.payload.jsonApiData), queries: updateQueryResults(state.queries, action.payload.query.queryId, action.payload.jsonApiData), isReading: state.isReading - 1 });
             return newState;
         }
         case NgrxJsonApiActionTypes.API_PATCH_SUCCESS: {
-            newState = Object.assign({}, state, { data: updateStoreDataFromPayload(state.data, action.payload.jsonApiData), isUpdating: state.isUpdating - 1 });
+            newState = __assign$4({}, state, { data: updateStoreDataFromPayload(state.data, action.payload.jsonApiData), isUpdating: state.isUpdating - 1 });
             return newState;
         }
         case NgrxJsonApiActionTypes.API_DELETE_SUCCESS: {
-            newState = Object.assign({}, state, { data: deleteStoreResources(state.data, action.payload.query), queries: updateQueriesForDeletedResource(state.queries, {
+            newState = __assign$4({}, state, { data: deleteStoreResources(state.data, action.payload.query), queries: updateQueriesForDeletedResource(state.queries, {
                     id: action.payload.query.id,
                     type: action.payload.query.type,
                 }), isDeleting: state.isDeleting - 1 });
@@ -2513,48 +2620,48 @@ function NgrxJsonApiStoreReducer(state, action) {
         }
         case NgrxJsonApiActionTypes.API_QUERY_REFRESH: {
             // clear result ids and wait until new data is fetched (triggered by effect)
-            newState = Object.assign({}, state, { queries: clearQueryResult(state.queries, action.payload) });
+            newState = __assign$4({}, state, { queries: clearQueryResult(state.queries, action.payload) });
             return newState;
         }
         case NgrxJsonApiActionTypes.API_POST_FAIL: {
-            newState = Object.assign({}, state, { data: updateResourceErrorsForQuery(state.data, action.payload.query, action.payload.jsonApiData), isCreating: state.isCreating - 1 });
+            newState = __assign$4({}, state, { data: updateResourceErrorsForQuery(state.data, action.payload.query, action.payload.jsonApiData), isCreating: state.isCreating - 1 });
             return newState;
         }
         case NgrxJsonApiActionTypes.API_GET_FAIL: {
-            newState = Object.assign({}, state, { queries: updateQueryErrors(state.queries, action.payload.query.queryId, action.payload.jsonApiData), isReading: state.isReading - 1 });
+            newState = __assign$4({}, state, { queries: updateQueryErrors(state.queries, action.payload.query.queryId, action.payload.jsonApiData), isReading: state.isReading - 1 });
             return newState;
         }
         case NgrxJsonApiActionTypes.API_PATCH_FAIL: {
-            newState = Object.assign({}, state, { data: updateResourceErrorsForQuery(state.data, action.payload.query, action.payload.jsonApiData), isUpdating: state.isUpdating - 1 });
+            newState = __assign$4({}, state, { data: updateResourceErrorsForQuery(state.data, action.payload.query, action.payload.jsonApiData), isUpdating: state.isUpdating - 1 });
             return newState;
         }
         case NgrxJsonApiActionTypes.API_DELETE_FAIL: {
-            newState = Object.assign({}, state, { data: updateResourceErrorsForQuery(state.data, action.payload.query, action.payload.jsonApiData), isDeleting: state.isDeleting - 1 });
+            newState = __assign$4({}, state, { data: updateResourceErrorsForQuery(state.data, action.payload.query, action.payload.jsonApiData), isDeleting: state.isDeleting - 1 });
             return newState;
         }
         case NgrxJsonApiActionTypes.REMOVE_QUERY: {
             var /** @type {?} */ queryId = (action.payload);
-            newState = Object.assign({}, state, { queries: removeQuery(state.queries, queryId) });
+            newState = __assign$4({}, state, { queries: removeQuery(state.queries, queryId) });
             return newState;
         }
         case NgrxJsonApiActionTypes.LOCAL_QUERY_INIT: {
             var /** @type {?} */ query = (action.payload);
-            newState = Object.assign({}, state, { queries: updateQueryParams(state.queries, query) });
+            newState = __assign$4({}, state, { queries: updateQueryParams(state.queries, query) });
             return newState;
         }
         case NgrxJsonApiActionTypes.MODIFY_STORE_RESOURCE_ERRORS: {
             var /** @type {?} */ payload = (action.payload);
-            newState = Object.assign({}, state, { data: updateResourceErrors(state.data, payload.resourceId, payload.errors, payload.modificationType) });
+            newState = __assign$4({}, state, { data: updateResourceErrors(state.data, payload.resourceId, payload.errors, payload.modificationType) });
             return newState;
         }
         case NgrxJsonApiActionTypes.LOCAL_QUERY_SUCCESS: {
-            newState = Object.assign({}, state, { queries: updateQueryResults(state.queries, action.payload.query.queryId, action.payload.jsonApiData) });
+            newState = __assign$4({}, state, { queries: updateQueryResults(state.queries, action.payload.query.queryId, action.payload.jsonApiData) });
             return newState;
         }
         case NgrxJsonApiActionTypes.PATCH_STORE_RESOURCE: {
             var /** @type {?} */ updatedData = updateStoreDataFromResource(state.data, action.payload, false, false);
             if (updatedData !== state.data) {
-                newState = Object.assign({}, state, { data: updatedData });
+                newState = __assign$4({}, state, { data: updatedData });
                 return newState;
             }
             else {
@@ -2564,7 +2671,7 @@ function NgrxJsonApiStoreReducer(state, action) {
         case NgrxJsonApiActionTypes.POST_STORE_RESOURCE: {
             var /** @type {?} */ updatedData = updateStoreDataFromResource(state.data, action.payload, false, true);
             if (updatedData !== state.data) {
-                newState = Object.assign({}, state, { data: updatedData });
+                newState = __assign$4({}, state, { data: updatedData });
                 return newState;
             }
             else {
@@ -2575,7 +2682,7 @@ function NgrxJsonApiStoreReducer(state, action) {
             var /** @type {?} */ updatedData = updateStoreDataFromResource(state.data, action.payload, false, true);
             updatedData = updateResourceState(updatedData, action.payload, 'NEW');
             if (updatedData !== state.data) {
-                newState = Object.assign({}, state, { data: updatedData });
+                newState = __assign$4({}, state, { data: updatedData });
                 return newState;
             }
             else {
@@ -2589,12 +2696,12 @@ function NgrxJsonApiStoreReducer(state, action) {
                 var /** @type {?} */ resource = state.data[resourceId.type][resourceId.id];
                 if (resource.state === 'NEW' || resource.state === 'CREATED') {
                     // not yet stored on server-side, just delete
-                    newState = Object.assign({}, state, { data: removeStoreResource(state.data, resourceId) });
+                    newState = __assign$4({}, state, { data: removeStoreResource(state.data, resourceId) });
                     return newState;
                 }
                 else {
                     // stored on server, mark for deletion
-                    newState = Object.assign({}, state, { data: updateResourceState(state.data, action.payload, 'DELETED') });
+                    newState = __assign$4({}, state, { data: updateResourceState(state.data, action.payload, 'DELETED') });
                     return newState;
                 }
             }
@@ -2602,10 +2709,10 @@ function NgrxJsonApiStoreReducer(state, action) {
         }
         case NgrxJsonApiActionTypes.API_APPLY_INIT: {
             var /** @type {?} */ payload = ((action)).payload;
-            var /** @type {?} */ pending_2 = getPendingChanges(state.data, payload.ids, payload.include);
-            newState = Object.assign({}, state, { isApplying: state.isApplying + 1 });
-            for (var _i = 0, pending_3 = pending_2; _i < pending_3.length; _i++) {
-                var pendingChange = pending_3[_i];
+            var /** @type {?} */ pending_1 = getPendingChanges(state.data, payload.ids, payload.include);
+            newState = __assign$4({}, state, { isApplying: state.isApplying + 1 });
+            for (var _i = 0, pending_2 = pending_1; _i < pending_2.length; _i++) {
+                var pendingChange = pending_2[_i];
                 if (pendingChange.state === 'CREATED') {
                     newState.isCreating++;
                 }
@@ -2626,16 +2733,16 @@ function NgrxJsonApiStoreReducer(state, action) {
             // apply all the committed or failed changes
             var /** @type {?} */ actions = (action.payload);
             newState = state;
-            for (var _a = 0, actions_2 = actions; _a < actions_2.length; _a++) {
-                var commitAction = actions_2[_a];
+            for (var _a = 0, actions_1 = actions; _a < actions_1.length; _a++) {
+                var commitAction = actions_1[_a];
                 newState = NgrxJsonApiStoreReducer(newState, commitAction);
             }
-            newState = Object.assign({}, newState, { isApplying: state['isApplying'] - 1 });
+            newState = __assign$4({}, newState, { isApplying: state['isApplying'] - 1 });
             return newState;
         }
         case NgrxJsonApiActionTypes.API_ROLLBACK: {
             var /** @type {?} */ payload = ((action)).payload;
-            newState = Object.assign({}, state, { data: rollbackStoreResources(state.data, payload.ids, payload.include) });
+            newState = __assign$4({}, state, { data: rollbackStoreResources(state.data, payload.ids, payload.include) });
             return newState;
         }
         case NgrxJsonApiActionTypes.CLEAR_STORE: {
@@ -2715,30 +2822,30 @@ var NgrxJsonApiModule = (function () {
             providers: configure(config),
         };
     };
+    NgrxJsonApiModule.decorators = [
+        { type: NgModule, args: [{
+                    declarations: [
+                        DenormaliseStoreResourcePipe,
+                        GetDenormalisedValuePipe,
+                        SelectStoreResourcePipe,
+                    ],
+                    imports: [
+                        EffectsModule.forFeature([NgrxJsonApiEffects]),
+                        StoreModule.forFeature('NgrxJsonApi', reducer, {}),
+                    ],
+                    exports: [
+                        DenormaliseStoreResourcePipe,
+                        GetDenormalisedValuePipe,
+                        SelectStoreResourcePipe,
+                    ],
+                },] },
+    ];
+    /**
+     * @nocollapse
+     */
+    NgrxJsonApiModule.ctorParameters = function () { return []; };
     return NgrxJsonApiModule;
 }());
-NgrxJsonApiModule.decorators = [
-    { type: NgModule, args: [{
-                declarations: [
-                    DenormaliseStoreResourcePipe,
-                    GetDenormalisedValuePipe,
-                    SelectStoreResourcePipe,
-                ],
-                imports: [
-                    EffectsModule.forFeature([NgrxJsonApiEffects]),
-                    StoreModule.forFeature('NgrxJsonApi', reducer, {}),
-                ],
-                exports: [
-                    DenormaliseStoreResourcePipe,
-                    GetDenormalisedValuePipe,
-                    SelectStoreResourcePipe,
-                ],
-            },] },
-];
-/**
- * @nocollapse
- */
-NgrxJsonApiModule.ctorParameters = function () { return []; };
 /**
  * Generated bundle index. Do not edit.
  */

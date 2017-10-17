@@ -1,3 +1,11 @@
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __rest = (this && this.__rest) || function (s, e) {
     var t = {};
     for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -13,12 +21,12 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 import { generateIncludedQueryParams, generateFieldsQueryParams, generateFilteringQueryParams, generateSortingQueryParams, generateQueryParams, } from './utils';
-export class NgrxJsonApi {
+var NgrxJsonApi = (function () {
     /**
      * @param {?} http
      * @param {?} config
      */
-    constructor(http, config) {
+    function NgrxJsonApi(http, config) {
         this.http = http;
         this.config = config;
         this.headers = new HttpHeaders({
@@ -32,7 +40,7 @@ export class NgrxJsonApi {
      * @param {?} operation
      * @return {?}
      */
-    urlBuilder(query, operation) {
+    NgrxJsonApi.prototype.urlBuilder = function (query, operation) {
         switch (operation) {
             case 'GET': {
                 if (query.type && query.id) {
@@ -56,59 +64,59 @@ export class NgrxJsonApi {
                 return this.collectionUrlFor(query.type);
             }
         }
-    }
+    };
     /**
      * @param {?} type
      * @return {?}
      */
-    collectionPathFor(type) {
+    NgrxJsonApi.prototype.collectionPathFor = function (type) {
         // assume that type == collectionPath if not configured otherwise
-        let /** @type {?} */ definition = _.find(this.definitions, { type: type });
+        var /** @type {?} */ definition = _.find(this.definitions, { type: type });
         if (definition) {
-            return `${definition.collectionPath}`;
+            return "" + definition.collectionPath;
         }
         else {
             return type;
         }
-    }
+    };
     /**
      * @param {?} type
      * @return {?}
      */
-    collectionUrlFor(type) {
-        let /** @type {?} */ collectionPath = this.collectionPathFor(type);
-        return `${this.config.apiUrl}/${collectionPath}`;
-    }
-    /**
-     * @param {?} type
-     * @param {?} id
-     * @return {?}
-     */
-    resourcePathFor(type, id) {
-        let /** @type {?} */ collectionPath = this.collectionPathFor(type);
-        return `${collectionPath}/${encodeURIComponent(id)}`;
-    }
+    NgrxJsonApi.prototype.collectionUrlFor = function (type) {
+        var /** @type {?} */ collectionPath = this.collectionPathFor(type);
+        return this.config.apiUrl + "/" + collectionPath;
+    };
     /**
      * @param {?} type
      * @param {?} id
      * @return {?}
      */
-    resourceUrlFor(type, id) {
-        let /** @type {?} */ resourcePath = this.resourcePathFor(type, id);
-        return `${this.config.apiUrl}/${resourcePath}`;
-    }
+    NgrxJsonApi.prototype.resourcePathFor = function (type, id) {
+        var /** @type {?} */ collectionPath = this.collectionPathFor(type);
+        return collectionPath + "/" + encodeURIComponent(id);
+    };
+    /**
+     * @param {?} type
+     * @param {?} id
+     * @return {?}
+     */
+    NgrxJsonApi.prototype.resourceUrlFor = function (type, id) {
+        var /** @type {?} */ resourcePath = this.resourcePathFor(type, id);
+        return this.config.apiUrl + "/" + resourcePath;
+    };
     /**
      * @param {?} query
      * @return {?}
      */
-    find(query) {
-        let /** @type {?} */ _generateIncludedQueryParams = generateIncludedQueryParams;
-        let /** @type {?} */ _generateFilteringQueryParams = generateFilteringQueryParams;
-        let /** @type {?} */ _generateFieldsQueryParams = generateFieldsQueryParams;
-        let /** @type {?} */ _generateSortingQueryParams = generateSortingQueryParams;
-        let /** @type {?} */ _generateQueryParams = generateQueryParams;
+    NgrxJsonApi.prototype.find = function (query) {
+        var /** @type {?} */ _generateIncludedQueryParams = generateIncludedQueryParams;
+        var /** @type {?} */ _generateFilteringQueryParams = generateFilteringQueryParams;
+        var /** @type {?} */ _generateFieldsQueryParams = generateFieldsQueryParams;
+        var /** @type {?} */ _generateSortingQueryParams = generateSortingQueryParams;
+        var /** @type {?} */ _generateQueryParams = generateQueryParams;
         if (this.config.hasOwnProperty('urlBuilder')) {
-            let /** @type {?} */ urlBuilder = this.config.urlBuilder;
+            var /** @type {?} */ urlBuilder = this.config.urlBuilder;
             if (urlBuilder.generateIncludedQueryParams) {
                 _generateIncludedQueryParams = urlBuilder.generateIncludedQueryParams;
             }
@@ -125,13 +133,13 @@ export class NgrxJsonApi {
                 _generateQueryParams = urlBuilder.generateQueryParams;
             }
         }
-        let /** @type {?} */ queryParams = '';
-        let /** @type {?} */ includedParam = '';
-        let /** @type {?} */ filteringParams = '';
-        let /** @type {?} */ sortingParams = '';
-        let /** @type {?} */ fieldsParams = '';
-        let /** @type {?} */ offsetParams = '';
-        let /** @type {?} */ limitParams = '';
+        var /** @type {?} */ queryParams = '';
+        var /** @type {?} */ includedParam = '';
+        var /** @type {?} */ filteringParams = '';
+        var /** @type {?} */ sortingParams = '';
+        var /** @type {?} */ fieldsParams = '';
+        var /** @type {?} */ offsetParams = '';
+        var /** @type {?} */ limitParams = '';
         if (typeof query === undefined) {
             return Observable.throw('Query not found');
         }
@@ -156,89 +164,91 @@ export class NgrxJsonApi {
             }
         }
         queryParams = _generateQueryParams(includedParam, filteringParams, sortingParams, fieldsParams, offsetParams, limitParams);
-        let /** @type {?} */ requestOptions = {
+        var /** @type {?} */ requestOptions = {
             method: 'GET',
             url: this.urlBuilder(query, 'GET') + queryParams,
         };
         return this.request(requestOptions);
-    }
+    };
     /**
      * @param {?} query
      * @param {?} document
      * @return {?}
      */
-    create(query, document) {
+    NgrxJsonApi.prototype.create = function (query, document) {
         if (typeof query === undefined) {
             return Observable.throw('Query not found');
         }
         if (typeof document === undefined) {
             return Observable.throw('Data not found');
         }
-        let /** @type {?} */ requestOptions = {
+        var /** @type {?} */ requestOptions = {
             method: 'POST',
             url: this.urlBuilder(query, 'POST'),
             body: JSON.stringify({ data: document.data }),
         };
         return this.request(requestOptions);
-    }
+    };
     /**
      * @param {?} query
      * @param {?} document
      * @return {?}
      */
-    update(query, document) {
+    NgrxJsonApi.prototype.update = function (query, document) {
         if (typeof query === undefined) {
             return Observable.throw('Query not found');
         }
         if (typeof document === undefined) {
             return Observable.throw('Data not found');
         }
-        let /** @type {?} */ requestOptions = {
+        var /** @type {?} */ requestOptions = {
             method: 'PATCH',
             url: this.urlBuilder(query, 'PATCH'),
             body: JSON.stringify({ data: document.data }),
         };
         return this.request(requestOptions);
-    }
+    };
     /**
      * @param {?} query
      * @return {?}
      */
-    delete(query) {
+    NgrxJsonApi.prototype.delete = function (query) {
         if (typeof query === undefined) {
             return Observable.throw('Query not found');
         }
-        let /** @type {?} */ requestOptions = {
+        var /** @type {?} */ requestOptions = {
             method: 'DELETE',
             url: this.urlBuilder(query, 'DELETE'),
         };
         return this.request(requestOptions);
-    }
+    };
     /**
      * @param {?} requestOptions
      * @return {?}
      */
-    request(requestOptions) {
-        let /** @type {?} */ request;
-        let /** @type {?} */ newRequestOptions = Object.assign({}, requestOptions, { headers: this.headers, observe: 'response' });
+    NgrxJsonApi.prototype.request = function (requestOptions) {
+        var /** @type {?} */ request;
+        var /** @type {?} */ newRequestOptions = __assign({}, requestOptions, { headers: this.headers, observe: 'response' });
         if (requestOptions.method === 'GET') {
-            let { method, url } = newRequestOptions, init = __rest(newRequestOptions, ["method", "url"]);
+            var method = newRequestOptions.method, url = newRequestOptions.url, init = __rest(newRequestOptions, ["method", "url"]);
             return this.http.get(url, init);
         }
         else if (requestOptions.method === 'POST') {
-            let { method, url, body } = newRequestOptions, init = __rest(newRequestOptions, ["method", "url", "body"]);
+            var method = newRequestOptions.method, url = newRequestOptions.url, body = newRequestOptions.body, init = __rest(newRequestOptions, ["method", "url", "body"]);
             return this.http.post(url, body, init);
         }
         else if (requestOptions.method === 'PATCH') {
-            let { method, url, body } = newRequestOptions, init = __rest(newRequestOptions, ["method", "url", "body"]);
+            var method = newRequestOptions.method, url = newRequestOptions.url, body = newRequestOptions.body, init = __rest(newRequestOptions, ["method", "url", "body"]);
             return this.http.patch(url, body, init);
         }
         else if (requestOptions.method === 'DELETE') {
-            let { method, url } = newRequestOptions, init = __rest(newRequestOptions, ["method", "url"]);
+            var method = newRequestOptions.method, url = newRequestOptions.url, init = __rest(newRequestOptions, ["method", "url"]);
             return this.http.delete(url, init);
         }
-    }
-}
+    };
+    return NgrxJsonApi;
+}());
+export { NgrxJsonApi };
 function NgrxJsonApi_tsickle_Closure_declarations() {
     /** @type {?} */
     NgrxJsonApi.prototype.headers;

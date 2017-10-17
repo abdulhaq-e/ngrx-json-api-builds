@@ -1,4 +1,4 @@
-export const /** @type {?} */ NgrxJsonApiActionTypes = {
+export var /** @type {?} */ NgrxJsonApiActionTypes = {
     API_POST_INIT: '[NgrxJsonApi] API_POST_INIT',
     API_POST_SUCCESS: '[NgrxJsonApi] API_POST_SUCCESS',
     API_POST_FAIL: '[NgrxJsonApi] API_POST_FAIL',
@@ -28,411 +28,467 @@ export const /** @type {?} */ NgrxJsonApiActionTypes = {
     COMPACT_STORE: '[NgrxJsonApi] COMPACT_STORE',
     CLEAR_STORE: '[NgrxJsonApi] CLEAR_STORE',
 };
-export class ApiApplyInitAction {
+var ApiApplyInitAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function ApiApplyInitAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_APPLY_INIT;
     }
-}
+    return ApiApplyInitAction;
+}());
+export { ApiApplyInitAction };
 function ApiApplyInitAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiApplyInitAction.prototype.type;
     /** @type {?} */
     ApiApplyInitAction.prototype.payload;
 }
-export class ApiApplySuccessAction {
+var ApiApplySuccessAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function ApiApplySuccessAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_APPLY_SUCCESS;
     }
-}
+    return ApiApplySuccessAction;
+}());
+export { ApiApplySuccessAction };
 function ApiApplySuccessAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiApplySuccessAction.prototype.type;
     /** @type {?} */
     ApiApplySuccessAction.prototype.payload;
 }
-export class ApiApplyFailAction {
+var ApiApplyFailAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function ApiApplyFailAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_APPLY_FAIL;
     }
-}
+    return ApiApplyFailAction;
+}());
+export { ApiApplyFailAction };
 function ApiApplyFailAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiApplyFailAction.prototype.type;
     /** @type {?} */
     ApiApplyFailAction.prototype.payload;
 }
-export class ApiPostInitAction {
+var ApiPostInitAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function ApiPostInitAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_POST_INIT;
     }
-}
+    return ApiPostInitAction;
+}());
+export { ApiPostInitAction };
 function ApiPostInitAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiPostInitAction.prototype.type;
     /** @type {?} */
     ApiPostInitAction.prototype.payload;
 }
-export class ApiPostSuccessAction {
+var ApiPostSuccessAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function ApiPostSuccessAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_POST_SUCCESS;
     }
-}
+    return ApiPostSuccessAction;
+}());
+export { ApiPostSuccessAction };
 function ApiPostSuccessAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiPostSuccessAction.prototype.type;
     /** @type {?} */
     ApiPostSuccessAction.prototype.payload;
 }
-export class ApiPostFailAction {
+var ApiPostFailAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function ApiPostFailAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_POST_FAIL;
     }
-}
+    return ApiPostFailAction;
+}());
+export { ApiPostFailAction };
 function ApiPostFailAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiPostFailAction.prototype.type;
     /** @type {?} */
     ApiPostFailAction.prototype.payload;
 }
-export class ApiDeleteInitAction {
+var ApiDeleteInitAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function ApiDeleteInitAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_DELETE_INIT;
     }
-}
+    return ApiDeleteInitAction;
+}());
+export { ApiDeleteInitAction };
 function ApiDeleteInitAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiDeleteInitAction.prototype.type;
     /** @type {?} */
     ApiDeleteInitAction.prototype.payload;
 }
-export class ApiDeleteSuccessAction {
+var ApiDeleteSuccessAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function ApiDeleteSuccessAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_DELETE_SUCCESS;
     }
-}
+    return ApiDeleteSuccessAction;
+}());
+export { ApiDeleteSuccessAction };
 function ApiDeleteSuccessAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiDeleteSuccessAction.prototype.type;
     /** @type {?} */
     ApiDeleteSuccessAction.prototype.payload;
 }
-export class ApiDeleteFailAction {
+var ApiDeleteFailAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function ApiDeleteFailAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_DELETE_FAIL;
     }
-}
+    return ApiDeleteFailAction;
+}());
+export { ApiDeleteFailAction };
 function ApiDeleteFailAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiDeleteFailAction.prototype.type;
     /** @type {?} */
     ApiDeleteFailAction.prototype.payload;
 }
-export class ApiGetInitAction {
+var ApiGetInitAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function ApiGetInitAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_GET_INIT;
     }
-}
+    return ApiGetInitAction;
+}());
+export { ApiGetInitAction };
 function ApiGetInitAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiGetInitAction.prototype.type;
     /** @type {?} */
     ApiGetInitAction.prototype.payload;
 }
-export class ApiGetSuccessAction {
+var ApiGetSuccessAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function ApiGetSuccessAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_GET_SUCCESS;
     }
-}
+    return ApiGetSuccessAction;
+}());
+export { ApiGetSuccessAction };
 function ApiGetSuccessAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiGetSuccessAction.prototype.type;
     /** @type {?} */
     ApiGetSuccessAction.prototype.payload;
 }
-export class ApiGetFailAction {
+var ApiGetFailAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function ApiGetFailAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_GET_FAIL;
     }
-}
+    return ApiGetFailAction;
+}());
+export { ApiGetFailAction };
 function ApiGetFailAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiGetFailAction.prototype.type;
     /** @type {?} */
     ApiGetFailAction.prototype.payload;
 }
-export class ApiRollbackAction {
+var ApiRollbackAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function ApiRollbackAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_ROLLBACK;
     }
-}
+    return ApiRollbackAction;
+}());
+export { ApiRollbackAction };
 function ApiRollbackAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiRollbackAction.prototype.type;
     /** @type {?} */
     ApiRollbackAction.prototype.payload;
 }
-export class ApiPatchInitAction {
+var ApiPatchInitAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function ApiPatchInitAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_PATCH_INIT;
     }
-}
+    return ApiPatchInitAction;
+}());
+export { ApiPatchInitAction };
 function ApiPatchInitAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiPatchInitAction.prototype.type;
     /** @type {?} */
     ApiPatchInitAction.prototype.payload;
 }
-export class ApiPatchSuccessAction {
+var ApiPatchSuccessAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function ApiPatchSuccessAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_PATCH_SUCCESS;
     }
-}
+    return ApiPatchSuccessAction;
+}());
+export { ApiPatchSuccessAction };
 function ApiPatchSuccessAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiPatchSuccessAction.prototype.type;
     /** @type {?} */
     ApiPatchSuccessAction.prototype.payload;
 }
-export class ApiPatchFailAction {
+var ApiPatchFailAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function ApiPatchFailAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_PATCH_FAIL;
     }
-}
+    return ApiPatchFailAction;
+}());
+export { ApiPatchFailAction };
 function ApiPatchFailAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiPatchFailAction.prototype.type;
     /** @type {?} */
     ApiPatchFailAction.prototype.payload;
 }
-export class DeleteStoreResourceAction {
+var DeleteStoreResourceAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function DeleteStoreResourceAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.DELETE_STORE_RESOURCE;
     }
-}
+    return DeleteStoreResourceAction;
+}());
+export { DeleteStoreResourceAction };
 function DeleteStoreResourceAction_tsickle_Closure_declarations() {
     /** @type {?} */
     DeleteStoreResourceAction.prototype.type;
     /** @type {?} */
     DeleteStoreResourceAction.prototype.payload;
 }
-export class PatchStoreResourceAction {
+var PatchStoreResourceAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function PatchStoreResourceAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.PATCH_STORE_RESOURCE;
     }
-}
+    return PatchStoreResourceAction;
+}());
+export { PatchStoreResourceAction };
 function PatchStoreResourceAction_tsickle_Closure_declarations() {
     /** @type {?} */
     PatchStoreResourceAction.prototype.type;
     /** @type {?} */
     PatchStoreResourceAction.prototype.payload;
 }
-export class NewStoreResourceAction {
+var NewStoreResourceAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function NewStoreResourceAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.NEW_STORE_RESOURCE;
     }
-}
+    return NewStoreResourceAction;
+}());
+export { NewStoreResourceAction };
 function NewStoreResourceAction_tsickle_Closure_declarations() {
     /** @type {?} */
     NewStoreResourceAction.prototype.type;
     /** @type {?} */
     NewStoreResourceAction.prototype.payload;
 }
-export class PostStoreResourceAction {
+var PostStoreResourceAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function PostStoreResourceAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.POST_STORE_RESOURCE;
     }
-}
+    return PostStoreResourceAction;
+}());
+export { PostStoreResourceAction };
 function PostStoreResourceAction_tsickle_Closure_declarations() {
     /** @type {?} */
     PostStoreResourceAction.prototype.type;
     /** @type {?} */
     PostStoreResourceAction.prototype.payload;
 }
-export class RemoveQueryAction {
+var RemoveQueryAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function RemoveQueryAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.REMOVE_QUERY;
     }
-}
+    return RemoveQueryAction;
+}());
+export { RemoveQueryAction };
 function RemoveQueryAction_tsickle_Closure_declarations() {
     /** @type {?} */
     RemoveQueryAction.prototype.type;
     /** @type {?} */
     RemoveQueryAction.prototype.payload;
 }
-export class LocalQueryInitAction {
+var LocalQueryInitAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function LocalQueryInitAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.LOCAL_QUERY_INIT;
     }
-}
+    return LocalQueryInitAction;
+}());
+export { LocalQueryInitAction };
 function LocalQueryInitAction_tsickle_Closure_declarations() {
     /** @type {?} */
     LocalQueryInitAction.prototype.type;
     /** @type {?} */
     LocalQueryInitAction.prototype.payload;
 }
-export class LocalQuerySuccessAction {
+var LocalQuerySuccessAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function LocalQuerySuccessAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.LOCAL_QUERY_SUCCESS;
     }
-}
+    return LocalQuerySuccessAction;
+}());
+export { LocalQuerySuccessAction };
 function LocalQuerySuccessAction_tsickle_Closure_declarations() {
     /** @type {?} */
     LocalQuerySuccessAction.prototype.type;
     /** @type {?} */
     LocalQuerySuccessAction.prototype.payload;
 }
-export class LocalQueryFailAction {
+var LocalQueryFailAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function LocalQueryFailAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.LOCAL_QUERY_FAIL;
     }
-}
+    return LocalQueryFailAction;
+}());
+export { LocalQueryFailAction };
 function LocalQueryFailAction_tsickle_Closure_declarations() {
     /** @type {?} */
     LocalQueryFailAction.prototype.type;
     /** @type {?} */
     LocalQueryFailAction.prototype.payload;
 }
-export class CompactStoreAction {
-    constructor() {
+var CompactStoreAction = (function () {
+    function CompactStoreAction() {
         this.type = NgrxJsonApiActionTypes.COMPACT_STORE;
     }
-}
+    return CompactStoreAction;
+}());
+export { CompactStoreAction };
 function CompactStoreAction_tsickle_Closure_declarations() {
     /** @type {?} */
     CompactStoreAction.prototype.type;
 }
-export class ClearStoreAction {
-    constructor() {
+var ClearStoreAction = (function () {
+    function ClearStoreAction() {
         this.type = NgrxJsonApiActionTypes.CLEAR_STORE;
     }
-}
+    return ClearStoreAction;
+}());
+export { ClearStoreAction };
 function ClearStoreAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ClearStoreAction.prototype.type;
 }
-export class ApiQueryRefreshAction {
+var ApiQueryRefreshAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function ApiQueryRefreshAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.API_QUERY_REFRESH;
         if (!payload) {
             throw new Error('no query id provided for ApiQueryRefreshAction');
         }
     }
-}
+    return ApiQueryRefreshAction;
+}());
+export { ApiQueryRefreshAction };
 function ApiQueryRefreshAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiQueryRefreshAction.prototype.type;
     /** @type {?} */
     ApiQueryRefreshAction.prototype.payload;
 }
-export class ModifyStoreResourceErrorsAction {
+var ModifyStoreResourceErrorsAction = (function () {
     /**
      * @param {?} payload
      */
-    constructor(payload) {
+    function ModifyStoreResourceErrorsAction(payload) {
         this.payload = payload;
         this.type = NgrxJsonApiActionTypes.MODIFY_STORE_RESOURCE_ERRORS;
     }
-}
+    return ModifyStoreResourceErrorsAction;
+}());
+export { ModifyStoreResourceErrorsAction };
 function ModifyStoreResourceErrorsAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ModifyStoreResourceErrorsAction.prototype.type;
