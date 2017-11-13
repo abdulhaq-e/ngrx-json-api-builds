@@ -1,5 +1,6 @@
-import { ActionReducerMap } from '@ngrx/store';
-import { NgrxJsonApiStore } from './interfaces';
-export declare const initialNgrxJsonApiState: NgrxJsonApiStore;
-export declare function NgrxJsonApiStoreReducer(state: NgrxJsonApiStore, action: any): NgrxJsonApiStore;
-export declare const reducer: ActionReducerMap<any>;
+import { NgrxJsonApiState, NgrxJsonApiZone } from './interfaces';
+export declare const initialNgrxJsonApiZone: NgrxJsonApiZone;
+export declare const initialNgrxJsonApiState: NgrxJsonApiState;
+export declare function NgrxJsonApiStoreReducer(state: NgrxJsonApiState, action: any): NgrxJsonApiState;
+export declare function NgrxJsonApiZoneReducer(zone: NgrxJsonApiZone, action: any): NgrxJsonApiZone;
+export declare const reducer: typeof NgrxJsonApiStoreReducer;

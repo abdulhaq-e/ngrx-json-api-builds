@@ -4,10 +4,10 @@ import { Store, StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { NgrxJsonApi } from './api';
 import { NgrxJsonApiEffects } from './effects';
-import { NgrxJsonApiSelectors } from './selectors';
 import { NgrxJsonApiService } from './services';
 import { reducer } from './reducers';
 import { DenormaliseStoreResourcePipe, GetDenormalisedValuePipe, SelectStoreResourcePipe, } from './pipes';
+import { NgrxJsonApiSelectors } from './selectors';
 export var /** @type {?} */ NGRX_JSON_API_CONFIG = new OpaqueToken('NGRX_JSON_API_CONFIG');
 /**
  * @param {?} http
@@ -18,19 +18,19 @@ export function apiFactory(http, config) {
     return new NgrxJsonApi(http, config);
 }
 /**
- * @param {?} config
+ * Deprecated, do not use any longer
  * @return {?}
  */
-export function selectorsFactory(config) {
-    return new NgrxJsonApiSelectors(config);
+export function selectorsFactory() {
+    return new NgrxJsonApiSelectors();
 }
 /**
  * @param {?} store
- * @param {?} selectors
+ * @param {?} config
  * @return {?}
  */
-export function serviceFactory(store, selectors) {
-    return new NgrxJsonApiService(store, selectors);
+export function serviceFactory(store, config) {
+    return new NgrxJsonApiService(store, config);
 }
 /**
  * @param {?} config
@@ -46,12 +46,11 @@ export function configure(config) {
         {
             provide: NgrxJsonApiSelectors,
             useFactory: selectorsFactory,
-            deps: [NGRX_JSON_API_CONFIG],
         },
         {
             provide: NgrxJsonApiService,
             useFactory: serviceFactory,
-            deps: [Store, NgrxJsonApiSelectors],
+            deps: [Store, NGRX_JSON_API_CONFIG],
         },
         {
             provide: NGRX_JSON_API_CONFIG,

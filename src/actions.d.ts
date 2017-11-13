@@ -44,142 +44,175 @@ export interface ApiApplyInitPayload {
 }
 export interface ApiApplyRollbackPayload extends ApiApplyInitPayload {
 }
-export declare class ApiApplyInitAction implements Action {
+export declare abstract class NgrxJsonApiAction implements Action {
+    abstract zoneId?: string;
+    abstract type: string;
+    constructor();
+}
+export declare class ApiApplyInitAction extends NgrxJsonApiAction {
     payload: ApiApplyInitPayload;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: ApiApplyInitPayload);
+    constructor(payload: ApiApplyInitPayload, zoneId: string);
 }
-export declare class ApiApplySuccessAction implements Action {
+export declare class ApiApplySuccessAction extends NgrxJsonApiAction {
     payload: Array<Action>;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: Array<Action>);
+    constructor(payload: Array<Action>, zoneId: string);
 }
-export declare class ApiApplyFailAction implements Action {
+export declare class ApiApplyFailAction extends NgrxJsonApiAction {
     payload: Array<Action>;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: Array<Action>);
+    constructor(payload: Array<Action>, zoneId: string);
 }
-export declare class ApiPostInitAction implements Action {
+export declare class ApiPostInitAction extends NgrxJsonApiAction {
     payload: Resource;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: Resource);
+    constructor(payload: Resource, zoneId: string);
 }
-export declare class ApiPostSuccessAction implements Action {
+export declare class ApiPostSuccessAction extends NgrxJsonApiAction {
     payload: Payload;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: Payload);
+    constructor(payload: Payload, zoneId: string);
 }
-export declare class ApiPostFailAction implements Action {
+export declare class ApiPostFailAction extends NgrxJsonApiAction {
     payload: Payload;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: Payload);
+    constructor(payload: Payload, zoneId: string);
 }
-export declare class ApiDeleteInitAction implements Action {
+export declare class ApiDeleteInitAction extends NgrxJsonApiAction {
     payload: ResourceIdentifier;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: ResourceIdentifier);
+    constructor(payload: ResourceIdentifier, zoneId: string);
 }
-export declare class ApiDeleteSuccessAction implements Action {
+export declare class ApiDeleteSuccessAction extends NgrxJsonApiAction {
     payload: Payload;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: Payload);
+    constructor(payload: Payload, zoneId: string);
 }
-export declare class ApiDeleteFailAction implements Action {
+export declare class ApiDeleteFailAction extends NgrxJsonApiAction {
     payload: Payload;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: Payload);
+    constructor(payload: Payload, zoneId: string);
 }
-export declare class ApiGetInitAction implements Action {
+export declare class ApiGetInitAction extends NgrxJsonApiAction {
     payload: Query;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: Query);
+    constructor(payload: Query, zoneId: string);
 }
-export declare class ApiGetSuccessAction implements Action {
+export declare class ApiGetSuccessAction extends NgrxJsonApiAction {
     payload: Payload;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: Payload);
+    constructor(payload: Payload, zoneId: string);
 }
-export declare class ApiGetFailAction implements Action {
+export declare class ApiGetFailAction extends NgrxJsonApiAction {
     payload: Payload;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: Payload);
+    constructor(payload: Payload, zoneId: string);
 }
-export declare class ApiRollbackAction implements Action {
+export declare class ApiRollbackAction extends NgrxJsonApiAction {
     payload: ApiApplyRollbackPayload;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: ApiApplyRollbackPayload);
+    constructor(payload: ApiApplyRollbackPayload, zoneId: string);
 }
-export declare class ApiPatchInitAction implements Action {
+export declare class ApiPatchInitAction extends NgrxJsonApiAction {
     payload: Resource;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: Resource);
+    constructor(payload: Resource, zoneId: string);
 }
-export declare class ApiPatchSuccessAction implements Action {
+export declare class ApiPatchSuccessAction extends NgrxJsonApiAction {
     payload: Payload;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: Payload);
+    constructor(payload: Payload, zoneId: string);
 }
-export declare class ApiPatchFailAction implements Action {
+export declare class ApiPatchFailAction extends NgrxJsonApiAction {
     payload: Payload;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: Payload);
+    constructor(payload: Payload, zoneId: string);
 }
-export declare class DeleteStoreResourceAction implements Action {
+export declare class DeleteStoreResourceAction extends NgrxJsonApiAction {
     payload: ResourceIdentifier;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: ResourceIdentifier);
+    constructor(payload: ResourceIdentifier, zoneId: string);
 }
-export declare class PatchStoreResourceAction implements Action {
+export declare class PatchStoreResourceAction extends NgrxJsonApiAction {
     payload: Resource;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: Resource);
+    constructor(payload: Resource, zoneId: string);
 }
-export declare class NewStoreResourceAction implements Action {
+export declare class NewStoreResourceAction extends NgrxJsonApiAction {
     payload: Resource;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: Resource);
+    constructor(payload: Resource, zoneId: string);
 }
-export declare class PostStoreResourceAction implements Action {
+export declare class PostStoreResourceAction extends NgrxJsonApiAction {
     payload: Resource;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: Resource);
+    constructor(payload: Resource, zoneId: string);
 }
-export declare class RemoveQueryAction implements Action {
+export declare class RemoveQueryAction extends NgrxJsonApiAction {
     payload: string;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: string);
+    constructor(payload: string, zoneId: string);
 }
-export declare class LocalQueryInitAction implements Action {
+export declare class LocalQueryInitAction extends NgrxJsonApiAction {
     payload: Query;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: Query);
+    constructor(payload: Query, zoneId: string);
 }
-export declare class LocalQuerySuccessAction implements Action {
+export declare class LocalQuerySuccessAction extends NgrxJsonApiAction {
     payload: Payload;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: Payload);
+    constructor(payload: Payload, zoneId: string);
 }
-export declare class LocalQueryFailAction implements Action {
+export declare class LocalQueryFailAction extends NgrxJsonApiAction {
     payload: Payload;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: Payload);
+    constructor(payload: Payload, zoneId: string);
 }
-export declare class CompactStoreAction implements Action {
+export declare class CompactStoreAction extends NgrxJsonApiAction {
+    zoneId: string;
     readonly type: string;
-    constructor();
+    constructor(zoneId: string);
 }
-export declare class ClearStoreAction implements Action {
+export declare class ClearStoreAction extends NgrxJsonApiAction {
+    zoneId: string;
     readonly type: string;
-    constructor();
+    constructor(zoneId: string);
 }
-export declare class ApiQueryRefreshAction implements Action {
+export declare class ApiQueryRefreshAction extends NgrxJsonApiAction {
     payload: string;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: string);
+    constructor(payload: string, zoneId: string);
 }
-export declare class ModifyStoreResourceErrorsAction implements Action {
+export declare class ModifyStoreResourceErrorsAction extends NgrxJsonApiAction {
     payload: ModifyStoreResourceErrorsPayload;
+    zoneId: string;
     readonly type: string;
-    constructor(payload: ModifyStoreResourceErrorsPayload);
+    constructor(payload: ModifyStoreResourceErrorsPayload, zoneId: string);
 }
 export declare type NgrxJsonApiActions = ApiApplyInitAction | ApiApplySuccessAction | ApiApplyFailAction | ApiPostInitAction | ApiPostSuccessAction | ApiPostFailAction | ApiDeleteInitAction | ApiDeleteSuccessAction | ApiDeleteFailAction | ApiGetInitAction | ApiGetSuccessAction | ApiGetFailAction | ApiRollbackAction | ApiPatchInitAction | ApiPatchSuccessAction | ApiPatchFailAction | DeleteStoreResourceAction | PatchStoreResourceAction | PostStoreResourceAction | NewStoreResourceAction | RemoveQueryAction | ApiQueryRefreshAction | LocalQueryInitAction | LocalQuerySuccessAction | LocalQueryFailAction | ModifyStoreResourceErrorsAction | CompactStoreAction | ClearStoreAction;

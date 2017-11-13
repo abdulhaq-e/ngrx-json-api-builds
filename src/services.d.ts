@@ -1,8 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/finally';
 import { Store } from '@ngrx/store';
-import { NgrxJsonApiSelectors } from './selectors';
-import { NgrxJsonApiStore, Resource, ResourceIdentifier, Query, OneQueryResult, ManyQueryResult, StoreResource, ResourceError } from './interfaces';
+import { ManyQueryResult, NgrxJsonApiConfig, NgrxJsonApiStore, OneQueryResult, Query, Resource, ResourceError, ResourceIdentifier, StoreResource } from './interfaces';
 export interface FindOptions {
     query: Query;
     fromServer?: boolean;
@@ -38,18 +37,14 @@ export interface Options {
     toRemote?: boolean;
     resourceId?: ResourceIdentifier;
 }
-export declare class NgrxJsonApiService {
-    private store;
-    private selectors;
-    private test;
-    /**
-     * Keeps current snapshot of the store to allow fast access to resources.
-     */
-    private _storeSnapshot;
-    constructor(store: Store<any>, selectors: NgrxJsonApiSelectors);
-    findOne(options: FindOptions): Observable<OneQueryResult>;
-    findMany(options: FindOptions): Observable<ManyQueryResult>;
-    readonly storeSnapshot: NgrxJsonApiStore;
+/**
+ * Represents an isolated area in the store with its own set of resources and queries.
+ * 'api' is the default zone that already historically has been put beneath NgrxJsonApi within the store.
+ */
+export declare class NgrxJsonApiZoneService {
+    protected zoneId: string;
+    protected store: Store<any>;
+    constructor(zoneId: string, store: Store<any>);
     /**
      * Adds the given query to the store. Any existing query with the same queryId is replaced.
      * Make use of selectResults(...) to fetch the data.
@@ -60,22 +55,6 @@ export declare class NgrxJsonApiService {
     putQuery(options: PutQueryOptions): void;
     refreshQuery(queryId: string): void;
     removeQuery(queryId: string): void;
-    private findInternal(options, multi);
-    private uuid();
-    /**
-     * Gets the current persisted state of the given resources.
-     * Consider the use of selectResource(...) to get an observable of the resource.
-     *
-     * @param identifier
-     */
-    getPersistedResourceSnapshot(identifier: ResourceIdentifier): Resource;
-    /**
-     * Gets the current state of the given resources in the store.
-     * Consider the use of selectResource(...) to get an observable of the resource.
-     *
-     * @param identifier
-     */
-    getResourceSnapshot(identifier: ResourceIdentifier): StoreResource;
     /**
      * Selects the data of the given query.
      *
@@ -95,9 +74,6 @@ export declare class NgrxJsonApiService {
      * @returns observable of the resource
      */
     selectStoreResource(identifier: ResourceIdentifier): Observable<StoreResource>;
-    denormaliseResource(storeResource$: Observable<StoreResource> | Observable<StoreResource[]>): Observable<StoreResource> | Observable<StoreResource[]>;
-    getDenormalisedPath(path: string, resourceType: string): string;
-    getDenormalisedValue(path: string, storeResource: StoreResource): any;
     /**
      * Updates the given resource in the store with the provided data.
      * Use commit() to send the changes to the remote JSON API endpoint.
@@ -156,4 +132,37 @@ export declare class NgrxJsonApiService {
      * @param errors
      */
     setResourceErrors(id: ResourceIdentifier, errors: Array<ResourceError>): void;
+}
+export declare class NgrxJsonApiService extends NgrxJsonApiZoneService {
+    private config;
+    private test;
+    /**
+     * Keeps current snapshot of the store to allow fast access to resources.
+     */
+    private _storeSnapshot;
+    constructor(store: Store<any>, config: NgrxJsonApiConfig);
+    getDefaultZone(): NgrxJsonApiZoneService;
+    getZone(zoneId: string): NgrxJsonApiZoneService;
+    findOne(options: FindOptions): Observable<OneQueryResult>;
+    findMany(options: FindOptions): Observable<ManyQueryResult>;
+    readonly storeSnapshot: NgrxJsonApiStore;
+    private findInternal(options, multi);
+    private uuid();
+    /**
+     * Gets the current persisted state of the given resources.
+     * Consider the use of selectResource(...) to get an observable of the resource.
+     *
+     * @param identifier
+     */
+    getPersistedResourceSnapshot(identifier: ResourceIdentifier): Resource;
+    /**
+     * Gets the current state of the given resources in the store.
+     * Consider the use of selectResource(...) to get an observable of the resource.
+     *
+     * @param identifier
+     */
+    getResourceSnapshot(identifier: ResourceIdentifier): StoreResource;
+    denormaliseResource(storeResource$: Observable<StoreResource> | Observable<StoreResource[]>): Observable<StoreResource> | Observable<StoreResource[]>;
+    getDenormalisedPath(path: string, resourceType: string): string;
+    getDenormalisedValue(path: string, storeResource: StoreResource): any;
 }

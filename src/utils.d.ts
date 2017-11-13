@@ -1,4 +1,5 @@
 import { Document, FilteringParam, NgrxJsonApiFilteringConfig, NgrxJsonApiStore, NgrxJsonApiStoreData, NgrxJsonApiStoreResources, NgrxJsonApiStoreQueries, OperationType, Payload, Query, Resource, ResourceDefinition, ResourceIdentifier, ResourceError, ResourceState, StoreQuery, SortingParam, StoreResource, ErrorModificationType } from './interfaces';
+export declare function setIn(state: any, path: string, value: any): any;
 export declare const denormaliseObject: (resource: Resource, storeData: NgrxJsonApiStoreData, bag: NgrxJsonApiStoreData) => any;
 export declare const denormaliseStoreResources: (items: StoreResource[], storeData: NgrxJsonApiStoreData, bag?: any) => StoreResource[];
 export declare const denormaliseStoreResource: (item: StoreResource, storeData: NgrxJsonApiStoreData, bag?: any) => any;

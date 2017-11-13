@@ -8,6 +8,23 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 import * as _ from 'lodash/index';
 import { Direction, } from './interfaces';
+/**
+ * @param {?} state
+ * @param {?} path
+ * @param {?} value
+ * @return {?}
+ */
+export function setIn(state, path, value) {
+    var /** @type {?} */ currentValue = _.get(state, path);
+    if (value === currentValue) {
+        return state;
+    }
+    return _.setWith(_.clone(state), path, value, function (nsValue, key, nsObject) {
+        var /** @type {?} */ newObject = _.clone(nsObject);
+        newObject[key] = nsValue;
+        return newObject;
+    });
+}
 export var /** @type {?} */ denormaliseObject = function (resource, storeData, bag) {
     // this function MUST MUTATE resource
     var /** @type {?} */ denormalised = resource;
@@ -474,9 +491,11 @@ export var updateQueryResults = function (storeQueries, queryId, document) {
     if (storeQuery) {
         var data = _.isArray(document.data) ? document.data : [document.data];
         var newQueryStore = __assign({}, storeQuery, { resultIds: data.map(function (it) { return (it ? toResourceIdentifier(it) : []); }), meta: document.meta, links: document.links, loading: false });
-        var newState = __assign({}, storeQueries);
-        newState[queryId] = newQueryStore;
-        return newState;
+        if (!_.isEqual(newQueryStore, storeQuery)) {
+            var newState = __assign({}, storeQueries);
+            newState[queryId] = newQueryStore;
+            return newState;
+        }
     }
     return storeQueries;
 };

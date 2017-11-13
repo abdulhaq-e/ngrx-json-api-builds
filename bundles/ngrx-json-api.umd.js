@@ -1,320 +1,16 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs/add/operator/let'), require('lodash/index'), require('rxjs/add/operator/finally'), require('@angular/common/http'), require('@ngrx/store'), require('@ngrx/effects'), require('rxjs/Observable'), require('rxjs/add/operator/map'), require('rxjs/add/observable/throw'), require('rxjs/add/observable/of'), require('rxjs/add/operator/catch'), require('rxjs/add/operator/concatAll'), require('rxjs/add/operator/do'), require('rxjs/add/operator/mapTo'), require('rxjs/add/operator/mergeMap'), require('rxjs/add/operator/switchMap'), require('rxjs/add/operator/switchMapTo'), require('rxjs/add/operator/take'), require('rxjs/add/operator/toArray'), require('rxjs/add/operator/withLatestFrom'), require('rxjs/add/operator/takeWhile'), require('rxjs/add/operator/takeUntil'), require('rxjs/add/observable/concat'), require('rxjs/add/operator/combineLatest'), require('rxjs/add/operator/concat'), require('rxjs/add/operator/concatMap'), require('rxjs/add/operator/distinctUntilChanged'), require('rxjs/add/operator/filter'), require('rxjs/add/observable/zip')) :
-	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'rxjs/add/operator/let', 'lodash/index', 'rxjs/add/operator/finally', '@angular/common/http', '@ngrx/store', '@ngrx/effects', 'rxjs/Observable', 'rxjs/add/operator/map', 'rxjs/add/observable/throw', 'rxjs/add/observable/of', 'rxjs/add/operator/catch', 'rxjs/add/operator/concatAll', 'rxjs/add/operator/do', 'rxjs/add/operator/mapTo', 'rxjs/add/operator/mergeMap', 'rxjs/add/operator/switchMap', 'rxjs/add/operator/switchMapTo', 'rxjs/add/operator/take', 'rxjs/add/operator/toArray', 'rxjs/add/operator/withLatestFrom', 'rxjs/add/operator/takeWhile', 'rxjs/add/operator/takeUntil', 'rxjs/add/observable/concat', 'rxjs/add/operator/combineLatest', 'rxjs/add/operator/concat', 'rxjs/add/operator/concatMap', 'rxjs/add/operator/distinctUntilChanged', 'rxjs/add/operator/filter', 'rxjs/add/observable/zip'], factory) :
-	(factory((global.ngrx = global.ngrx || {}, global.ngrx.json = global.ngrx.json || {}, global.ngrx.json.api = {}),global.ng.core,null,global.lodash_index,null,global._angular_common_http,global._ngrx_store,global._ngrx_effects,global.Rx));
-}(this, (function (exports,_angular_core,rxjs_add_operator_let,lodash_index,rxjs_add_operator_finally,_angular_common_http,_ngrx_store,_ngrx_effects,rxjs_Observable) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs/add/operator/let'), require('lodash/index'), require('rxjs/add/operator/finally'), require('rxjs/add/observable/concat'), require('rxjs/add/observable/throw'), require('rxjs/add/operator/combineLatest'), require('rxjs/add/operator/concat'), require('rxjs/add/operator/concatMap'), require('rxjs/add/operator/distinctUntilChanged'), require('rxjs/add/operator/do'), require('rxjs/add/operator/filter'), require('rxjs/add/operator/map'), require('rxjs/add/operator/mergeMap'), require('rxjs/add/observable/zip'), require('@angular/common/http'), require('@ngrx/store'), require('@ngrx/effects'), require('rxjs/Observable'), require('rxjs/add/observable/of'), require('rxjs/add/operator/catch'), require('rxjs/add/operator/concatAll'), require('rxjs/add/operator/mapTo'), require('rxjs/add/operator/switchMap'), require('rxjs/add/operator/switchMapTo'), require('rxjs/add/operator/take'), require('rxjs/add/operator/toArray'), require('rxjs/add/operator/withLatestFrom'), require('rxjs/add/operator/takeWhile'), require('rxjs/add/operator/takeUntil')) :
+	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'rxjs/add/operator/let', 'lodash/index', 'rxjs/add/operator/finally', 'rxjs/add/observable/concat', 'rxjs/add/observable/throw', 'rxjs/add/operator/combineLatest', 'rxjs/add/operator/concat', 'rxjs/add/operator/concatMap', 'rxjs/add/operator/distinctUntilChanged', 'rxjs/add/operator/do', 'rxjs/add/operator/filter', 'rxjs/add/operator/map', 'rxjs/add/operator/mergeMap', 'rxjs/add/observable/zip', '@angular/common/http', '@ngrx/store', '@ngrx/effects', 'rxjs/Observable', 'rxjs/add/observable/of', 'rxjs/add/operator/catch', 'rxjs/add/operator/concatAll', 'rxjs/add/operator/mapTo', 'rxjs/add/operator/switchMap', 'rxjs/add/operator/switchMapTo', 'rxjs/add/operator/take', 'rxjs/add/operator/toArray', 'rxjs/add/operator/withLatestFrom', 'rxjs/add/operator/takeWhile', 'rxjs/add/operator/takeUntil'], factory) :
+	(factory((global.ngrx = global.ngrx || {}, global.ngrx.json = global.ngrx.json || {}, global.ngrx.json.api = {}),global.ng.core,null,global.lodash_index,null,null,null,null,null,null,null,null,null,null,null,null,global._angular_common_http,global._ngrx_store,global._ngrx_effects,global.Rx));
+}(this, (function (exports,_angular_core,rxjs_add_operator_let,lodash_index,rxjs_add_operator_finally,rxjs_add_observable_concat,rxjs_add_observable_throw,rxjs_add_operator_combineLatest,rxjs_add_operator_concat,rxjs_add_operator_concatMap,rxjs_add_operator_distinctUntilChanged,rxjs_add_operator_do,rxjs_add_operator_filter,rxjs_add_operator_map,rxjs_add_operator_mergeMap,rxjs_add_observable_zip,_angular_common_http,_ngrx_store,_ngrx_effects,rxjs_Observable) { 'use strict';
 
+var NGRX_JSON_API_DEFAULT_ZONE = 'default';
 var Direction = {};
 Direction.ASC = 0;
 Direction.DESC = 1;
 Direction[Direction.ASC] = "ASC";
 Direction[Direction.DESC] = "DESC";
-var NgrxJsonApiActionTypes = {
-    API_POST_INIT: '[NgrxJsonApi] API_POST_INIT',
-    API_POST_SUCCESS: '[NgrxJsonApi] API_POST_SUCCESS',
-    API_POST_FAIL: '[NgrxJsonApi] API_POST_FAIL',
-    API_GET_INIT: '[NgrxJsonApi] API_GET_INIT',
-    API_GET_SUCCESS: '[NgrxJsonApi] API_GET_SUCCESS',
-    API_GET_FAIL: '[NgrxJsonApi] API_GET_FAIL',
-    API_PATCH_INIT: '[NgrxJsonApi] API_PATCH_INIT',
-    API_PATCH_SUCCESS: '[NgrxJsonApi] API_PATCH_SUCCESS',
-    API_PATCH_FAIL: '[NgrxJsonApi] API_PATCH_FAIL',
-    API_DELETE_INIT: '[NgrxJsonApi] API_DELETE_INIT',
-    API_DELETE_SUCCESS: '[NgrxJsonApi] API_DELETE_SUCCESS',
-    API_DELETE_FAIL: '[NgrxJsonApi] API_DELETE_FAIL',
-    API_APPLY_INIT: '[NgrxJsonApi] API_APPLY_INIT',
-    API_APPLY_SUCCESS: '[NgrxJsonApi] API_APPLY_SUCCESS',
-    API_APPLY_FAIL: '[NgrxJsonApi] API_APPLY_FAIL',
-    API_ROLLBACK: '[NgrxJsonApi] API_ROLLBACK',
-    API_QUERY_REFRESH: '[NgrxJsonApi] API_QUERY_REFRESH',
-    LOCAL_QUERY_INIT: '[NgrxJsonApi] LOCAL_QUERY_INIT',
-    LOCAL_QUERY_SUCCESS: '[NgrxJsonApi] LOCAL_QUERY_SUCCESS',
-    LOCAL_QUERY_FAIL: '[NgrxJsonApi] LOCAL_QUERY_FAIL',
-    DELETE_STORE_RESOURCE: '[NgrxJsonApi] DELETE_STORE_RESOURCE',
-    PATCH_STORE_RESOURCE: '[NgrxJsonApi] PATCH_STORE_RESOURCE',
-    NEW_STORE_RESOURCE: '[NgrxJsonApi] NEW_STORE_RESOURCE',
-    POST_STORE_RESOURCE: '[NgrxJsonApi] POST_STORE_RESOURCE',
-    MODIFY_STORE_RESOURCE_ERRORS: '[NgrxJsonApi] MODIFY_STORE_RESOURCE_ERRORS',
-    REMOVE_QUERY: '[NgrxJsonApi] REMOVE_QUERY',
-    COMPACT_STORE: '[NgrxJsonApi] COMPACT_STORE',
-    CLEAR_STORE: '[NgrxJsonApi] CLEAR_STORE',
-};
-var ApiApplyInitAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function ApiApplyInitAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.API_APPLY_INIT;
-    }
-    return ApiApplyInitAction;
-}());
-var ApiApplySuccessAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function ApiApplySuccessAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.API_APPLY_SUCCESS;
-    }
-    return ApiApplySuccessAction;
-}());
-var ApiApplyFailAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function ApiApplyFailAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.API_APPLY_FAIL;
-    }
-    return ApiApplyFailAction;
-}());
-var ApiPostInitAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function ApiPostInitAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.API_POST_INIT;
-    }
-    return ApiPostInitAction;
-}());
-var ApiPostSuccessAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function ApiPostSuccessAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.API_POST_SUCCESS;
-    }
-    return ApiPostSuccessAction;
-}());
-var ApiPostFailAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function ApiPostFailAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.API_POST_FAIL;
-    }
-    return ApiPostFailAction;
-}());
-var ApiDeleteInitAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function ApiDeleteInitAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.API_DELETE_INIT;
-    }
-    return ApiDeleteInitAction;
-}());
-var ApiDeleteSuccessAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function ApiDeleteSuccessAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.API_DELETE_SUCCESS;
-    }
-    return ApiDeleteSuccessAction;
-}());
-var ApiDeleteFailAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function ApiDeleteFailAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.API_DELETE_FAIL;
-    }
-    return ApiDeleteFailAction;
-}());
-var ApiGetInitAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function ApiGetInitAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.API_GET_INIT;
-    }
-    return ApiGetInitAction;
-}());
-var ApiGetSuccessAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function ApiGetSuccessAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.API_GET_SUCCESS;
-    }
-    return ApiGetSuccessAction;
-}());
-var ApiGetFailAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function ApiGetFailAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.API_GET_FAIL;
-    }
-    return ApiGetFailAction;
-}());
-var ApiRollbackAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function ApiRollbackAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.API_ROLLBACK;
-    }
-    return ApiRollbackAction;
-}());
-var ApiPatchInitAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function ApiPatchInitAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.API_PATCH_INIT;
-    }
-    return ApiPatchInitAction;
-}());
-var ApiPatchSuccessAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function ApiPatchSuccessAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.API_PATCH_SUCCESS;
-    }
-    return ApiPatchSuccessAction;
-}());
-var ApiPatchFailAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function ApiPatchFailAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.API_PATCH_FAIL;
-    }
-    return ApiPatchFailAction;
-}());
-var DeleteStoreResourceAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function DeleteStoreResourceAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.DELETE_STORE_RESOURCE;
-    }
-    return DeleteStoreResourceAction;
-}());
-var PatchStoreResourceAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function PatchStoreResourceAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.PATCH_STORE_RESOURCE;
-    }
-    return PatchStoreResourceAction;
-}());
-var NewStoreResourceAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function NewStoreResourceAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.NEW_STORE_RESOURCE;
-    }
-    return NewStoreResourceAction;
-}());
-var PostStoreResourceAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function PostStoreResourceAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.POST_STORE_RESOURCE;
-    }
-    return PostStoreResourceAction;
-}());
-var RemoveQueryAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function RemoveQueryAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.REMOVE_QUERY;
-    }
-    return RemoveQueryAction;
-}());
-var LocalQueryInitAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function LocalQueryInitAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.LOCAL_QUERY_INIT;
-    }
-    return LocalQueryInitAction;
-}());
-var LocalQuerySuccessAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function LocalQuerySuccessAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.LOCAL_QUERY_SUCCESS;
-    }
-    return LocalQuerySuccessAction;
-}());
-var LocalQueryFailAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function LocalQueryFailAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.LOCAL_QUERY_FAIL;
-    }
-    return LocalQueryFailAction;
-}());
-var CompactStoreAction = (function () {
-    function CompactStoreAction() {
-        this.type = NgrxJsonApiActionTypes.COMPACT_STORE;
-    }
-    return CompactStoreAction;
-}());
-var ClearStoreAction = (function () {
-    function ClearStoreAction() {
-        this.type = NgrxJsonApiActionTypes.CLEAR_STORE;
-    }
-    return ClearStoreAction;
-}());
-var ApiQueryRefreshAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function ApiQueryRefreshAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.API_QUERY_REFRESH;
-        if (!payload) {
-            throw new Error('no query id provided for ApiQueryRefreshAction');
-        }
-    }
-    return ApiQueryRefreshAction;
-}());
-var ModifyStoreResourceErrorsAction = (function () {
-    /**
-     * @param {?} payload
-     */
-    function ModifyStoreResourceErrorsAction(payload) {
-        this.payload = payload;
-        this.type = NgrxJsonApiActionTypes.MODIFY_STORE_RESOURCE_ERRORS;
-    }
-    return ModifyStoreResourceErrorsAction;
-}());
-var __assign$1 = (undefined && undefined.__assign) || Object.assign || function (t) {
+var __assign$2 = (undefined && undefined.__assign) || Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -323,6 +19,23 @@ var __assign$1 = (undefined && undefined.__assign) || Object.assign || function 
     }
     return t;
 };
+/**
+ * @param {?} state
+ * @param {?} path
+ * @param {?} value
+ * @return {?}
+ */
+function setIn(state, path, value) {
+    var /** @type {?} */ currentValue = lodash_index.get(state, path);
+    if (value === currentValue) {
+        return state;
+    }
+    return lodash_index.setWith(lodash_index.clone(state), path, value, function (nsValue, key, nsObject) {
+        var /** @type {?} */ newObject = lodash_index.clone(nsObject);
+        newObject[key] = nsValue;
+        return newObject;
+    });
+}
 var denormaliseObject = function (resource, storeData, bag) {
     // this function MUST MUTATE resource
     var /** @type {?} */ denormalised = resource;
@@ -454,12 +167,12 @@ var updateResourceObject = function (original, source) {
  *
  */
 var insertStoreResource = function (storeResources, resource, fromServer) {
-    var newStoreResources = __assign$1({}, storeResources);
+    var newStoreResources = __assign$2({}, storeResources);
     if (fromServer) {
-        newStoreResources[resource.id] = __assign$1({}, resource, { persistedResource: resource, state: 'IN_SYNC', errors: [], loading: false });
+        newStoreResources[resource.id] = __assign$2({}, resource, { persistedResource: resource, state: 'IN_SYNC', errors: [], loading: false });
     }
     else {
-        newStoreResources[resource.id] = __assign$1({}, resource, { persistedResource: null, state: 'CREATED', errors: [], loading: false });
+        newStoreResources[resource.id] = __assign$2({}, resource, { persistedResource: null, state: 'CREATED', errors: [], loading: false });
     }
     return lodash_index.isEqual(storeResources, newStoreResources)
         ? storeResources
@@ -471,8 +184,8 @@ var insertStoreResource = function (storeResources, resource, fromServer) {
  */
 var removeStoreResource = function (storeData, resourceId) {
     if (storeData[resourceId.type][resourceId.id]) {
-        var newState = __assign$1({}, storeData);
-        newState[resourceId.type] = __assign$1({}, newState[resourceId.type]);
+        var newState = __assign$2({}, storeData);
+        newState[resourceId.type] = __assign$2({}, newState[resourceId.type]);
         delete newState[resourceId.type][resourceId.id];
         return newState;
     }
@@ -490,9 +203,9 @@ var updateResourceState = function (storeData, resourceId, resourceState, loadin
     if (lodash_index.isUndefined(storeData[resourceId.type]) ||
         lodash_index.isUndefined(storeData[resourceId.type][resourceId.id])) {
         if (resourceState === 'DELETED') {
-            var newState_1 = __assign$1({}, storeData);
-            newState_1[resourceId.type] = __assign$1({}, newState_1[resourceId.type]);
-            newState_1[resourceId.type][resourceId.id] = __assign$1({}, newState_1[resourceId.type][resourceId.id]);
+            var newState_1 = __assign$2({}, storeData);
+            newState_1[resourceId.type] = __assign$2({}, newState_1[resourceId.type]);
+            newState_1[resourceId.type][resourceId.id] = __assign$2({}, newState_1[resourceId.type][resourceId.id]);
             newState_1[resourceId.type][resourceId.id] = {
                 type: resourceId.type,
                 id: resourceId.id,
@@ -505,9 +218,9 @@ var updateResourceState = function (storeData, resourceId, resourceState, loadin
             return storeData;
         }
     }
-    var newState = __assign$1({}, storeData);
-    newState[resourceId.type] = __assign$1({}, newState[resourceId.type]);
-    newState[resourceId.type][resourceId.id] = __assign$1({}, newState[resourceId.type][resourceId.id]);
+    var newState = __assign$2({}, storeData);
+    newState[resourceId.type] = __assign$2({}, newState[resourceId.type]);
+    newState[resourceId.type][resourceId.id] = __assign$2({}, newState[resourceId.type][resourceId.id]);
     if (resourceState !== null) {
         newState[resourceId.type][resourceId.id].state = resourceState;
     }
@@ -570,8 +283,8 @@ var updateStoreResource = function (state, resource, fromServer) {
             }
         }
     }
-    var /** @type {?} */ newState = __assign$1({}, state);
-    newState[resource.id] = (__assign$1({}, newResource, { persistedResource: persistedResource, state: newResourceState, errors: [], loading: false }));
+    var /** @type {?} */ newState = __assign$2({}, state);
+    newState[resource.id] = (__assign$2({}, newResource, { persistedResource: persistedResource, state: newResourceState, errors: [], loading: false }));
     return lodash_index.isEqual(newState[resource.id], state[resource.id])
         ? state
         : newState;
@@ -602,9 +315,9 @@ var updateResourceErrors = function (storeData, id, errors, modificationType) {
     if (!storeData[id.type] || !storeData[id.type][id.id]) {
         return storeData;
     }
-    var /** @type {?} */ newState = __assign$1({}, storeData);
-    newState[id.type] = __assign$1({}, newState[id.type]);
-    var /** @type {?} */ storeResource = __assign$1({}, newState[id.type][id.id]);
+    var /** @type {?} */ newState = __assign$2({}, storeData);
+    newState[id.type] = __assign$2({}, newState[id.type]);
+    var /** @type {?} */ storeResource = __assign$2({}, newState[id.type][id.id]);
     if (modificationType === 'SET') {
         storeResource.errors = [];
         if (errors) {
@@ -653,14 +366,14 @@ function rollbackResource(newState, type, id) {
         delete newState[type][id];
     }
     else if (storeResource.state !== 'IN_SYNC') {
-        newState[type][id] = (__assign$1({}, newState[type][id], { state: 'IN_SYNC', resource: newState[type][id].persistedResource }));
+        newState[type][id] = (__assign$2({}, newState[type][id], { state: 'IN_SYNC', resource: newState[type][id].persistedResource }));
     }
 }
 var rollbackStoreResources = function (storeData, ids, include) {
-    var /** @type {?} */ newState = __assign$1({}, storeData);
+    var /** @type {?} */ newState = __assign$2({}, storeData);
     if (lodash_index.isUndefined(ids)) {
         Object.keys(newState).forEach(function (type) {
-            newState[type] = __assign$1({}, newState[type]);
+            newState[type] = __assign$2({}, newState[type]);
             Object.keys(newState[type]).forEach(function (id) {
                 rollbackResource(newState, type, id);
             });
@@ -676,7 +389,7 @@ var rollbackStoreResources = function (storeData, ids, include) {
     return newState;
 };
 var deleteStoreResources = function (storeData, query) {
-    var /** @type {?} */ newState = __assign$1({}, storeData);
+    var /** @type {?} */ newState = __assign$2({}, storeData);
     // if an id is not provided, all resources of the provided type will be deleted
     if (typeof query.id === 'undefined') {
         newState[query.type] = {};
@@ -689,12 +402,12 @@ var deleteStoreResources = function (storeData, query) {
     return newState;
 };
 var clearQueryResult = function (storeData, queryId) {
-    var /** @type {?} */ newQuery = __assign$1({}, storeData[queryId]);
+    var /** @type {?} */ newQuery = __assign$2({}, storeData[queryId]);
     delete newQuery.resultIds;
     delete newQuery.errors;
     delete newQuery.meta;
     delete newQuery.links;
-    var /** @type {?} */ newState = __assign$1({}, storeData);
+    var /** @type {?} */ newState = __assign$2({}, storeData);
     newState[queryId] = newQuery;
     return newState;
 };
@@ -711,7 +424,7 @@ var clearQueryResult = function (storeData, queryId) {
  */
 var updateStoreDataFromResource = function (storeData, resource, fromServer, override) {
     if (lodash_index.isUndefined(storeData[resource.type])) {
-        var newStoreData = __assign$1({}, storeData);
+        var newStoreData = __assign$2({}, storeData);
         newStoreData[resource.type] = {};
         newStoreData[resource.type] = insertStoreResource(newStoreData[resource.type], resource, fromServer);
         return newStoreData;
@@ -720,7 +433,7 @@ var updateStoreDataFromResource = function (storeData, resource, fromServer, ove
         var updatedStoreResources = insertStoreResource(storeData[resource.type], resource, fromServer);
         // check if nothing has changed
         if (updatedStoreResources !== storeData[resource.type]) {
-            var newStoreData = __assign$1({}, storeData);
+            var newStoreData = __assign$2({}, storeData);
             newStoreData[resource.type] = updatedStoreResources;
             return newStoreData;
         }
@@ -730,7 +443,7 @@ var updateStoreDataFromResource = function (storeData, resource, fromServer, ove
         var updatedStoreResources = updateStoreResource(storeData[resource.type], resource, fromServer);
         // check if nothing has changed
         if (updatedStoreResources !== storeData[resource.type]) {
-            var newStoreData = __assign$1({}, storeData);
+            var newStoreData = __assign$2({}, storeData);
             newStoreData[resource.type] = updatedStoreResources;
             return newStoreData;
         }
@@ -775,13 +488,13 @@ var updateQueryParams = function (storeQueries, query) {
     if (!query.queryId) {
         return storeQueries;
     }
-    var newStoreQuery = __assign$1({}, storeQueries[query.queryId]);
+    var newStoreQuery = __assign$2({}, storeQueries[query.queryId]);
     newStoreQuery.loading = true;
     newStoreQuery.query = lodash_index.cloneDeep(query);
     if (lodash_index.isUndefined(newStoreQuery.errors)) {
         newStoreQuery.errors = [];
     }
-    var newStoreQueries = __assign$1({}, storeQueries);
+    var newStoreQueries = __assign$2({}, storeQueries);
     newStoreQueries[newStoreQuery.query.queryId] = newStoreQuery;
     return newStoreQueries;
 };
@@ -792,10 +505,12 @@ var updateQueryResults = function (storeQueries, queryId, document) {
     var storeQuery = storeQueries[queryId];
     if (storeQuery) {
         var data = lodash_index.isArray(document.data) ? document.data : [document.data];
-        var newQueryStore = __assign$1({}, storeQuery, { resultIds: data.map(function (it) { return (it ? toResourceIdentifier(it) : []); }), meta: document.meta, links: document.links, loading: false });
-        var newState = __assign$1({}, storeQueries);
-        newState[queryId] = newQueryStore;
-        return newState;
+        var newQueryStore = __assign$2({}, storeQuery, { resultIds: data.map(function (it) { return (it ? toResourceIdentifier(it) : []); }), meta: document.meta, links: document.links, loading: false });
+        if (!lodash_index.isEqual(newQueryStore, storeQuery)) {
+            var newState = __assign$2({}, storeQueries);
+            newState[queryId] = newQueryStore;
+            return newState;
+        }
     }
     return storeQueries;
 };
@@ -809,8 +524,8 @@ var updateQueryErrors = function (storeQueries, queryId, document) {
     if (!queryId || !storeQueries[queryId]) {
         return storeQueries;
     }
-    var newState = __assign$1({}, storeQueries);
-    var newStoreQuery = __assign$1({}, newState[queryId]);
+    var newState = __assign$2({}, storeQueries);
+    var newStoreQuery = __assign$2({}, newState[queryId]);
     newStoreQuery.errors = [];
     if (document.errors) {
         (_a = newStoreQuery.errors).push.apply(_a, document.errors);
@@ -823,7 +538,7 @@ var updateQueryErrors = function (storeQueries, queryId, document) {
  * Removes a query given its queryId from the NgrxJsonApiStoreQueries.
  */
 var removeQuery = function (storeQueries, queryId) {
-    var newState = __assign$1({}, storeQueries);
+    var newState = __assign$2({}, storeQueries);
     delete newState[queryId];
     return newState;
 };
@@ -1340,6 +1055,715 @@ function getPendingChanges(state, ids, include, includeNew) {
     }
     return pending;
 }
+var __assign$1 = (undefined && undefined.__assign) || Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s)
+            if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+    }
+    return t;
+};
+/**
+ * @return {?}
+ */
+function selectNgrxJson() {
+    return function (state$) {
+        return state$.select('NgrxJsonApi')
+            .map(function (it) { /** @type {?} */ return (it); })
+            .filter(function (it) { return !lodash_index.isUndefined(it); });
+    };
+}
+/**
+ * @return {?}
+ */
+function selectNgrxJsonApiDefaultZone() {
+    return selectNgrxJsonApiZone(NGRX_JSON_API_DEFAULT_ZONE);
+}
+/**
+ * @param {?} zoneId
+ * @return {?}
+ */
+function selectNgrxJsonApiZone(zoneId) {
+    return function (state$) {
+        return state$.let(selectNgrxJson())
+            .map(function (it) { /** @type {?} */ return (it.zones[zoneId]); });
+    };
+}
+/**
+ * @param {?} state
+ * @param {?} zoneId
+ * @return {?}
+ */
+function getNgrxJsonApiZone(state, zoneId) {
+    return (state['NgrxJsonApi']['zones'][zoneId]);
+}
+/**
+ * @param {?} queryId
+ * @return {?}
+ */
+function selectStoreQuery(queryId) {
+    return function (state$) {
+        return state$
+            .map(function (state) { return state.queries[queryId]; });
+    };
+}
+/**
+ * @param {?} type
+ * @return {?}
+ */
+function selectStoreResourcesOfType(type) {
+    return function (state$) {
+        return state$
+            .map(function (state) { return state.data; })
+            .map(function (data) { return (data ? data[type] : undefined); });
+    };
+}
+/**
+ * @param {?} identifier
+ * @return {?}
+ */
+function selectStoreResource(identifier) {
+    return function (state$) {
+        return state$
+            .let(selectStoreResourcesOfType(identifier.type))
+            .map(function (resources) { /** @type {?} */ return ((resources ? resources[identifier.id] : undefined)); });
+    };
+}
+/**
+ * @param {?} queryId
+ * @param {?=} denormalize
+ * @return {?}
+ */
+function selectManyQueryResult(queryId, denormalize) {
+    return function (state$) {
+        return state$.map(function (state) {
+            var /** @type {?} */ storeQuery = state.queries[queryId];
+            if (!storeQuery) {
+                return undefined;
+            }
+            if (lodash_index.isEmpty(storeQuery.resultIds)) {
+                var /** @type {?} */ queryResult = __assign$1({}, storeQuery, { data: lodash_index.isUndefined(storeQuery.resultIds) ? undefined : [] });
+                return queryResult;
+            }
+            else {
+                var /** @type {?} */ results = storeQuery.resultIds.map(function (id) { return (state.data[id.type] ? state.data[id.type][id.id] : undefined); });
+                if (denormalize) {
+                    results = denormaliseStoreResources(results, state.data);
+                }
+                return __assign$1({}, storeQuery, { data: /** @type {?} */ (results) });
+            }
+        });
+    };
+}
+/**
+ * @param {?} queryId
+ * @param {?=} denormalize
+ * @return {?}
+ */
+function selectOneQueryResult(queryId, denormalize) {
+    return function (state$) {
+        return state$.map(function (state) {
+            var /** @type {?} */ storeQuery = state.queries[queryId];
+            if (!storeQuery) {
+                return undefined;
+            }
+            if (lodash_index.isEmpty(storeQuery.resultIds)) {
+                var /** @type {?} */ queryResult = __assign$1({}, storeQuery, { data: lodash_index.isUndefined(storeQuery.resultIds) ? undefined : null });
+                return queryResult;
+            }
+            else {
+                if (storeQuery.resultIds.length >= 2) {
+                    throw new Error('expected single result for query ' + storeQuery.query.queryId);
+                }
+                var /** @type {?} */ resultId = storeQuery.resultIds[0];
+                var /** @type {?} */ result = state.data[resultId.type]
+                    ? state.data[resultId.type][resultId.id]
+                    : undefined;
+                if (denormalize) {
+                    result = denormaliseStoreResource(result, state.data);
+                }
+                var /** @type {?} */ queryResult = __assign$1({}, storeQuery, { data: result });
+                return queryResult;
+            }
+        });
+    };
+}
+/**
+ * deprecated, to not use any longer
+ * @param {?} state$
+ * @return {?}
+ */
+function getNgrxJsonApiStore(state$) {
+    return state$.let(selectNgrxJsonApiDefaultZone());
+}
+/**
+ * deprecated, to not use any longer
+ */
+var NgrxJsonApiSelectors = (function () {
+    function NgrxJsonApiSelectors() {
+    }
+    /**
+     * @return {?}
+     */
+    NgrxJsonApiSelectors.prototype.getNgrxJsonApiStore$ = function () {
+        return function (state$) {
+            return state$.let(selectNgrxJsonApiDefaultZone());
+        };
+    };
+    /**
+     * @return {?}
+     */
+    NgrxJsonApiSelectors.prototype.getStoreData$ = function () {
+        return function (state$) {
+            return state$.select('data');
+        };
+    };
+    /**
+     * @param {?} type
+     * @return {?}
+     */
+    NgrxJsonApiSelectors.prototype.getStoreResourceOfType$ = function (type) {
+        var _this = this;
+        return function (state$) {
+            return state$
+                .let(_this.getStoreData$())
+                .map(function (resources) { return (resources ? resources[type] : undefined); });
+        };
+    };
+    /**
+     * @return {?}
+     */
+    NgrxJsonApiSelectors.prototype.getStoreQueries$ = function () {
+        return function (state$) {
+            return state$.select('queries');
+        };
+    };
+    /**
+     * @param {?} queryId
+     * @return {?}
+     */
+    NgrxJsonApiSelectors.prototype.getResourceQuery$ = function (queryId) {
+        return selectStoreQuery(queryId);
+    };
+    /**
+     * @param {?} identifier
+     * @return {?}
+     */
+    NgrxJsonApiSelectors.prototype.getStoreResource$ = function (identifier) {
+        return selectStoreResource(identifier);
+    };
+    /**
+     * @param {?} queryId
+     * @param {?} denormalize
+     * @return {?}
+     */
+    NgrxJsonApiSelectors.prototype.getManyResults$ = function (queryId, denormalize) {
+        return selectManyQueryResult(queryId, denormalize);
+    };
+    /**
+     * @param {?} queryId
+     * @param {?} denormalize
+     * @return {?}
+     */
+    NgrxJsonApiSelectors.prototype.getOneResult$ = function (queryId, denormalize) {
+        return selectOneQueryResult(queryId, denormalize);
+    };
+    /**
+     * @param {?} identifier
+     * @return {?}
+     */
+    NgrxJsonApiSelectors.prototype.getPersistedResource$ = function (identifier) {
+        var _this = this;
+        return function (state$) {
+            return state$
+                .let(_this.getStoreResource$(identifier))
+                .map(function (it) { return (it ? it.persistedResource : undefined); });
+        };
+    };
+    return NgrxJsonApiSelectors;
+}());
+var __extends$1 = (undefined && undefined.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b)
+            if (b.hasOwnProperty(p))
+                d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var NgrxJsonApiActionTypes = {
+    API_POST_INIT: '[NgrxJsonApi] API_POST_INIT',
+    API_POST_SUCCESS: '[NgrxJsonApi] API_POST_SUCCESS',
+    API_POST_FAIL: '[NgrxJsonApi] API_POST_FAIL',
+    API_GET_INIT: '[NgrxJsonApi] API_GET_INIT',
+    API_GET_SUCCESS: '[NgrxJsonApi] API_GET_SUCCESS',
+    API_GET_FAIL: '[NgrxJsonApi] API_GET_FAIL',
+    API_PATCH_INIT: '[NgrxJsonApi] API_PATCH_INIT',
+    API_PATCH_SUCCESS: '[NgrxJsonApi] API_PATCH_SUCCESS',
+    API_PATCH_FAIL: '[NgrxJsonApi] API_PATCH_FAIL',
+    API_DELETE_INIT: '[NgrxJsonApi] API_DELETE_INIT',
+    API_DELETE_SUCCESS: '[NgrxJsonApi] API_DELETE_SUCCESS',
+    API_DELETE_FAIL: '[NgrxJsonApi] API_DELETE_FAIL',
+    API_APPLY_INIT: '[NgrxJsonApi] API_APPLY_INIT',
+    API_APPLY_SUCCESS: '[NgrxJsonApi] API_APPLY_SUCCESS',
+    API_APPLY_FAIL: '[NgrxJsonApi] API_APPLY_FAIL',
+    API_ROLLBACK: '[NgrxJsonApi] API_ROLLBACK',
+    API_QUERY_REFRESH: '[NgrxJsonApi] API_QUERY_REFRESH',
+    LOCAL_QUERY_INIT: '[NgrxJsonApi] LOCAL_QUERY_INIT',
+    LOCAL_QUERY_SUCCESS: '[NgrxJsonApi] LOCAL_QUERY_SUCCESS',
+    LOCAL_QUERY_FAIL: '[NgrxJsonApi] LOCAL_QUERY_FAIL',
+    DELETE_STORE_RESOURCE: '[NgrxJsonApi] DELETE_STORE_RESOURCE',
+    PATCH_STORE_RESOURCE: '[NgrxJsonApi] PATCH_STORE_RESOURCE',
+    NEW_STORE_RESOURCE: '[NgrxJsonApi] NEW_STORE_RESOURCE',
+    POST_STORE_RESOURCE: '[NgrxJsonApi] POST_STORE_RESOURCE',
+    MODIFY_STORE_RESOURCE_ERRORS: '[NgrxJsonApi] MODIFY_STORE_RESOURCE_ERRORS',
+    REMOVE_QUERY: '[NgrxJsonApi] REMOVE_QUERY',
+    COMPACT_STORE: '[NgrxJsonApi] COMPACT_STORE',
+    CLEAR_STORE: '[NgrxJsonApi] CLEAR_STORE',
+};
+/**
+ * @abstract
+ */
+var NgrxJsonApiAction = (function () {
+    function NgrxJsonApiAction() {
+    }
+    return NgrxJsonApiAction;
+}());
+var ApiApplyInitAction = (function (_super) {
+    __extends$1(ApiApplyInitAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function ApiApplyInitAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.API_APPLY_INIT;
+        return _this;
+    }
+    return ApiApplyInitAction;
+}(NgrxJsonApiAction));
+var ApiApplySuccessAction = (function (_super) {
+    __extends$1(ApiApplySuccessAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function ApiApplySuccessAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.API_APPLY_SUCCESS;
+        return _this;
+    }
+    return ApiApplySuccessAction;
+}(NgrxJsonApiAction));
+var ApiApplyFailAction = (function (_super) {
+    __extends$1(ApiApplyFailAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function ApiApplyFailAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.API_APPLY_FAIL;
+        return _this;
+    }
+    return ApiApplyFailAction;
+}(NgrxJsonApiAction));
+var ApiPostInitAction = (function (_super) {
+    __extends$1(ApiPostInitAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function ApiPostInitAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.API_POST_INIT;
+        return _this;
+    }
+    return ApiPostInitAction;
+}(NgrxJsonApiAction));
+var ApiPostSuccessAction = (function (_super) {
+    __extends$1(ApiPostSuccessAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function ApiPostSuccessAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.API_POST_SUCCESS;
+        return _this;
+    }
+    return ApiPostSuccessAction;
+}(NgrxJsonApiAction));
+var ApiPostFailAction = (function (_super) {
+    __extends$1(ApiPostFailAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function ApiPostFailAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.API_POST_FAIL;
+        return _this;
+    }
+    return ApiPostFailAction;
+}(NgrxJsonApiAction));
+var ApiDeleteInitAction = (function (_super) {
+    __extends$1(ApiDeleteInitAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function ApiDeleteInitAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.API_DELETE_INIT;
+        return _this;
+    }
+    return ApiDeleteInitAction;
+}(NgrxJsonApiAction));
+var ApiDeleteSuccessAction = (function (_super) {
+    __extends$1(ApiDeleteSuccessAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function ApiDeleteSuccessAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.API_DELETE_SUCCESS;
+        return _this;
+    }
+    return ApiDeleteSuccessAction;
+}(NgrxJsonApiAction));
+var ApiDeleteFailAction = (function (_super) {
+    __extends$1(ApiDeleteFailAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function ApiDeleteFailAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.API_DELETE_FAIL;
+        return _this;
+    }
+    return ApiDeleteFailAction;
+}(NgrxJsonApiAction));
+var ApiGetInitAction = (function (_super) {
+    __extends$1(ApiGetInitAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function ApiGetInitAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.API_GET_INIT;
+        return _this;
+    }
+    return ApiGetInitAction;
+}(NgrxJsonApiAction));
+var ApiGetSuccessAction = (function (_super) {
+    __extends$1(ApiGetSuccessAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function ApiGetSuccessAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.API_GET_SUCCESS;
+        return _this;
+    }
+    return ApiGetSuccessAction;
+}(NgrxJsonApiAction));
+var ApiGetFailAction = (function (_super) {
+    __extends$1(ApiGetFailAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function ApiGetFailAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.API_GET_FAIL;
+        return _this;
+    }
+    return ApiGetFailAction;
+}(NgrxJsonApiAction));
+var ApiRollbackAction = (function (_super) {
+    __extends$1(ApiRollbackAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function ApiRollbackAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.API_ROLLBACK;
+        return _this;
+    }
+    return ApiRollbackAction;
+}(NgrxJsonApiAction));
+var ApiPatchInitAction = (function (_super) {
+    __extends$1(ApiPatchInitAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function ApiPatchInitAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.API_PATCH_INIT;
+        return _this;
+    }
+    return ApiPatchInitAction;
+}(NgrxJsonApiAction));
+var ApiPatchSuccessAction = (function (_super) {
+    __extends$1(ApiPatchSuccessAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function ApiPatchSuccessAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.API_PATCH_SUCCESS;
+        return _this;
+    }
+    return ApiPatchSuccessAction;
+}(NgrxJsonApiAction));
+var ApiPatchFailAction = (function (_super) {
+    __extends$1(ApiPatchFailAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function ApiPatchFailAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.API_PATCH_FAIL;
+        return _this;
+    }
+    return ApiPatchFailAction;
+}(NgrxJsonApiAction));
+var DeleteStoreResourceAction = (function (_super) {
+    __extends$1(DeleteStoreResourceAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function DeleteStoreResourceAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.DELETE_STORE_RESOURCE;
+        return _this;
+    }
+    return DeleteStoreResourceAction;
+}(NgrxJsonApiAction));
+var PatchStoreResourceAction = (function (_super) {
+    __extends$1(PatchStoreResourceAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function PatchStoreResourceAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.PATCH_STORE_RESOURCE;
+        return _this;
+    }
+    return PatchStoreResourceAction;
+}(NgrxJsonApiAction));
+var NewStoreResourceAction = (function (_super) {
+    __extends$1(NewStoreResourceAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function NewStoreResourceAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.NEW_STORE_RESOURCE;
+        return _this;
+    }
+    return NewStoreResourceAction;
+}(NgrxJsonApiAction));
+var PostStoreResourceAction = (function (_super) {
+    __extends$1(PostStoreResourceAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function PostStoreResourceAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.POST_STORE_RESOURCE;
+        return _this;
+    }
+    return PostStoreResourceAction;
+}(NgrxJsonApiAction));
+var RemoveQueryAction = (function (_super) {
+    __extends$1(RemoveQueryAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function RemoveQueryAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.REMOVE_QUERY;
+        return _this;
+    }
+    return RemoveQueryAction;
+}(NgrxJsonApiAction));
+var LocalQueryInitAction = (function (_super) {
+    __extends$1(LocalQueryInitAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function LocalQueryInitAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.LOCAL_QUERY_INIT;
+        return _this;
+    }
+    return LocalQueryInitAction;
+}(NgrxJsonApiAction));
+var LocalQuerySuccessAction = (function (_super) {
+    __extends$1(LocalQuerySuccessAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function LocalQuerySuccessAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.LOCAL_QUERY_SUCCESS;
+        return _this;
+    }
+    return LocalQuerySuccessAction;
+}(NgrxJsonApiAction));
+var LocalQueryFailAction = (function (_super) {
+    __extends$1(LocalQueryFailAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function LocalQueryFailAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.LOCAL_QUERY_FAIL;
+        return _this;
+    }
+    return LocalQueryFailAction;
+}(NgrxJsonApiAction));
+var CompactStoreAction = (function (_super) {
+    __extends$1(CompactStoreAction, _super);
+    /**
+     * @param {?} zoneId
+     */
+    function CompactStoreAction(zoneId) {
+        var _this = _super.call(this) || this;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.COMPACT_STORE;
+        return _this;
+    }
+    return CompactStoreAction;
+}(NgrxJsonApiAction));
+var ClearStoreAction = (function (_super) {
+    __extends$1(ClearStoreAction, _super);
+    /**
+     * @param {?} zoneId
+     */
+    function ClearStoreAction(zoneId) {
+        var _this = _super.call(this) || this;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.CLEAR_STORE;
+        return _this;
+    }
+    return ClearStoreAction;
+}(NgrxJsonApiAction));
+var ApiQueryRefreshAction = (function (_super) {
+    __extends$1(ApiQueryRefreshAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function ApiQueryRefreshAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.API_QUERY_REFRESH;
+        if (!payload) {
+            throw new Error('no query id provided for ApiQueryRefreshAction');
+        }
+        return _this;
+    }
+    return ApiQueryRefreshAction;
+}(NgrxJsonApiAction));
+var ModifyStoreResourceErrorsAction = (function (_super) {
+    __extends$1(ModifyStoreResourceErrorsAction, _super);
+    /**
+     * @param {?} payload
+     * @param {?} zoneId
+     */
+    function ModifyStoreResourceErrorsAction(payload, zoneId) {
+        var _this = _super.call(this) || this;
+        _this.payload = payload;
+        _this.zoneId = zoneId;
+        _this.type = NgrxJsonApiActionTypes.MODIFY_STORE_RESOURCE_ERRORS;
+        return _this;
+    }
+    return ModifyStoreResourceErrorsAction;
+}(NgrxJsonApiAction));
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b)
+            if (b.hasOwnProperty(p))
+                d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __assign = (undefined && undefined.__assign) || Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
@@ -1349,16 +1773,236 @@ var __assign = (undefined && undefined.__assign) || Object.assign || function (t
     }
     return t;
 };
-var NgrxJsonApiService = (function () {
+/**
+ * Represents an isolated area in the store with its own set of resources and queries.
+ * 'api' is the default zone that already historically has been put beneath NgrxJsonApi within the store.
+ */
+var NgrxJsonApiZoneService = (function () {
+    /**
+     * @param {?} zoneId
+     * @param {?} store
+     */
+    function NgrxJsonApiZoneService(zoneId, store) {
+        this.zoneId = zoneId;
+        this.store = store;
+    }
+    /**
+     * Adds the given query to the store. Any existing query with the same queryId is replaced.
+     * Make use of selectResults(...) to fetch the data.
+     * @param {?} options
+     * @return {?}
+     */
+    NgrxJsonApiZoneService.prototype.putQuery = function (options) {
+        var /** @type {?} */ query = options.query;
+        var /** @type {?} */ fromServer = lodash_index.isUndefined(options.fromServer)
+            ? true
+            : options.fromServer;
+        if (!query.queryId) {
+            throw new Error('to query must have a queryId');
+        }
+        if (fromServer) {
+            this.store.dispatch(new ApiGetInitAction(query, this.zoneId));
+        }
+        else {
+            this.store.dispatch(new LocalQueryInitAction(query, this.zoneId));
+        }
+    };
+    /**
+     * @param {?} queryId
+     * @return {?}
+     */
+    NgrxJsonApiZoneService.prototype.refreshQuery = function (queryId) {
+        this.store.dispatch(new ApiQueryRefreshAction(queryId, this.zoneId));
+    };
+    /**
+     * @param {?} queryId
+     * @return {?}
+     */
+    NgrxJsonApiZoneService.prototype.removeQuery = function (queryId) {
+        this.store.dispatch(new RemoveQueryAction(queryId, this.zoneId));
+    };
+    /**
+     * Selects the data of the given query.
+     *
+     * @param {?} queryId
+     * @param {?=} denormalize
+     * @return {?} observable holding the data as array of resources.
+     */
+    NgrxJsonApiZoneService.prototype.selectManyResults = function (queryId, denormalize) {
+        if (denormalize === void 0) {
+            denormalize = false;
+        }
+        return this.store.let(selectNgrxJsonApiZone(this.zoneId)).let(selectManyQueryResult(queryId, denormalize));
+    };
+    /**
+     * Selects the data of the given query.
+     *
+     * @param {?} queryId
+     * @param {?=} denormalize
+     * @return {?} observable holding the data as array of resources.
+     */
+    NgrxJsonApiZoneService.prototype.selectOneResults = function (queryId, denormalize) {
+        if (denormalize === void 0) {
+            denormalize = false;
+        }
+        return this.store.let(selectNgrxJsonApiZone(this.zoneId)).let(selectOneQueryResult(queryId, denormalize));
+    };
+    /**
+     * @param {?} identifier of the resource
+     * @return {?} observable of the resource
+     */
+    NgrxJsonApiZoneService.prototype.selectStoreResource = function (identifier) {
+        return this.store.let(selectNgrxJsonApiZone(this.zoneId)).let(selectStoreResource(identifier));
+    };
+    /**
+     * Updates the given resource in the store with the provided data.
+     * Use commit() to send the changes to the remote JSON API endpoint.
+     *
+     * @param {?} options
+     * @return {?}
+     */
+    NgrxJsonApiZoneService.prototype.patchResource = function (options) {
+        var /** @type {?} */ resource = options.resource;
+        var /** @type {?} */ toRemote = lodash_index.isUndefined(options.toRemote) ? false : options.toRemote;
+        if (toRemote) {
+            this.store.dispatch(new ApiPatchInitAction(resource, this.zoneId));
+        }
+        else {
+            this.store.dispatch(new PatchStoreResourceAction(resource, this.zoneId));
+        }
+    };
+    /**
+     * Creates a new resources that is hold locally in the store
+     * and my later be posted.
+     *
+     * @param {?} options
+     * @return {?}
+     */
+    NgrxJsonApiZoneService.prototype.newResource = function (options) {
+        var /** @type {?} */ resource = options.resource;
+        this.store.dispatch(new NewStoreResourceAction(resource, this.zoneId));
+    };
+    /**
+     * Adds the given resource to the store. Any already existing
+     * resource with the same id gets replaced. Use commit() to send
+     * the changes to the remote JSON API endpoint.
+     *
+     * @param {?} options
+     * @return {?}
+     */
+    NgrxJsonApiZoneService.prototype.postResource = function (options) {
+        var /** @type {?} */ resource = options.resource;
+        var /** @type {?} */ toRemote = lodash_index.isUndefined(options.toRemote) ? false : options.toRemote;
+        if (toRemote) {
+            this.store.dispatch(new ApiPostInitAction(resource, this.zoneId));
+        }
+        else {
+            this.store.dispatch(new PostStoreResourceAction(resource, this.zoneId));
+        }
+    };
+    /**
+     * Marks the given resource for deletion.
+     *
+     * @param {?} options
+     * @return {?}
+     */
+    NgrxJsonApiZoneService.prototype.deleteResource = function (options) {
+        var /** @type {?} */ resourceId = options.resourceId;
+        var /** @type {?} */ toRemote = lodash_index.isUndefined(options.toRemote) ? false : options.toRemote;
+        if (toRemote) {
+            this.store.dispatch(new ApiDeleteInitAction(resourceId, this.zoneId));
+        }
+        else {
+            this.store.dispatch(new DeleteStoreResourceAction(resourceId, this.zoneId));
+        }
+    };
+    /**
+     * Applies all pending changes to the remote JSON API endpoint.
+     * @return {?}
+     */
+    NgrxJsonApiZoneService.prototype.apply = function () {
+        this.store.dispatch(new ApiApplyInitAction({}, this.zoneId));
+    };
+    /**
+     * Clear all the contents from the store.
+     * @return {?}
+     */
+    NgrxJsonApiZoneService.prototype.clear = function () {
+        this.store.dispatch(new ClearStoreAction(this.zoneId));
+    };
+    /**
+     * Compacts the store by removing unreferences and unchanges resources.
+     * @return {?}
+     */
+    NgrxJsonApiZoneService.prototype.compact = function () {
+        this.store.dispatch(new CompactStoreAction(this.zoneId));
+    };
+    /**
+     * Adds the given errors to the resource with the given id.
+     * @param {?} id
+     * @param {?} errors
+     * @return {?}
+     */
+    NgrxJsonApiZoneService.prototype.addResourceErrors = function (id, errors) {
+        this.store.dispatch(new ModifyStoreResourceErrorsAction({
+            resourceId: id,
+            errors: errors,
+            modificationType: 'ADD',
+        }, this.zoneId));
+    };
+    /**
+     * Removes the given errors to the resource with the given id.
+     * @param {?} id
+     * @param {?} errors
+     * @return {?}
+     */
+    NgrxJsonApiZoneService.prototype.removeResourceErrors = function (id, errors) {
+        this.store.dispatch(new ModifyStoreResourceErrorsAction({
+            resourceId: id,
+            errors: errors,
+            modificationType: 'REMOVE',
+        }, this.zoneId));
+    };
+    /**
+     * Sets the given errors to the resource with the given id.
+     * @param {?} id
+     * @param {?} errors
+     * @return {?}
+     */
+    NgrxJsonApiZoneService.prototype.setResourceErrors = function (id, errors) {
+        this.store.dispatch(new ModifyStoreResourceErrorsAction({
+            resourceId: id,
+            errors: errors,
+            modificationType: 'SET',
+        }, this.zoneId));
+    };
+    return NgrxJsonApiZoneService;
+}());
+var NgrxJsonApiService = (function (_super) {
+    __extends(NgrxJsonApiService, _super);
     /**
      * @param {?} store
-     * @param {?} selectors
+     * @param {?} config
      */
-    function NgrxJsonApiService(store, selectors) {
-        this.store = store;
-        this.selectors = selectors;
-        this.test = true;
+    function NgrxJsonApiService(store, config) {
+        var _this = _super.call(this, NGRX_JSON_API_DEFAULT_ZONE, store) || this;
+        _this.config = config;
+        _this.test = true;
+        return _this;
     }
+    /**
+     * @return {?}
+     */
+    NgrxJsonApiService.prototype.getDefaultZone = function () {
+        return this;
+    };
+    /**
+     * @param {?} zoneId
+     * @return {?}
+     */
+    NgrxJsonApiService.prototype.getZone = function (zoneId) {
+        return new NgrxJsonApiZoneService(zoneId, this.store);
+    };
     /**
      * @param {?} options
      * @return {?}
@@ -1381,7 +2025,7 @@ var NgrxJsonApiService = (function () {
             var _this = this;
             if (!this._storeSnapshot) {
                 this.store
-                    .let(this.selectors.getNgrxJsonApiStore$())
+                    .let(selectNgrxJsonApiDefaultZone())
                     .subscribe(function (it) { return (_this._storeSnapshot = (it)); });
                 if (!this._storeSnapshot) {
                     throw new Error('failed to initialize store snapshot');
@@ -1392,41 +2036,6 @@ var NgrxJsonApiService = (function () {
         enumerable: true,
         configurable: true
     });
-    /**
-     * Adds the given query to the store. Any existing query with the same queryId is replaced.
-     * Make use of selectResults(...) to fetch the data.
-     * @param {?} options
-     * @return {?}
-     */
-    NgrxJsonApiService.prototype.putQuery = function (options) {
-        var /** @type {?} */ query = options.query;
-        var /** @type {?} */ fromServer = lodash_index.isUndefined(options.fromServer)
-            ? true
-            : options.fromServer;
-        if (!query.queryId) {
-            throw new Error('to query must have a queryId');
-        }
-        if (fromServer) {
-            this.store.dispatch(new ApiGetInitAction(query));
-        }
-        else {
-            this.store.dispatch(new LocalQueryInitAction(query));
-        }
-    };
-    /**
-     * @param {?} queryId
-     * @return {?}
-     */
-    NgrxJsonApiService.prototype.refreshQuery = function (queryId) {
-        this.store.dispatch(new ApiQueryRefreshAction(queryId));
-    };
-    /**
-     * @param {?} queryId
-     * @return {?}
-     */
-    NgrxJsonApiService.prototype.removeQuery = function (queryId) {
-        this.store.dispatch(new RemoveQueryAction(queryId));
-    };
     /**
      * @param {?} options
      * @param {?} multi
@@ -1497,54 +2106,13 @@ var NgrxJsonApiService = (function () {
         return null;
     };
     /**
-     * Selects the data of the given query.
-     *
-     * @param {?} queryId
-     * @param {?=} denormalize
-     * @return {?} observable holding the data as array of resources.
-     */
-    NgrxJsonApiService.prototype.selectManyResults = function (queryId, denormalize) {
-        if (denormalize === void 0) {
-            denormalize = false;
-        }
-        var /** @type {?} */ queryResult$ = this.store
-            .let(this.selectors.getNgrxJsonApiStore$())
-            .let(this.selectors.getManyResults$(queryId, denormalize));
-        return queryResult$;
-    };
-    /**
-     * Selects the data of the given query.
-     *
-     * @param {?} queryId
-     * @param {?=} denormalize
-     * @return {?} observable holding the data as array of resources.
-     */
-    NgrxJsonApiService.prototype.selectOneResults = function (queryId, denormalize) {
-        if (denormalize === void 0) {
-            denormalize = false;
-        }
-        var /** @type {?} */ queryResult$ = this.store
-            .let(this.selectors.getNgrxJsonApiStore$())
-            .let(this.selectors.getOneResult$(queryId, denormalize));
-        return (queryResult$);
-    };
-    /**
-     * @param {?} identifier of the resource
-     * @return {?} observable of the resource
-     */
-    NgrxJsonApiService.prototype.selectStoreResource = function (identifier) {
-        return this.store
-            .let(this.selectors.getNgrxJsonApiStore$())
-            .let(this.selectors.getStoreResource$(identifier));
-    };
-    /**
      * @param {?} storeResource$
      * @return {?}
      */
     NgrxJsonApiService.prototype.denormaliseResource = function (storeResource$) {
         return (storeResource$.combineLatest(this.store
-            .let(this.selectors.getNgrxJsonApiStore$())
-            .let(this.selectors.getStoreData$()), function (storeResource, storeData) {
+            .let(selectNgrxJsonApiZone(this.zoneId))
+            .map(function (state) { return state.data; }), function (storeResource, storeData) {
             if (lodash_index.isArray(storeResource)) {
                 return denormaliseStoreResources(/** @type {?} */ (storeResource), storeData);
             }
@@ -1560,8 +2128,8 @@ var NgrxJsonApiService = (function () {
      * @return {?}
      */
     NgrxJsonApiService.prototype.getDenormalisedPath = function (path, resourceType) {
-        var /** @type {?} */ pathSeparator = (lodash_index.get(this.selectors.config, 'filteringConfig.pathSeparator'));
-        return getDenormalisedPath(path, resourceType, this.selectors.config.resourceDefinitions, pathSeparator);
+        var /** @type {?} */ pathSeparator = (lodash_index.get(this.config, 'filteringConfig.pathSeparator'));
+        return getDenormalisedPath(path, resourceType, this.config.resourceDefinitions, pathSeparator);
     };
     /**
      * @param {?} path
@@ -1569,133 +2137,11 @@ var NgrxJsonApiService = (function () {
      * @return {?}
      */
     NgrxJsonApiService.prototype.getDenormalisedValue = function (path, storeResource) {
-        var /** @type {?} */ pathSeparator = (lodash_index.get(this.selectors.config, 'filteringConfig.pathSeparator'));
-        return getDenormalisedValue(path, storeResource, this.selectors.config.resourceDefinitions, pathSeparator);
-    };
-    /**
-     * Updates the given resource in the store with the provided data.
-     * Use commit() to send the changes to the remote JSON API endpoint.
-     *
-     * @param {?} options
-     * @return {?}
-     */
-    NgrxJsonApiService.prototype.patchResource = function (options) {
-        var /** @type {?} */ resource = options.resource;
-        var /** @type {?} */ toRemote = lodash_index.isUndefined(options.toRemote) ? false : options.toRemote;
-        if (toRemote) {
-            this.store.dispatch(new ApiPatchInitAction(resource));
-        }
-        else {
-            this.store.dispatch(new PatchStoreResourceAction(resource));
-        }
-    };
-    /**
-     * Creates a new resources that is hold locally in the store
-     * and my later be posted.
-     *
-     * @param {?} options
-     * @return {?}
-     */
-    NgrxJsonApiService.prototype.newResource = function (options) {
-        var /** @type {?} */ resource = options.resource;
-        this.store.dispatch(new NewStoreResourceAction(resource));
-    };
-    /**
-     * Adds the given resource to the store. Any already existing
-     * resource with the same id gets replaced. Use commit() to send
-     * the changes to the remote JSON API endpoint.
-     *
-     * @param {?} options
-     * @return {?}
-     */
-    NgrxJsonApiService.prototype.postResource = function (options) {
-        var /** @type {?} */ resource = options.resource;
-        var /** @type {?} */ toRemote = lodash_index.isUndefined(options.toRemote) ? false : options.toRemote;
-        if (toRemote) {
-            this.store.dispatch(new ApiPostInitAction(resource));
-        }
-        else {
-            this.store.dispatch(new PostStoreResourceAction(resource));
-        }
-    };
-    /**
-     * Marks the given resource for deletion.
-     *
-     * @param {?} options
-     * @return {?}
-     */
-    NgrxJsonApiService.prototype.deleteResource = function (options) {
-        var /** @type {?} */ resourceId = options.resourceId;
-        var /** @type {?} */ toRemote = lodash_index.isUndefined(options.toRemote) ? false : options.toRemote;
-        if (toRemote) {
-            this.store.dispatch(new ApiDeleteInitAction(resourceId));
-        }
-        else {
-            this.store.dispatch(new DeleteStoreResourceAction(resourceId));
-        }
-    };
-    /**
-     * Applies all pending changes to the remote JSON API endpoint.
-     * @return {?}
-     */
-    NgrxJsonApiService.prototype.apply = function () {
-        this.store.dispatch(new ApiApplyInitAction({}));
-    };
-    /**
-     * Clear all the contents from the store.
-     * @return {?}
-     */
-    NgrxJsonApiService.prototype.clear = function () {
-        this.store.dispatch(new ClearStoreAction());
-    };
-    /**
-     * Compacts the store by removing unreferences and unchanges resources.
-     * @return {?}
-     */
-    NgrxJsonApiService.prototype.compact = function () {
-        this.store.dispatch(new CompactStoreAction());
-    };
-    /**
-     * Adds the given errors to the resource with the given id.
-     * @param {?} id
-     * @param {?} errors
-     * @return {?}
-     */
-    NgrxJsonApiService.prototype.addResourceErrors = function (id, errors) {
-        this.store.dispatch(new ModifyStoreResourceErrorsAction({
-            resourceId: id,
-            errors: errors,
-            modificationType: 'ADD',
-        }));
-    };
-    /**
-     * Removes the given errors to the resource with the given id.
-     * @param {?} id
-     * @param {?} errors
-     * @return {?}
-     */
-    NgrxJsonApiService.prototype.removeResourceErrors = function (id, errors) {
-        this.store.dispatch(new ModifyStoreResourceErrorsAction({
-            resourceId: id,
-            errors: errors,
-            modificationType: 'REMOVE',
-        }));
-    };
-    /**
-     * Sets the given errors to the resource with the given id.
-     * @param {?} id
-     * @param {?} errors
-     * @return {?}
-     */
-    NgrxJsonApiService.prototype.setResourceErrors = function (id, errors) {
-        this.store.dispatch(new ModifyStoreResourceErrorsAction({
-            resourceId: id,
-            errors: errors,
-            modificationType: 'SET',
-        }));
+        var /** @type {?} */ pathSeparator = (lodash_index.get(this.config, 'filteringConfig.pathSeparator'));
+        return getDenormalisedValue(path, storeResource, this.config.resourceDefinitions, pathSeparator);
     };
     return NgrxJsonApiService;
-}());
+}(NgrxJsonApiZoneService));
 var SelectStoreResourcePipe = (function () {
     /**
      * @param {?} service
@@ -1778,7 +2224,7 @@ var GetDenormalisedValuePipe = (function () {
     };
     return GetDenormalisedValuePipe;
 }());
-var __assign$2 = (undefined && undefined.__assign) || Object.assign || function (t) {
+var __assign$3 = (undefined && undefined.__assign) || Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -2005,7 +2451,7 @@ var NgrxJsonApi = (function () {
      */
     NgrxJsonApi.prototype.request = function (requestOptions) {
         var /** @type {?} */ request;
-        var /** @type {?} */ newRequestOptions = __assign$2({}, requestOptions, { headers: this.headers, observe: 'response' });
+        var /** @type {?} */ newRequestOptions = __assign$3({}, requestOptions, { headers: this.headers, observe: 'response' });
         if (requestOptions.method === 'GET') {
             var method = newRequestOptions.method, url = newRequestOptions.url, init = __rest(newRequestOptions, ["method", "url"]);
             return this.http.get(url, init);
@@ -2025,235 +2471,53 @@ var NgrxJsonApi = (function () {
     };
     return NgrxJsonApi;
 }());
-var __assign$3 = (undefined && undefined.__assign) || Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s)
-            if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-    }
-    return t;
-};
-/**
- * @param {?} state$
- * @return {?}
- */
-function getNgrxJsonApiStore(state$) {
-    return state$.select('NgrxJsonApi').filter(function (it) { return !lodash_index.isUndefined(it); }).map(function (it) { return it.api; });
-}
-var NgrxJsonApiSelectors = (function () {
-    /**
-     * @param {?} config
-     */
-    function NgrxJsonApiSelectors(config) {
-        this.config = config;
-    }
-    /**
-     * @return {?}
-     */
-    NgrxJsonApiSelectors.prototype.getNgrxJsonApiStore$ = function () {
-        return function (state$) {
-            // note that upon setup the store may not yet be initialized
-            return state$.select('NgrxJsonApi').filter(function (it) { return !lodash_index.isUndefined(it); }).map(function (it) { return it.api; });
-        };
-    };
-    /**
-     * @return {?}
-     */
-    NgrxJsonApiSelectors.prototype.getStoreData$ = function () {
-        return function (state$) {
-            return state$.select('data');
-        };
-    };
-    /**
-     * @param {?} type
-     * @return {?}
-     */
-    NgrxJsonApiSelectors.prototype.getStoreResourceOfType$ = function (type) {
-        var _this = this;
-        return function (state$) {
-            return state$
-                .let(_this.getStoreData$())
-                .map(function (resources) { return (resources ? resources[type] : undefined); });
-        };
-    };
-    /**
-     * @param {?} query
-     * @return {?}
-     */
-    NgrxJsonApiSelectors.prototype.queryStore$ = function (query) {
-        var _this = this;
-        return function (state$) {
-            var /** @type {?} */ selected$;
-            if (!query.type) {
-                return state$.map(function () { return rxjs_Observable.Observable.throw('Unknown query'); });
-            }
-            else if (query.type && query.id) {
-                selected$ = state$.let(_this.getStoreResource$({ type: query.type, id: query.id }));
-            }
-            else {
-                selected$ = state$
-                    .let(_this.getStoreResourceOfType$(query.type))
-                    .combineLatest(state$.let(_this.getStoreData$()), function (resources, storeData) {
-                    return filterResources(resources, storeData, query, _this.config.resourceDefinitions, _this.config.filteringConfig);
-                });
-            }
-            return selected$.distinctUntilChanged();
-        };
-    };
-    /**
-     * @return {?}
-     */
-    NgrxJsonApiSelectors.prototype.getStoreQueries$ = function () {
-        return function (state$) {
-            return state$.select('queries');
-        };
-    };
-    /**
-     * @param {?} queryId
-     * @return {?}
-     */
-    NgrxJsonApiSelectors.prototype.getResourceQuery$ = function (queryId) {
-        var _this = this;
-        return function (state$) {
-            return state$
-                .let(_this.getStoreQueries$())
-                .map(function (it) { return (it ? it[queryId] : undefined); });
-        };
-    };
-    /**
-     * @param {?} identifier
-     * @return {?}
-     */
-    NgrxJsonApiSelectors.prototype.getStoreResource$ = function (identifier) {
-        var _this = this;
-        return function (state$) {
-            return state$
-                .let(_this.getStoreResourceOfType$(identifier.type))
-                .map(function (resources) { /** @type {?} */ return ((resources ? resources[identifier.id] : undefined)); });
-        };
-    };
-    /**
-     * @param {?} queryId
-     * @param {?} denormalize
-     * @return {?}
-     */
-    NgrxJsonApiSelectors.prototype.getManyResults$ = function (queryId, denormalize) {
-        return function (state$) {
-            return state$.map(function (state) {
-                var /** @type {?} */ storeQuery = state.queries[queryId];
-                if (!storeQuery) {
-                    return undefined;
-                }
-                if (lodash_index.isEmpty(storeQuery.resultIds)) {
-                    var /** @type {?} */ queryResult = __assign$3({}, storeQuery, { data: lodash_index.isUndefined(storeQuery.resultIds) ? undefined : [] });
-                    return queryResult;
-                }
-                else {
-                    var /** @type {?} */ results = storeQuery.resultIds.map(function (id) { return (state.data[id.type] ? state.data[id.type][id.id] : undefined); });
-                    if (denormalize) {
-                        results = denormaliseStoreResources(results, state.data);
-                    }
-                    return __assign$3({}, storeQuery, { data: /** @type {?} */ (results) });
-                }
-            });
-        };
-    };
-    /**
-     * @param {?} queryId
-     * @param {?} denormalize
-     * @return {?}
-     */
-    NgrxJsonApiSelectors.prototype.getOneResult$ = function (queryId, denormalize) {
-        return function (state$) {
-            return state$.map(function (state) {
-                var /** @type {?} */ storeQuery = state.queries[queryId];
-                if (!storeQuery) {
-                    return undefined;
-                }
-                if (lodash_index.isEmpty(storeQuery.resultIds)) {
-                    var /** @type {?} */ queryResult = __assign$3({}, storeQuery, { data: lodash_index.isUndefined(storeQuery.resultIds) ? undefined : null });
-                    return queryResult;
-                }
-                else {
-                    if (storeQuery.resultIds.length >= 2) {
-                        throw new Error('expected single result for query ' + storeQuery.query.queryId);
-                    }
-                    var /** @type {?} */ resultId = storeQuery.resultIds[0];
-                    var /** @type {?} */ result = state.data[resultId.type]
-                        ? state.data[resultId.type][resultId.id]
-                        : undefined;
-                    if (denormalize) {
-                        result = denormaliseStoreResource(result, state.data);
-                    }
-                    return __assign$3({}, storeQuery, { data: result });
-                }
-            });
-        };
-    };
-    /**
-     * @param {?} identifier
-     * @return {?}
-     */
-    NgrxJsonApiSelectors.prototype.getPersistedResource$ = function (identifier) {
-        var _this = this;
-        return function (state$) {
-            return state$
-                .let(_this.getStoreResource$(identifier))
-                .map(function (it) { return (it ? it.persistedResource : undefined); });
-        };
-    };
-    return NgrxJsonApiSelectors;
-}());
 var NgrxJsonApiEffects = (function () {
     /**
      * @param {?} actions$
      * @param {?} jsonApi
      * @param {?} store
-     * @param {?} selectors
      */
-    function NgrxJsonApiEffects(actions$, jsonApi, store, selectors) {
+    function NgrxJsonApiEffects(actions$, jsonApi, store) {
         var _this = this;
         this.actions$ = actions$;
         this.jsonApi = jsonApi;
         this.store = store;
-        this.selectors = selectors;
         this.createResource$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_POST_INIT)
-            .map(function (it) { return _this.generatePayload(it.payload, 'POST'); })
-            .mergeMap(function (payload) {
+            .mergeMap(function (action) {
+            var /** @type {?} */ payload = _this.generatePayload(action.payload, 'POST');
             return _this.jsonApi
                 .create(payload.query, payload.jsonApiData)
                 .map(function (response) {
                 return new ApiPostSuccessAction({
                     jsonApiData: response.body,
                     query: payload.query,
-                });
+                }, action.zoneId);
             })
                 .catch(function (error) {
-                return rxjs_Observable.Observable.of(new ApiPostFailAction(_this.toErrorPayload(payload.query, error)));
+                return rxjs_Observable.Observable.of(new ApiPostFailAction(_this.toErrorPayload(payload.query, error), action.zoneId));
             });
         });
         this.updateResource$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_PATCH_INIT)
-            .map(function (it) { return _this.generatePayload(it.payload, 'PATCH'); })
-            .mergeMap(function (payload) {
+            .mergeMap(function (action) {
+            var /** @type {?} */ payload = _this.generatePayload(action.payload, 'PATCH');
             return _this.jsonApi
                 .update(payload.query, payload.jsonApiData)
                 .map(function (response) {
                 return new ApiPatchSuccessAction({
                     jsonApiData: response.body,
                     query: payload.query,
-                });
+                }, action.zoneId);
             })
                 .catch(function (error) {
-                return rxjs_Observable.Observable.of(new ApiPatchFailAction(_this.toErrorPayload(payload.query, error)));
+                return rxjs_Observable.Observable.of(new ApiPatchFailAction(_this.toErrorPayload(payload.query, error), action.zoneId));
             });
         });
         this.readResource$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_GET_INIT)
-            .map(function (it) { return it.payload; })
-            .mergeMap(function (query) {
+            .mergeMap(function (action) {
+            var /** @type {?} */ query = action.payload;
             return _this.jsonApi
                 .find(query)
                 .map(function (response) { return response.body; })
@@ -2261,36 +2525,35 @@ var NgrxJsonApiEffects = (function () {
                 return new ApiGetSuccessAction({
                     jsonApiData: data,
                     query: query,
-                });
+                }, action.zoneId);
             })
                 .catch(function (error) {
-                return rxjs_Observable.Observable.of(new ApiGetFailAction(_this.toErrorPayload(query, error)));
+                return rxjs_Observable.Observable.of(new ApiGetFailAction(_this.toErrorPayload(query, error), action.zoneId));
             });
         });
         this.queryStore$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.LOCAL_QUERY_INIT)
-            .map(function (it) { return it.payload; })
-            .mergeMap(function (query) {
+            .mergeMap(function (action) {
+            var /** @type {?} */ query = action.payload;
             return _this.store
-                .let(_this.selectors.getNgrxJsonApiStore$())
-                .let(_this.selectors.queryStore$(query))
+                .let(selectNgrxJsonApiZone(action.zoneId))
+                .let(_this.executeLocalQuery(query))
                 .map(function (results) {
                 return new LocalQuerySuccessAction({
                     jsonApiData: { data: results },
                     query: query,
-                });
+                }, action.zoneId);
             })
                 .catch(function (error) {
-                return rxjs_Observable.Observable.of(new LocalQueryFailAction(_this.toErrorPayload(query, error)));
+                return rxjs_Observable.Observable.of(new LocalQueryFailAction(_this.toErrorPayload(query, error), action.zoneId));
             })
                 .takeUntil(_this.localQueryInitEventFor(query))
                 .takeUntil(_this.removeQueryEventFor(query));
         });
         this.deleteResource$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_DELETE_INIT)
-            .map(function (it) { return it.payload; })
-            .map(function (it) { return _this.generatePayload(it, 'DELETE'); })
-            .mergeMap(function (payload) {
+            .mergeMap(function (action) {
+            var /** @type {?} */ payload = _this.generatePayload(action.payload, 'DELETE');
             return _this.jsonApi
                 .delete(payload.query)
                 .map(function (response) { return response.body; })
@@ -2298,10 +2561,10 @@ var NgrxJsonApiEffects = (function () {
                 return new ApiDeleteSuccessAction({
                     jsonApiData: data,
                     query: payload.query,
-                });
+                }, action.zoneId);
             })
                 .catch(function (error) {
-                return rxjs_Observable.Observable.of(new ApiDeleteFailAction(_this.toErrorPayload(payload.query, error)));
+                return rxjs_Observable.Observable.of(new ApiDeleteFailAction(_this.toErrorPayload(payload.query, error), action.zoneId));
             });
         });
         this.triggerReadOnQueryRefresh$ = this.actions$
@@ -2310,7 +2573,7 @@ var NgrxJsonApiEffects = (function () {
             var /** @type {?} */ queryId = action.payload;
             var /** @type {?} */ state = (store['NgrxJsonApi']['api']);
             var /** @type {?} */ query = state.queries[queryId].query;
-            return new ApiGetInitAction(query);
+            return new ApiGetInitAction(query, action.zoneId);
         });
         this.refreshQueriesOnDelete$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_DELETE_SUCCESS)
@@ -2334,7 +2597,7 @@ var NgrxJsonApiEffects = (function () {
                                 ' resource should have been emptied and marked with 404 error');
                         }
                         if (needsRefresh) {
-                            actions.push(new ApiQueryRefreshAction(queryId));
+                            actions.push(new ApiQueryRefreshAction(queryId, action.zoneId));
                         }
                     }
                 }
@@ -2345,73 +2608,36 @@ var NgrxJsonApiEffects = (function () {
         this.applyResources$ = this.actions$
             .ofType(NgrxJsonApiActionTypes.API_APPLY_INIT)
             .filter(function () { return _this.jsonApi.config.applyEnabled !== false; })
-            .withLatestFrom(this.store.let(getNgrxJsonApiStore), function (action, ngrxstore) {
+            .withLatestFrom(this.store, function (action, storeState) {
+            var /** @type {?} */ ngrxstore = getNgrxJsonApiZone(storeState, action.zoneId);
             var /** @type {?} */ payload = ((action)).payload;
             var /** @type {?} */ pending = getPendingChanges(ngrxstore.data, payload.ids, payload.include);
-            return pending;
-        })
-            .flatMap(function (pending) {
             if (pending.length === 0) {
-                return rxjs_Observable.Observable.of(new ApiApplySuccessAction([]));
+                return rxjs_Observable.Observable.of(new ApiApplySuccessAction([], action.zoneId));
             }
-            pending = sortPendingChanges(pending);
+            var /** @type {?} */ sortedPending = sortPendingChanges(pending);
             var /** @type {?} */ actions = [];
-            var _loop_1 = function (pendingChange) {
+            for (var _i = 0, sortedPending_1 = sortedPending; _i < sortedPending_1.length; _i++) {
+                var pendingChange = sortedPending_1[_i];
                 if (pendingChange.state === 'CREATED') {
-                    var /** @type {?} */ payload_1 = _this.generatePayload(pendingChange, 'POST');
-                    actions.push(_this.jsonApi
-                        .create(payload_1.query, payload_1.jsonApiData)
-                        .map(function (response) {
-                        return new ApiPostSuccessAction({
-                            jsonApiData: response.body,
-                            query: payload_1.query,
-                        });
-                    })
-                        .catch(function (error) {
-                        return rxjs_Observable.Observable.of(new ApiPostFailAction(_this.toErrorPayload(payload_1.query, error)));
-                    }));
+                    actions.push(_this.handlePendingCreate(pendingChange, action.zoneId));
                 }
                 else if (pendingChange.state === 'UPDATED') {
-                    // prepare payload, omit links and meta information
-                    var /** @type {?} */ payload_2 = _this.generatePayload(pendingChange, 'PATCH');
-                    actions.push(_this.jsonApi
-                        .update(payload_2.query, payload_2.jsonApiData)
-                        .map(function (response) {
-                        return new ApiPatchSuccessAction({
-                            jsonApiData: response.body,
-                            query: payload_2.query,
-                        });
-                    })
-                        .catch(function (error) {
-                        return rxjs_Observable.Observable.of(new ApiPatchFailAction(_this.toErrorPayload(payload_2.query, error)));
-                    }));
+                    actions.push(_this.handlePendingUpdate(pendingChange, action.zoneId));
                 }
                 else if (pendingChange.state === 'DELETED') {
-                    var /** @type {?} */ payload_3 = _this.generatePayload(pendingChange, 'DELETE');
-                    actions.push(_this.jsonApi
-                        .delete(payload_3.query)
-                        .map(function (response) {
-                        return new ApiDeleteSuccessAction({
-                            jsonApiData: response.body,
-                            query: payload_3.query,
-                        });
-                    })
-                        .catch(function (error) {
-                        return rxjs_Observable.Observable.of(new ApiDeleteFailAction(_this.toErrorPayload(payload_3.query, error)));
-                    }));
+                    actions.push(_this.handlePendingDelete(pendingChange, action.zoneId));
                 }
                 else {
                     throw new Error('unknown state ' + pendingChange.state);
                 }
-            };
-            for (var _i = 0, pending_1 = pending; _i < pending_1.length; _i++) {
-                var pendingChange = pending_1[_i];
-                _loop_1(/** @type {?} */ pendingChange);
             }
             return rxjs_Observable.Observable.of.apply(rxjs_Observable.Observable, actions).concatAll()
                 .toArray()
-                .map(function (actions) { return _this.toApplyAction(actions); });
-        });
+                .map(function (actions) { return _this.toApplyAction(actions, action.zoneId); });
+        })
+            .flatMap(function (actions) { return actions; });
+        this.config = this.jsonApi.config;
     }
     /**
      * @param {?} query
@@ -2434,23 +2660,108 @@ var NgrxJsonApiEffects = (function () {
             .filter(function (action) { return query.queryId == action.payload; });
     };
     /**
+     * @param {?} query
+     * @return {?}
+     */
+    NgrxJsonApiEffects.prototype.executeLocalQuery = function (query) {
+        var _this = this;
+        return function (state$) {
+            var /** @type {?} */ selected$;
+            if (!query.type) {
+                return state$.map(function () { return rxjs_Observable.Observable.throw('Unknown query'); });
+            }
+            else if (query.type && query.id) {
+                selected$ = state$.let(selectStoreResource({ type: query.type, id: query.id }));
+            }
+            else {
+                selected$ = state$
+                    .let(selectStoreResourcesOfType(query.type))
+                    .combineLatest(state$.map(function (it) { return it.data; }), function (resources, storeData) {
+                    return filterResources(resources, storeData, query, _this.config.resourceDefinitions, _this.config.filteringConfig);
+                });
+            }
+            return selected$.distinctUntilChanged();
+        };
+    };
+    /**
+     * @param {?} pendingChange
+     * @param {?} zoneId
+     * @return {?}
+     */
+    NgrxJsonApiEffects.prototype.handlePendingCreate = function (pendingChange, zoneId) {
+        var _this = this;
+        var /** @type {?} */ payload = this.generatePayload(pendingChange, 'POST');
+        return this.jsonApi
+            .create(payload.query, payload.jsonApiData)
+            .map(function (response) {
+            return new ApiPostSuccessAction({
+                jsonApiData: response.body,
+                query: payload.query,
+            }, zoneId);
+        })
+            .catch(function (error) {
+            return rxjs_Observable.Observable.of(new ApiPostFailAction(_this.toErrorPayload(payload.query, error), zoneId));
+        });
+    };
+    /**
+     * @param {?} pendingChange
+     * @param {?} zoneId
+     * @return {?}
+     */
+    NgrxJsonApiEffects.prototype.handlePendingUpdate = function (pendingChange, zoneId) {
+        var _this = this;
+        var /** @type {?} */ payload = this.generatePayload(pendingChange, 'PATCH');
+        return (this.jsonApi
+            .update(payload.query, payload.jsonApiData)
+            .map(function (response) {
+            return new ApiPatchSuccessAction({
+                jsonApiData: response.body,
+                query: payload.query,
+            }, zoneId);
+        })
+            .catch(function (error) {
+            return rxjs_Observable.Observable.of(new ApiPatchFailAction(_this.toErrorPayload(payload.query, error), zoneId));
+        }));
+    };
+    /**
+     * @param {?} pendingChange
+     * @param {?} zoneId
+     * @return {?}
+     */
+    NgrxJsonApiEffects.prototype.handlePendingDelete = function (pendingChange, zoneId) {
+        var _this = this;
+        var /** @type {?} */ payload = this.generatePayload(pendingChange, 'DELETE');
+        return (this.jsonApi
+            .delete(payload.query)
+            .map(function (response) {
+            return new ApiDeleteSuccessAction({
+                jsonApiData: response.body,
+                query: payload.query,
+            }, zoneId);
+        })
+            .catch(function (error) {
+            return rxjs_Observable.Observable.of(new ApiDeleteFailAction(_this.toErrorPayload(payload.query, error), zoneId));
+        }));
+    };
+    /**
      * @return {?}
      */
     NgrxJsonApiEffects.prototype.ngOnDestroy = function () { };
     /**
      * @param {?} actions
+     * @param {?} zoneId
      * @return {?}
      */
-    NgrxJsonApiEffects.prototype.toApplyAction = function (actions) {
+    NgrxJsonApiEffects.prototype.toApplyAction = function (actions, zoneId) {
         for (var _i = 0, actions_1 = actions; _i < actions_1.length; _i++) {
             var action = actions_1[_i];
             if (action.type === NgrxJsonApiActionTypes.API_POST_FAIL ||
                 action.type === NgrxJsonApiActionTypes.API_PATCH_FAIL ||
                 action.type === NgrxJsonApiActionTypes.API_DELETE_FAIL) {
-                return new ApiApplyFailAction(actions);
+                return new ApiApplyFailAction(actions, zoneId);
             }
         }
-        return new ApiApplySuccessAction(actions);
+        return new ApiApplySuccessAction(actions, zoneId);
     };
     /**
      * @param {?} query
@@ -2512,7 +2823,6 @@ var NgrxJsonApiEffects = (function () {
             { type: _ngrx_effects.Actions, },
             { type: NgrxJsonApi, },
             { type: _ngrx_store.Store, },
-            { type: NgrxJsonApiSelectors, },
         ];
     };
     NgrxJsonApiEffects.propDecorators = {
@@ -2536,7 +2846,7 @@ var __assign$4 = (undefined && undefined.__assign) || Object.assign || function 
     }
     return t;
 };
-var initialNgrxJsonApiState = {
+var initialNgrxJsonApiZone = {
     isCreating: 0,
     isReading: 0,
     isUpdating: 0,
@@ -2544,6 +2854,9 @@ var initialNgrxJsonApiState = {
     isApplying: 0,
     data: {},
     queries: {},
+};
+var initialNgrxJsonApiState = {
+    zones: {}
 };
 /**
  * @param {?=} state
@@ -2554,186 +2867,206 @@ function NgrxJsonApiStoreReducer(state, action) {
     if (state === void 0) {
         state = initialNgrxJsonApiState;
     }
-    var /** @type {?} */ newState;
+    var /** @type {?} */ zoneId = action['zoneId'];
+    if (!zoneId) {
+        return state;
+    }
+    var /** @type {?} */ zone = state.zones[zoneId];
+    if (!zone) {
+        zone = initialNgrxJsonApiZone;
+    }
+    var /** @type {?} */ newZone = NgrxJsonApiZoneReducer(zone, action);
+    if (zone != newZone) {
+        return __assign$4({}, state, { zones: __assign$4({}, state.zones, (_a = {}, _a[zoneId] = newZone, _a)) });
+    }
+    else {
+        return state;
+    }
+    var _a;
+}
+/**
+ * @param {?} zone
+ * @param {?} action
+ * @return {?}
+ */
+function NgrxJsonApiZoneReducer(zone, action) {
+    var /** @type {?} */ newZone;
     switch (action.type) {
         case NgrxJsonApiActionTypes.API_POST_INIT: {
-            var /** @type {?} */ updatedData = updateStoreDataFromResource(state.data, action.payload, false, true);
-            newState = __assign$4({}, state, { data: updatedData, isCreating: state.isCreating + 1 });
-            return newState;
+            var /** @type {?} */ updatedData = updateStoreDataFromResource(zone.data, action.payload, false, true);
+            newZone = __assign$4({}, zone, { data: updatedData, isCreating: zone.isCreating + 1 });
+            return newZone;
         }
         case NgrxJsonApiActionTypes.API_GET_INIT: {
             var /** @type {?} */ query = (action.payload);
-            newState = __assign$4({}, state, { queries: updateQueryParams(state.queries, query), isReading: state.isReading + 1 });
-            return newState;
+            newZone = __assign$4({}, zone, { queries: updateQueryParams(zone.queries, query), isReading: zone.isReading + 1 });
+            return newZone;
         }
         case NgrxJsonApiActionTypes.API_PATCH_INIT: {
-            var /** @type {?} */ updatedData = updateStoreDataFromResource(state.data, action.payload, false, false);
-            newState = __assign$4({}, state, { data: updatedData, isUpdating: state.isUpdating + 1 });
-            return newState;
+            var /** @type {?} */ updatedData = updateStoreDataFromResource(zone.data, action.payload, false, false);
+            newZone = __assign$4({}, zone, { data: updatedData, isUpdating: zone.isUpdating + 1 });
+            return newZone;
         }
         case NgrxJsonApiActionTypes.API_DELETE_INIT: {
-            newState = __assign$4({}, state, { data: updateResourceState(state.data, action.payload, 'DELETED'), isDeleting: state.isDeleting + 1 });
-            return newState;
+            newZone = __assign$4({}, zone, { data: updateResourceState(zone.data, action.payload, 'DELETED'), isDeleting: zone.isDeleting + 1 });
+            return newZone;
         }
         case NgrxJsonApiActionTypes.API_POST_SUCCESS: {
-            newState = __assign$4({}, state, { data: updateStoreDataFromPayload(state.data, action.payload.jsonApiData), isCreating: state.isCreating - 1 });
-            return newState;
+            newZone = __assign$4({}, zone, { data: updateStoreDataFromPayload(zone.data, action.payload.jsonApiData), isCreating: zone.isCreating - 1 });
+            return newZone;
         }
         case NgrxJsonApiActionTypes.API_GET_SUCCESS: {
-            newState = __assign$4({}, state, { data: updateStoreDataFromPayload(state.data, action.payload.jsonApiData), queries: updateQueryResults(state.queries, action.payload.query.queryId, action.payload.jsonApiData), isReading: state.isReading - 1 });
-            return newState;
+            newZone = __assign$4({}, zone, { data: updateStoreDataFromPayload(zone.data, action.payload.jsonApiData), queries: updateQueryResults(zone.queries, action.payload.query.queryId, action.payload.jsonApiData), isReading: zone.isReading - 1 });
+            return newZone;
         }
         case NgrxJsonApiActionTypes.API_PATCH_SUCCESS: {
-            newState = __assign$4({}, state, { data: updateStoreDataFromPayload(state.data, action.payload.jsonApiData), isUpdating: state.isUpdating - 1 });
-            return newState;
+            newZone = __assign$4({}, zone, { data: updateStoreDataFromPayload(zone.data, action.payload.jsonApiData), isUpdating: zone.isUpdating - 1 });
+            return newZone;
         }
         case NgrxJsonApiActionTypes.API_DELETE_SUCCESS: {
-            newState = __assign$4({}, state, { data: deleteStoreResources(state.data, action.payload.query), queries: updateQueriesForDeletedResource(state.queries, {
+            newZone = __assign$4({}, zone, { data: deleteStoreResources(zone.data, action.payload.query), queries: updateQueriesForDeletedResource(zone.queries, {
                     id: action.payload.query.id,
                     type: action.payload.query.type,
-                }), isDeleting: state.isDeleting - 1 });
-            return newState;
+                }), isDeleting: zone.isDeleting - 1 });
+            return newZone;
         }
         case NgrxJsonApiActionTypes.API_QUERY_REFRESH: {
             // clear result ids and wait until new data is fetched (triggered by effect)
-            newState = __assign$4({}, state, { queries: clearQueryResult(state.queries, action.payload) });
-            return newState;
+            newZone = __assign$4({}, zone, { queries: clearQueryResult(zone.queries, action.payload) });
+            return newZone;
         }
         case NgrxJsonApiActionTypes.API_POST_FAIL: {
-            newState = __assign$4({}, state, { data: updateResourceErrorsForQuery(state.data, action.payload.query, action.payload.jsonApiData), isCreating: state.isCreating - 1 });
-            return newState;
+            newZone = __assign$4({}, zone, { data: updateResourceErrorsForQuery(zone.data, action.payload.query, action.payload.jsonApiData), isCreating: zone.isCreating - 1 });
+            return newZone;
         }
         case NgrxJsonApiActionTypes.API_GET_FAIL: {
-            newState = __assign$4({}, state, { queries: updateQueryErrors(state.queries, action.payload.query.queryId, action.payload.jsonApiData), isReading: state.isReading - 1 });
-            return newState;
+            newZone = __assign$4({}, zone, { queries: updateQueryErrors(zone.queries, action.payload.query.queryId, action.payload.jsonApiData), isReading: zone.isReading - 1 });
+            return newZone;
         }
         case NgrxJsonApiActionTypes.API_PATCH_FAIL: {
-            newState = __assign$4({}, state, { data: updateResourceErrorsForQuery(state.data, action.payload.query, action.payload.jsonApiData), isUpdating: state.isUpdating - 1 });
-            return newState;
+            newZone = __assign$4({}, zone, { data: updateResourceErrorsForQuery(zone.data, action.payload.query, action.payload.jsonApiData), isUpdating: zone.isUpdating - 1 });
+            return newZone;
         }
         case NgrxJsonApiActionTypes.API_DELETE_FAIL: {
-            newState = __assign$4({}, state, { data: updateResourceErrorsForQuery(state.data, action.payload.query, action.payload.jsonApiData), isDeleting: state.isDeleting - 1 });
-            return newState;
+            newZone = __assign$4({}, zone, { data: updateResourceErrorsForQuery(zone.data, action.payload.query, action.payload.jsonApiData), isDeleting: zone.isDeleting - 1 });
+            return newZone;
         }
         case NgrxJsonApiActionTypes.REMOVE_QUERY: {
             var /** @type {?} */ queryId = (action.payload);
-            newState = __assign$4({}, state, { queries: removeQuery(state.queries, queryId) });
-            return newState;
+            newZone = __assign$4({}, zone, { queries: removeQuery(zone.queries, queryId) });
+            return newZone;
         }
         case NgrxJsonApiActionTypes.LOCAL_QUERY_INIT: {
             var /** @type {?} */ query = (action.payload);
-            newState = __assign$4({}, state, { queries: updateQueryParams(state.queries, query) });
-            return newState;
+            newZone = __assign$4({}, zone, { queries: updateQueryParams(zone.queries, query) });
+            return newZone;
         }
         case NgrxJsonApiActionTypes.MODIFY_STORE_RESOURCE_ERRORS: {
             var /** @type {?} */ payload = (action.payload);
-            newState = __assign$4({}, state, { data: updateResourceErrors(state.data, payload.resourceId, payload.errors, payload.modificationType) });
-            return newState;
+            newZone = __assign$4({}, zone, { data: updateResourceErrors(zone.data, payload.resourceId, payload.errors, payload.modificationType) });
+            return newZone;
         }
         case NgrxJsonApiActionTypes.LOCAL_QUERY_SUCCESS: {
-            newState = __assign$4({}, state, { queries: updateQueryResults(state.queries, action.payload.query.queryId, action.payload.jsonApiData) });
-            return newState;
+            return setIn(zone, 'queries', updateQueryResults(zone.queries, action.payload.query.queryId, action.payload.jsonApiData));
         }
         case NgrxJsonApiActionTypes.PATCH_STORE_RESOURCE: {
-            var /** @type {?} */ updatedData = updateStoreDataFromResource(state.data, action.payload, false, false);
-            if (updatedData !== state.data) {
-                newState = __assign$4({}, state, { data: updatedData });
-                return newState;
+            var /** @type {?} */ updatedData = updateStoreDataFromResource(zone.data, action.payload, false, false);
+            if (updatedData !== zone.data) {
+                newZone = __assign$4({}, zone, { data: updatedData });
+                return newZone;
             }
             else {
-                return state;
+                return zone;
             }
         }
         case NgrxJsonApiActionTypes.POST_STORE_RESOURCE: {
-            var /** @type {?} */ updatedData = updateStoreDataFromResource(state.data, action.payload, false, true);
-            if (updatedData !== state.data) {
-                newState = __assign$4({}, state, { data: updatedData });
-                return newState;
+            var /** @type {?} */ updatedData = updateStoreDataFromResource(zone.data, action.payload, false, true);
+            if (updatedData !== zone.data) {
+                newZone = __assign$4({}, zone, { data: updatedData });
+                return newZone;
             }
             else {
-                return state;
+                return zone;
             }
         }
         case NgrxJsonApiActionTypes.NEW_STORE_RESOURCE: {
-            var /** @type {?} */ updatedData = updateStoreDataFromResource(state.data, action.payload, false, true);
+            var /** @type {?} */ updatedData = updateStoreDataFromResource(zone.data, action.payload, false, true);
             updatedData = updateResourceState(updatedData, action.payload, 'NEW');
-            if (updatedData !== state.data) {
-                newState = __assign$4({}, state, { data: updatedData });
-                return newState;
+            if (updatedData !== zone.data) {
+                newZone = __assign$4({}, zone, { data: updatedData });
+                return newZone;
             }
             else {
-                return state;
+                return zone;
             }
         }
         case NgrxJsonApiActionTypes.DELETE_STORE_RESOURCE: {
             var /** @type {?} */ resourceId = (action.payload);
-            if (state.data[resourceId.type] &&
-                state.data[resourceId.type][resourceId.id]) {
-                var /** @type {?} */ resource = state.data[resourceId.type][resourceId.id];
+            if (zone.data[resourceId.type] &&
+                zone.data[resourceId.type][resourceId.id]) {
+                var /** @type {?} */ resource = zone.data[resourceId.type][resourceId.id];
                 if (resource.state === 'NEW' || resource.state === 'CREATED') {
                     // not yet stored on server-side, just delete
-                    newState = __assign$4({}, state, { data: removeStoreResource(state.data, resourceId) });
-                    return newState;
+                    newZone = __assign$4({}, zone, { data: removeStoreResource(zone.data, resourceId) });
+                    return newZone;
                 }
                 else {
                     // stored on server, mark for deletion
-                    newState = __assign$4({}, state, { data: updateResourceState(state.data, action.payload, 'DELETED') });
-                    return newState;
+                    newZone = __assign$4({}, zone, { data: updateResourceState(zone.data, action.payload, 'DELETED') });
+                    return newZone;
                 }
             }
-            return state;
+            return zone;
         }
         case NgrxJsonApiActionTypes.API_APPLY_INIT: {
             var /** @type {?} */ payload = ((action)).payload;
-            var /** @type {?} */ pending_1 = getPendingChanges(state.data, payload.ids, payload.include);
-            newState = __assign$4({}, state, { isApplying: state.isApplying + 1 });
+            var /** @type {?} */ pending_1 = getPendingChanges(zone.data, payload.ids, payload.include);
+            newZone = __assign$4({}, zone, { isApplying: zone.isApplying + 1 });
             for (var _i = 0, pending_2 = pending_1; _i < pending_2.length; _i++) {
                 var pendingChange = pending_2[_i];
                 if (pendingChange.state === 'CREATED') {
-                    newState.isCreating++;
+                    newZone.isCreating++;
                 }
                 else if (pendingChange.state === 'UPDATED') {
-                    newState.isUpdating++;
+                    newZone.isUpdating++;
                 }
                 else if (pendingChange.state === 'DELETED') {
-                    newState.isDeleting++;
+                    newZone.isDeleting++;
                 }
                 else {
                     throw new Error('unknown state ' + pendingChange.state);
                 }
             }
-            return newState;
+            return newZone;
         }
         case NgrxJsonApiActionTypes.API_APPLY_SUCCESS:
         case NgrxJsonApiActionTypes.API_APPLY_FAIL: {
             // apply all the committed or failed changes
             var /** @type {?} */ actions = (action.payload);
-            newState = state;
+            newZone = zone;
             for (var _a = 0, actions_1 = actions; _a < actions_1.length; _a++) {
                 var commitAction = actions_1[_a];
-                newState = NgrxJsonApiStoreReducer(newState, commitAction);
+                newZone = NgrxJsonApiZoneReducer(newZone, commitAction);
             }
-            newState = __assign$4({}, newState, { isApplying: state['isApplying'] - 1 });
-            return newState;
+            newZone = __assign$4({}, newZone, { isApplying: zone['isApplying'] - 1 });
+            return newZone;
         }
         case NgrxJsonApiActionTypes.API_ROLLBACK: {
             var /** @type {?} */ payload = ((action)).payload;
-            newState = __assign$4({}, state, { data: rollbackStoreResources(state.data, payload.ids, payload.include) });
-            return newState;
+            newZone = __assign$4({}, zone, { data: rollbackStoreResources(zone.data, payload.ids, payload.include) });
+            return newZone;
         }
         case NgrxJsonApiActionTypes.CLEAR_STORE: {
-            return initialNgrxJsonApiState;
+            return initialNgrxJsonApiZone;
         }
         case NgrxJsonApiActionTypes.COMPACT_STORE: {
-            return compactStore(state);
+            return compactStore(zone);
         }
         default:
-            return state;
+            return zone;
     }
 }
-var reducer = {
-    api: NgrxJsonApiStoreReducer,
-};
+var reducer = NgrxJsonApiStoreReducer;
 var NGRX_JSON_API_CONFIG = new _angular_core.OpaqueToken('NGRX_JSON_API_CONFIG');
 /**
  * @param {?} http
@@ -2744,19 +3077,19 @@ function apiFactory(http, config) {
     return new NgrxJsonApi(http, config);
 }
 /**
- * @param {?} config
+ * Deprecated, do not use any longer
  * @return {?}
  */
-function selectorsFactory(config) {
-    return new NgrxJsonApiSelectors(config);
+function selectorsFactory() {
+    return new NgrxJsonApiSelectors();
 }
 /**
  * @param {?} store
- * @param {?} selectors
+ * @param {?} config
  * @return {?}
  */
-function serviceFactory(store, selectors) {
-    return new NgrxJsonApiService(store, selectors);
+function serviceFactory(store, config) {
+    return new NgrxJsonApiService(store, config);
 }
 /**
  * @param {?} config
@@ -2772,12 +3105,11 @@ function configure(config) {
         {
             provide: NgrxJsonApiSelectors,
             useFactory: selectorsFactory,
-            deps: [NGRX_JSON_API_CONFIG],
         },
         {
             provide: NgrxJsonApiService,
             useFactory: serviceFactory,
-            deps: [_ngrx_store.Store, NgrxJsonApiSelectors],
+            deps: [_ngrx_store.Store, NGRX_JSON_API_CONFIG],
         },
         {
             provide: NGRX_JSON_API_CONFIG,
@@ -2827,11 +3159,14 @@ exports.SelectStoreResourcePipe = SelectStoreResourcePipe;
 exports.DenormaliseStoreResourcePipe = DenormaliseStoreResourcePipe;
 exports.GetDenormalisedValuePipe = GetDenormalisedValuePipe;
 exports.NgrxJsonApiService = NgrxJsonApiService;
+exports.NgrxJsonApiZoneService = NgrxJsonApiZoneService;
 exports.NgrxJsonApiModule = NgrxJsonApiModule;
 exports.NGRX_JSON_API_CONFIG = NGRX_JSON_API_CONFIG;
 exports.uuid = uuid;
+exports.NGRX_JSON_API_DEFAULT_ZONE = NGRX_JSON_API_DEFAULT_ZONE;
 exports.Direction = Direction;
 exports.NgrxJsonApiActionTypes = NgrxJsonApiActionTypes;
+exports.NgrxJsonApiAction = NgrxJsonApiAction;
 exports.ApiApplyInitAction = ApiApplyInitAction;
 exports.ApiApplySuccessAction = ApiApplySuccessAction;
 exports.ApiApplyFailAction = ApiApplyFailAction;
@@ -2860,6 +3195,15 @@ exports.CompactStoreAction = CompactStoreAction;
 exports.ClearStoreAction = ClearStoreAction;
 exports.ApiQueryRefreshAction = ApiQueryRefreshAction;
 exports.ModifyStoreResourceErrorsAction = ModifyStoreResourceErrorsAction;
+exports.selectNgrxJson = selectNgrxJson;
+exports.selectNgrxJsonApiDefaultZone = selectNgrxJsonApiDefaultZone;
+exports.selectNgrxJsonApiZone = selectNgrxJsonApiZone;
+exports.getNgrxJsonApiZone = getNgrxJsonApiZone;
+exports.selectStoreQuery = selectStoreQuery;
+exports.selectStoreResourcesOfType = selectStoreResourcesOfType;
+exports.selectStoreResource = selectStoreResource;
+exports.selectManyQueryResult = selectManyQueryResult;
+exports.selectOneQueryResult = selectOneQueryResult;
 exports.getNgrxJsonApiStore = getNgrxJsonApiStore;
 exports.NgrxJsonApiSelectors = NgrxJsonApiSelectors;
 exports.ɵf = NgrxJsonApi;
