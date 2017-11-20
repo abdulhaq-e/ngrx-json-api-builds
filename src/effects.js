@@ -120,7 +120,7 @@ var NgrxJsonApiEffects = (function () {
             .ofType(NgrxJsonApiActionTypes.API_QUERY_REFRESH)
             .withLatestFrom(this.store, function (action, store) {
             var /** @type {?} */ queryId = action.payload;
-            var /** @type {?} */ state = (store['NgrxJsonApi']['api']);
+            var /** @type {?} */ state = getNgrxJsonApiZone(store, action.zoneId);
             var /** @type {?} */ query = state.queries[queryId].query;
             return new ApiGetInitAction(query, action.zoneId);
         });
@@ -131,7 +131,7 @@ var NgrxJsonApiEffects = (function () {
             if (!id.id || !id.type) {
                 throw new Error('API_DELETE_SUCCESS did not carry resource id and type information');
             }
-            var /** @type {?} */ state = (store['NgrxJsonApi']['api']);
+            var /** @type {?} */ state = getNgrxJsonApiZone(store, action.zoneId);
             var /** @type {?} */ actions = [];
             for (var /** @type {?} */ queryId in state.queries) {
                 if (state.queries.hasOwnProperty(queryId)) {

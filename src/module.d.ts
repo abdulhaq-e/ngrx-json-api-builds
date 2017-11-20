@@ -1,11 +1,11 @@
-import { ModuleWithProviders, OpaqueToken } from '@angular/core';
+import { InjectionToken, ModuleWithProviders } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { NgrxJsonApi } from './api';
 import { NgrxJsonApiService } from './services';
 import { NgrxJsonApiConfig } from './interfaces';
 import { NgrxJsonApiSelectors } from "./selectors";
-export declare const NGRX_JSON_API_CONFIG: OpaqueToken;
+export declare const NGRX_JSON_API_CONFIG: InjectionToken<NgrxJsonApiConfig>;
 export declare function apiFactory(http: HttpClient, config: NgrxJsonApiConfig): NgrxJsonApi;
 /**
  * Deprecated, do not use any longer

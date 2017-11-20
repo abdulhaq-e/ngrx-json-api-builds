@@ -1,4 +1,4 @@
-import { Injectable, NgModule, OpaqueToken, Pipe } from '@angular/core';
+import { Injectable, InjectionToken, NgModule, Pipe } from '@angular/core';
 import 'rxjs/add/operator/let';
 import { clone, cloneDeep, endsWith, filter, find, findIndex, get, hasIn, includes, isArray, isEmpty, isEqual, isPlainObject, isString, isUndefined, mergeWith, omit, reduce, set, setWith, startsWith, uniqBy } from 'lodash/index';
 import 'rxjs/add/operator/finally';
@@ -222,6 +222,7 @@ var removeStoreResource = function (storeData, resourceId) {
  * @param resourceId
  * @param resourceState
  * @param loading
+ * @return
  */
 var updateResourceState = function (storeData, resourceId, resourceState, loading) {
     if (isUndefined(storeData[resourceId.type]) ||
@@ -258,6 +259,7 @@ var updateResourceState = function (storeData, resourceId, resourceState, loadin
  * store (state, persistedResource, etc.)
  * @param resource0
  * @param resource1
+ * @return
  */
 var isEqualResource = function (resource0, resource1) {
     if (resource0 === resource1) {
@@ -2595,7 +2597,7 @@ var NgrxJsonApiEffects = (function () {
             .ofType(NgrxJsonApiActionTypes.API_QUERY_REFRESH)
             .withLatestFrom(this.store, function (action, store) {
             var /** @type {?} */ queryId = action.payload;
-            var /** @type {?} */ state = (store['NgrxJsonApi']['api']);
+            var /** @type {?} */ state = getNgrxJsonApiZone(store, action.zoneId);
             var /** @type {?} */ query = state.queries[queryId].query;
             return new ApiGetInitAction(query, action.zoneId);
         });
@@ -2606,7 +2608,7 @@ var NgrxJsonApiEffects = (function () {
             if (!id.id || !id.type) {
                 throw new Error('API_DELETE_SUCCESS did not carry resource id and type information');
             }
-            var /** @type {?} */ state = (store['NgrxJsonApi']['api']);
+            var /** @type {?} */ state = getNgrxJsonApiZone(store, action.zoneId);
             var /** @type {?} */ actions = [];
             for (var /** @type {?} */ queryId in state.queries) {
                 if (state.queries.hasOwnProperty(queryId)) {
@@ -3091,7 +3093,7 @@ function NgrxJsonApiZoneReducer(zone, action) {
     }
 }
 var reducer = NgrxJsonApiStoreReducer;
-var NGRX_JSON_API_CONFIG = new OpaqueToken('NGRX_JSON_API_CONFIG');
+var NGRX_JSON_API_CONFIG = new InjectionToken('NGRX_JSON_API_CONFIG');
 /**
  * @param {?} http
  * @param {?} config

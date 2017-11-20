@@ -183,6 +183,7 @@ export var removeStoreResource = function (storeData, resourceId) {
  * @param resourceId
  * @param resourceState
  * @param loading
+ * @return
  */
 export var updateResourceState = function (storeData, resourceId, resourceState, loading) {
     if (_.isUndefined(storeData[resourceId.type]) ||
@@ -219,6 +220,7 @@ export var updateResourceState = function (storeData, resourceId, resourceState,
  * store (state, persistedResource, etc.)
  * @param resource0
  * @param resource1
+ * @return
  */
 export var isEqualResource = function (resource0, resource1) {
     if (resource0 === resource1) {

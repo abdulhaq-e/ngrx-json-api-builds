@@ -1,4 +1,4 @@
-import { NgModule, OpaqueToken } from '@angular/core';
+import { InjectionToken, NgModule } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Store, StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -8,7 +8,7 @@ import { NgrxJsonApiService } from './services';
 import { reducer } from './reducers';
 import { DenormaliseStoreResourcePipe, GetDenormalisedValuePipe, SelectStoreResourcePipe, } from './pipes';
 import { NgrxJsonApiSelectors } from './selectors';
-export var /** @type {?} */ NGRX_JSON_API_CONFIG = new OpaqueToken('NGRX_JSON_API_CONFIG');
+export var /** @type {?} */ NGRX_JSON_API_CONFIG = new InjectionToken('NGRX_JSON_API_CONFIG');
 /**
  * @param {?} http
  * @param {?} config
