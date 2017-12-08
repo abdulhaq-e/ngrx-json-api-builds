@@ -1,1 +1,1 @@
-4541efa 2.0.0-rc.5
+5b5cc66 Upgraded @ngrx packages to 4.1.0, to fix compatibility with Angular 5 based projects.

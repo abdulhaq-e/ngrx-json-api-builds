@@ -2473,6 +2473,20 @@ var NgrxJsonApi = (function () {
     };
     return NgrxJsonApi;
 }());
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+        r = Reflect.decorate(decorators, target, key, desc);
+    else
+        for (var i = decorators.length - 1; i >= 0; i--)
+            if (d = decorators[i])
+                r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
+        return Reflect.metadata(k, v);
+};
 var NgrxJsonApiEffects = (function () {
     /**
      * @param {?} actions$
@@ -2827,16 +2841,38 @@ var NgrxJsonApiEffects = (function () {
             { type: _ngrx_store.Store, },
         ];
     };
-    NgrxJsonApiEffects.propDecorators = {
-        'createResource$': [{ type: _ngrx_effects.Effect },],
-        'updateResource$': [{ type: _ngrx_effects.Effect },],
-        'readResource$': [{ type: _ngrx_effects.Effect },],
-        'queryStore$': [{ type: _ngrx_effects.Effect },],
-        'deleteResource$': [{ type: _ngrx_effects.Effect },],
-        'triggerReadOnQueryRefresh$': [{ type: _ngrx_effects.Effect },],
-        'refreshQueriesOnDelete$': [{ type: _ngrx_effects.Effect },],
-        'applyResources$': [{ type: _ngrx_effects.Effect },],
-    };
+    __decorate([
+        _ngrx_effects.Effect(),
+        __metadata("design:type", rxjs_Observable.Observable)
+    ], NgrxJsonApiEffects.prototype, "createResource$", void 0);
+    __decorate([
+        _ngrx_effects.Effect(),
+        __metadata("design:type", Object)
+    ], NgrxJsonApiEffects.prototype, "updateResource$", void 0);
+    __decorate([
+        _ngrx_effects.Effect(),
+        __metadata("design:type", Object)
+    ], NgrxJsonApiEffects.prototype, "readResource$", void 0);
+    __decorate([
+        _ngrx_effects.Effect(),
+        __metadata("design:type", Object)
+    ], NgrxJsonApiEffects.prototype, "queryStore$", void 0);
+    __decorate([
+        _ngrx_effects.Effect(),
+        __metadata("design:type", Object)
+    ], NgrxJsonApiEffects.prototype, "deleteResource$", void 0);
+    __decorate([
+        _ngrx_effects.Effect(),
+        __metadata("design:type", Object)
+    ], NgrxJsonApiEffects.prototype, "triggerReadOnQueryRefresh$", void 0);
+    __decorate([
+        _ngrx_effects.Effect(),
+        __metadata("design:type", Object)
+    ], NgrxJsonApiEffects.prototype, "refreshQueriesOnDelete$", void 0);
+    __decorate([
+        _ngrx_effects.Effect(),
+        __metadata("design:type", Object)
+    ], NgrxJsonApiEffects.prototype, "applyResources$", void 0);
     return NgrxJsonApiEffects;
 }());
 var __assign$4 = (undefined && undefined.__assign) || Object.assign || function (t) {

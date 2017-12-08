@@ -2478,6 +2478,15 @@ var NgrxJsonApi = (function () {
     return NgrxJsonApi;
 }());
 
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var NgrxJsonApiEffects = (function () {
     /**
      * @param {?} actions$
@@ -2830,16 +2839,38 @@ var NgrxJsonApiEffects = (function () {
         { type: NgrxJsonApi, },
         { type: Store, },
     ]; };
-    NgrxJsonApiEffects.propDecorators = {
-        'createResource$': [{ type: Effect },],
-        'updateResource$': [{ type: Effect },],
-        'readResource$': [{ type: Effect },],
-        'queryStore$': [{ type: Effect },],
-        'deleteResource$': [{ type: Effect },],
-        'triggerReadOnQueryRefresh$': [{ type: Effect },],
-        'refreshQueriesOnDelete$': [{ type: Effect },],
-        'applyResources$': [{ type: Effect },],
-    };
+    __decorate([
+        Effect(),
+        __metadata("design:type", Observable)
+    ], NgrxJsonApiEffects.prototype, "createResource$", void 0);
+    __decorate([
+        Effect(),
+        __metadata("design:type", Object)
+    ], NgrxJsonApiEffects.prototype, "updateResource$", void 0);
+    __decorate([
+        Effect(),
+        __metadata("design:type", Object)
+    ], NgrxJsonApiEffects.prototype, "readResource$", void 0);
+    __decorate([
+        Effect(),
+        __metadata("design:type", Object)
+    ], NgrxJsonApiEffects.prototype, "queryStore$", void 0);
+    __decorate([
+        Effect(),
+        __metadata("design:type", Object)
+    ], NgrxJsonApiEffects.prototype, "deleteResource$", void 0);
+    __decorate([
+        Effect(),
+        __metadata("design:type", Object)
+    ], NgrxJsonApiEffects.prototype, "triggerReadOnQueryRefresh$", void 0);
+    __decorate([
+        Effect(),
+        __metadata("design:type", Object)
+    ], NgrxJsonApiEffects.prototype, "refreshQueriesOnDelete$", void 0);
+    __decorate([
+        Effect(),
+        __metadata("design:type", Object)
+    ], NgrxJsonApiEffects.prototype, "applyResources$", void 0);
     return NgrxJsonApiEffects;
 }());
 
