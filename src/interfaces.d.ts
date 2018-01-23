@@ -45,6 +45,12 @@ export interface NgrxJsonApiConfig {
     urlBuilder?: NgrxJsonApiUrlBuilder;
     filteringConfig?: NgrxJsonApiFilteringConfig;
     /**
+     * Custom request headers.
+     */
+    requestHeaders?: {
+        [name: string]: any;
+    };
+    /**
      * Allows to disable the apply action and replace it with a custom one. For example
      * have a look at www.crnk.io that makes use of JSON PATCH to perform bulk updates.
      */

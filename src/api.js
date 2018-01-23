@@ -34,6 +34,13 @@ var NgrxJsonApi = (function () {
             Accept: 'application/vnd.api+json',
         });
         this.definitions = this.config.resourceDefinitions;
+        if (this.config.requestHeaders) {
+            for (var _i = 0, _a = _.keys(this.config.requestHeaders); _i < _a.length; _i++) {
+                var name_1 = _a[_i];
+                var value = this.config.requestHeaders[name_1];
+                this.headers = this.headers.set(name_1, value);
+            }
+        }
     }
     /**
      * @param {?} query

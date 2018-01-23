@@ -36,66 +36,82 @@ function setIn(state, path, value) {
         return newObject;
     });
 }
-var denormaliseObject = function (resource, storeData, bag) {
+var denormaliseObject = function (resource, storeData, bag, denormalizePersisted) {
+    if (denormalizePersisted === void 0) {
+        denormalizePersisted = false;
+    }
     // this function MUST MUTATE resource
-    var /** @type {?} */ denormalised = resource;
     if (resource.hasOwnProperty('relationships')) {
-        Object.keys(resource.relationships).forEach(function (relation) {
-            resource.relationships[relation]['reference'] = ({});
-            var /** @type {?} */ data = resource.relationships[relation].data;
-            // denormalised relation
-            var /** @type {?} */ relationDenorm;
-            if (data === null || lodash_index.isEqual(data, [])) {
-                relationDenorm = data;
+        Object.keys(resource.relationships).forEach(function (relationshipName) {
+            var /** @type {?} */ orginalRelationship = resource.relationships[relationshipName];
+            var /** @type {?} */ data = orginalRelationship.data;
+            if (!lodash_index.isUndefined(data)) {
+                var /** @type {?} */ denormalizedRelation = void 0;
+                if (data === null) {
+                    denormalizedRelation = data;
+                }
+                else if (!lodash_index.isArray(data)) {
+                    // one relation
+                    var /** @type {?} */ relatedRS = getSingleStoreResource(/** @type {?} */ (data), storeData);
+                    denormalizedRelation = denormaliseStoreResource(relatedRS, storeData, bag, denormalizePersisted);
+                }
+                else if (data.length == 0) {
+                    denormalizedRelation = data;
+                }
+                else {
+                    // many relation
+                    var /** @type {?} */ relatedRSs = getMultipleStoreResource(/** @type {?} */ (data), storeData);
+                    denormalizedRelation = relatedRSs.map(function (r) {
+                        return denormaliseStoreResource(r, storeData, bag, denormalizePersisted);
+                    });
+                }
+                var /** @type {?} */ relationship = __assign$2({}, orginalRelationship);
+                relationship['reference'] = denormalizedRelation;
+                resource.relationships[relationshipName] = relationship;
             }
-            else if (lodash_index.isPlainObject(data)) {
-                // hasOne relation
-                var /** @type {?} */ relatedRS = getSingleStoreResource(/** @type {?} */ (data), storeData);
-                relationDenorm = denormaliseStoreResource(relatedRS, storeData, bag);
-            }
-            else if (lodash_index.isArray(data)) {
-                // hasMany relation
-                var /** @type {?} */ relatedRSs = getMultipleStoreResource(/** @type {?} */ (data), storeData);
-                relationDenorm = relatedRSs.map(function (r) {
-                    return denormaliseStoreResource(r, storeData, bag);
-                });
-            }
-            var /** @type {?} */ relationDenormPath = 'relationships.' + relation + '.reference';
-            denormalised = (lodash_index.set(denormalised, relationDenormPath, relationDenorm));
         });
     }
-    return denormalised;
+    return resource;
 };
-var denormaliseStoreResources = function (items, storeData, bag) {
+var denormaliseStoreResources = function (items, storeData, bag, denormalizePersisted) {
     if (bag === void 0) {
         bag = {};
+    }
+    if (denormalizePersisted === void 0) {
+        denormalizePersisted = false;
     }
     var /** @type {?} */ results = [];
     for (var _i = 0, items_1 = items; _i < items_1.length; _i++) {
         var item = items_1[_i];
-        results.push(denormaliseStoreResource(item, storeData, bag));
+        results.push(denormaliseStoreResource(item, storeData, bag, denormalizePersisted));
     }
     return results;
 };
-var denormaliseStoreResource = function (item, storeData, bag) {
+var denormaliseStoreResource = function (item, storeData, bag, denormalizePersisted) {
     if (bag === void 0) {
         bag = {};
+    }
+    if (denormalizePersisted === void 0) {
+        denormalizePersisted = false;
     }
     if (!item) {
         return null;
     }
-    var /** @type {?} */ storeResource = lodash_index.cloneDeep(/** @type {?} */ (item));
-    if (lodash_index.isUndefined(bag[storeResource.type])) {
-        bag[storeResource.type] = {};
+    if (lodash_index.isUndefined(bag[item.type])) {
+        bag[item.type] = {};
     }
-    if (lodash_index.isUndefined(bag[storeResource.type][storeResource.id])) {
+    if (lodash_index.isUndefined(bag[item.type][item.id])) {
+        var /** @type {?} */ storeResource = __assign$2({}, item);
+        if (item.relationships) {
+            storeResource.relationships = __assign$2({}, item.relationships);
+        }
         bag[storeResource.type][storeResource.id] = storeResource;
-        storeResource = denormaliseObject(storeResource, storeData, bag);
-        if (storeResource.persistedResource) {
-            storeResource.persistedResource = denormaliseObject(storeResource.persistedResource, storeData, bag);
+        storeResource = denormaliseObject(storeResource, storeData, bag, denormalizePersisted);
+        if (storeResource.persistedResource && denormalizePersisted) {
+            storeResource.persistedResource = denormaliseObject(storeResource.persistedResource, storeData, bag, denormalizePersisted);
         }
     }
-    return bag[storeResource.type][storeResource.id];
+    return bag[item.type][item.id];
 };
 var getSingleStoreResource = function (resourceId, storeData) {
     return lodash_index.get(storeData, [resourceId.type, resourceId.id], null);
@@ -457,24 +473,28 @@ var updateStoreDataFromPayload = function (storeData, payload) {
     if (lodash_index.isUndefined(data)) {
         return storeData;
     }
-    data = lodash_index.isArray(data) ? (data) : ([data]);
+    var /** @type {?} */ resources = lodash_index.isArray(data) ? (data) : ([data]);
     var /** @type {?} */ included = (lodash_index.get(payload, 'included'));
     if (!lodash_index.isUndefined(included)) {
-        data = data.concat(included);
+        resources = resources.concat(included);
     }
-    return (lodash_index.reduce(data, function (result, resource) {
-        // let resourcePath: string = getResourcePath(
-        //   result.resourcesDefinitions, resource.type);
-        // Extremely ugly, needs refactoring!
-        // let newPartialState = { data: {} };
-        // newPartialState.data[resourcePath] = { data: {} } ;
-        // newPartialState.data = updateOrInsertResource(
-        // result.data, resource);
-        return updateStoreDataFromResource(result, resource, true, true);
-        // result.data[resourcePath].data = updateOrInsertResource(
-        // result.data[resourcePath].data, resource);
-        // return <NgrxJsonApiStore>_.merge({}, result, newPartialState);
-    }, storeData));
+    var /** @type {?} */ newStoreData = __assign$2({}, storeData);
+    var /** @type {?} */ hasChange = false;
+    for (var _i = 0, resources_1 = resources; _i < resources_1.length; _i++) {
+        var resource = resources_1[_i];
+        var /** @type {?} */ storeResource = (__assign$2({}, resource, { persistedResource: resource, state: 'IN_SYNC', errors: [], loading: false }));
+        if (!lodash_index.isEqual(storeResource, resource)) {
+            hasChange = true;
+            if (!newStoreData[resource.type]) {
+                newStoreData[resource.type] = {};
+            }
+            else if (newStoreData[resource.type] === storeData[resource.type]) {
+                newStoreData[resource.type] = __assign$2({}, storeData[resource.type]);
+            }
+            newStoreData[resource.type][resource.id] = storeResource;
+        }
+    }
+    return hasChange ? newStoreData : storeData;
 };
 /**
  * Updates the storeQueries by either adding a new ResourceQueryStore
@@ -2260,6 +2280,13 @@ var NgrxJsonApi = (function () {
             Accept: 'application/vnd.api+json',
         });
         this.definitions = this.config.resourceDefinitions;
+        if (this.config.requestHeaders) {
+            for (var _i = 0, _a = lodash_index.keys(this.config.requestHeaders); _i < _a.length; _i++) {
+                var name_1 = _a[_i];
+                var value = this.config.requestHeaders[name_1];
+                this.headers = this.headers.set(name_1, value);
+            }
+        }
     }
     /**
      * @param {?} query

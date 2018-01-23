@@ -1,8 +1,8 @@
 import { Document, FilteringParam, NgrxJsonApiFilteringConfig, NgrxJsonApiStore, NgrxJsonApiStoreData, NgrxJsonApiStoreResources, NgrxJsonApiStoreQueries, OperationType, Payload, Query, Resource, ResourceDefinition, ResourceIdentifier, ResourceError, ResourceState, StoreQuery, SortingParam, StoreResource, ErrorModificationType } from './interfaces';
 export declare function setIn(state: any, path: string, value: any): any;
-export declare const denormaliseObject: (resource: Resource, storeData: NgrxJsonApiStoreData, bag: NgrxJsonApiStoreData) => any;
-export declare const denormaliseStoreResources: (items: StoreResource[], storeData: NgrxJsonApiStoreData, bag?: any) => StoreResource[];
-export declare const denormaliseStoreResource: (item: StoreResource, storeData: NgrxJsonApiStoreData, bag?: any) => any;
+export declare const denormaliseObject: (resource: Resource, storeData: NgrxJsonApiStoreData, bag: NgrxJsonApiStoreData, denormalizePersisted?: boolean) => any;
+export declare const denormaliseStoreResources: (items: StoreResource[], storeData: NgrxJsonApiStoreData, bag?: any, denormalizePersisted?: boolean) => StoreResource[];
+export declare const denormaliseStoreResource: (item: StoreResource, storeData: NgrxJsonApiStoreData, bag?: any, denormalizePersisted?: boolean) => any;
 export declare const getSingleStoreResource: (resourceId: ResourceIdentifier, storeData: NgrxJsonApiStoreData) => StoreResource;
 export declare const getMultipleStoreResource: (resourceIds: ResourceIdentifier[], resources: NgrxJsonApiStoreData) => StoreResource[];
 export declare const getDenormalisedPath: (path: string, baseResourceType: string, resourceDefinitions: ResourceDefinition[], pathSeparator?: string) => string;

@@ -25,62 +25,72 @@ export function setIn(state, path, value) {
         return newObject;
     });
 }
-export var /** @type {?} */ denormaliseObject = function (resource, storeData, bag) {
+export var /** @type {?} */ denormaliseObject = function (resource, storeData, bag, denormalizePersisted) {
+    if (denormalizePersisted === void 0) { denormalizePersisted = false; }
     // this function MUST MUTATE resource
-    var /** @type {?} */ denormalised = resource;
     if (resource.hasOwnProperty('relationships')) {
-        Object.keys(resource.relationships).forEach(function (relation) {
-            resource.relationships[relation]['reference'] = ({});
-            var /** @type {?} */ data = resource.relationships[relation].data;
-            // denormalised relation
-            var /** @type {?} */ relationDenorm;
-            if (data === null || _.isEqual(data, [])) {
-                relationDenorm = data;
+        Object.keys(resource.relationships).forEach(function (relationshipName) {
+            var /** @type {?} */ orginalRelationship = resource.relationships[relationshipName];
+            var /** @type {?} */ data = orginalRelationship.data;
+            if (!_.isUndefined(data)) {
+                var /** @type {?} */ denormalizedRelation = void 0;
+                if (data === null) {
+                    denormalizedRelation = data;
+                }
+                else if (!_.isArray(data)) {
+                    // one relation
+                    var /** @type {?} */ relatedRS = getSingleStoreResource(/** @type {?} */ (data), storeData);
+                    denormalizedRelation = denormaliseStoreResource(relatedRS, storeData, bag, denormalizePersisted);
+                }
+                else if (data.length == 0) {
+                    denormalizedRelation = data;
+                }
+                else {
+                    // many relation
+                    var /** @type {?} */ relatedRSs = getMultipleStoreResource(/** @type {?} */ (data), storeData);
+                    denormalizedRelation = relatedRSs.map(function (r) {
+                        return denormaliseStoreResource(r, storeData, bag, denormalizePersisted);
+                    });
+                }
+                var /** @type {?} */ relationship = __assign({}, orginalRelationship);
+                relationship['reference'] = denormalizedRelation;
+                resource.relationships[relationshipName] = relationship;
             }
-            else if (_.isPlainObject(data)) {
-                // hasOne relation
-                var /** @type {?} */ relatedRS = getSingleStoreResource(/** @type {?} */ (data), storeData);
-                relationDenorm = denormaliseStoreResource(relatedRS, storeData, bag);
-            }
-            else if (_.isArray(data)) {
-                // hasMany relation
-                var /** @type {?} */ relatedRSs = getMultipleStoreResource(/** @type {?} */ (data), storeData);
-                relationDenorm = relatedRSs.map(function (r) {
-                    return denormaliseStoreResource(r, storeData, bag);
-                });
-            }
-            var /** @type {?} */ relationDenormPath = 'relationships.' + relation + '.reference';
-            denormalised = (_.set(denormalised, relationDenormPath, relationDenorm));
         });
     }
-    return denormalised;
+    return resource;
 };
-export var /** @type {?} */ denormaliseStoreResources = function (items, storeData, bag) {
+export var /** @type {?} */ denormaliseStoreResources = function (items, storeData, bag, denormalizePersisted) {
     if (bag === void 0) { bag = {}; }
+    if (denormalizePersisted === void 0) { denormalizePersisted = false; }
     var /** @type {?} */ results = [];
     for (var _i = 0, items_1 = items; _i < items_1.length; _i++) {
         var item = items_1[_i];
-        results.push(denormaliseStoreResource(item, storeData, bag));
+        results.push(denormaliseStoreResource(item, storeData, bag, denormalizePersisted));
     }
     return results;
 };
-export var /** @type {?} */ denormaliseStoreResource = function (item, storeData, bag) {
+export var /** @type {?} */ denormaliseStoreResource = function (item, storeData, bag, denormalizePersisted) {
     if (bag === void 0) { bag = {}; }
+    if (denormalizePersisted === void 0) { denormalizePersisted = false; }
     if (!item) {
         return null;
     }
-    var /** @type {?} */ storeResource = _.cloneDeep(/** @type {?} */ (item));
-    if (_.isUndefined(bag[storeResource.type])) {
-        bag[storeResource.type] = {};
+    if (_.isUndefined(bag[item.type])) {
+        bag[item.type] = {};
     }
-    if (_.isUndefined(bag[storeResource.type][storeResource.id])) {
+    if (_.isUndefined(bag[item.type][item.id])) {
+        var /** @type {?} */ storeResource = __assign({}, item);
+        if (item.relationships) {
+            storeResource.relationships = __assign({}, item.relationships);
+        }
         bag[storeResource.type][storeResource.id] = storeResource;
-        storeResource = denormaliseObject(storeResource, storeData, bag);
-        if (storeResource.persistedResource) {
-            storeResource.persistedResource = denormaliseObject(storeResource.persistedResource, storeData, bag);
+        storeResource = denormaliseObject(storeResource, storeData, bag, denormalizePersisted);
+        if (storeResource.persistedResource && denormalizePersisted) {
+            storeResource.persistedResource = denormaliseObject(storeResource.persistedResource, storeData, bag, denormalizePersisted);
         }
     }
-    return bag[storeResource.type][storeResource.id];
+    return bag[item.type][item.id];
 };
 export var /** @type {?} */ getSingleStoreResource = function (resourceId, storeData) {
     return _.get(storeData, [resourceId.type, resourceId.id], null);
@@ -442,24 +452,28 @@ export var /** @type {?} */ updateStoreDataFromPayload = function (storeData, pa
     if (_.isUndefined(data)) {
         return storeData;
     }
-    data = _.isArray(data) ? (data) : ([data]);
+    var /** @type {?} */ resources = _.isArray(data) ? (data) : ([data]);
     var /** @type {?} */ included = (_.get(payload, 'included'));
     if (!_.isUndefined(included)) {
-        data = data.concat(included);
+        resources = resources.concat(included);
     }
-    return (_.reduce(data, function (result, resource) {
-        // let resourcePath: string = getResourcePath(
-        //   result.resourcesDefinitions, resource.type);
-        // Extremely ugly, needs refactoring!
-        // let newPartialState = { data: {} };
-        // newPartialState.data[resourcePath] = { data: {} } ;
-        // newPartialState.data = updateOrInsertResource(
-        // result.data, resource);
-        return updateStoreDataFromResource(result, resource, true, true);
-        // result.data[resourcePath].data = updateOrInsertResource(
-        // result.data[resourcePath].data, resource);
-        // return <NgrxJsonApiStore>_.merge({}, result, newPartialState);
-    }, storeData));
+    var /** @type {?} */ newStoreData = __assign({}, storeData);
+    var /** @type {?} */ hasChange = false;
+    for (var _i = 0, resources_1 = resources; _i < resources_1.length; _i++) {
+        var resource = resources_1[_i];
+        var /** @type {?} */ storeResource = (__assign({}, resource, { persistedResource: resource, state: 'IN_SYNC', errors: [], loading: false }));
+        if (!_.isEqual(storeResource, resource)) {
+            hasChange = true;
+            if (!newStoreData[resource.type]) {
+                newStoreData[resource.type] = {};
+            }
+            else if (newStoreData[resource.type] === storeData[resource.type]) {
+                newStoreData[resource.type] = __assign({}, storeData[resource.type]);
+            }
+            newStoreData[resource.type][resource.id] = storeResource;
+        }
+    }
+    return hasChange ? newStoreData : storeData;
 };
 /**
  * Updates the storeQueries by either adding a new ResourceQueryStore
