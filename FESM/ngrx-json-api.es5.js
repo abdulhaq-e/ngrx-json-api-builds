@@ -553,6 +553,7 @@ var updateQueryErrors = function (storeQueries, queryId, document) {
     var newState = __assign$2({}, storeQueries);
     var newStoreQuery = __assign$2({}, newState[queryId]);
     newStoreQuery.errors = [];
+    newStoreQuery.loading = false;
     if (document.errors) {
         (_a = newStoreQuery.errors).push.apply(_a, document.errors);
     }

@@ -514,6 +514,7 @@ export var updateQueryErrors = function (storeQueries, queryId, document) {
     var newState = __assign({}, storeQueries);
     var newStoreQuery = __assign({}, newState[queryId]);
     newStoreQuery.errors = [];
+    newStoreQuery.loading = false;
     if (document.errors) {
         (_a = newStoreQuery.errors).push.apply(_a, document.errors);
     }
