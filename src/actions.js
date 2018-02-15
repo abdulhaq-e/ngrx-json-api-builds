@@ -8,6 +8,10 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 export var /** @type {?} */ NgrxJsonApiActionTypes = {
     API_POST_INIT: '[NgrxJsonApi] API_POST_INIT',
     API_POST_SUCCESS: '[NgrxJsonApi] API_POST_SUCCESS',
@@ -39,13 +43,43 @@ export var /** @type {?} */ NgrxJsonApiActionTypes = {
     CLEAR_STORE: '[NgrxJsonApi] CLEAR_STORE',
 };
 /**
+ * @record
+ */
+export function ApiApplyInitPayload() { }
+function ApiApplyInitPayload_tsickle_Closure_declarations() {
+    /**
+     * optional list of resource identifiers to perform apply. If not specified all change will be applied
+     * to the backend.
+     * @type {?|undefined}
+     */
+    ApiApplyInitPayload.prototype.ids;
+    /**
+     * if the apply action is restricted to a set of resources with the ids parameter. The include flag allows to
+     * specify which relationships to apply as well. Nested relationships are separated by a dot.
+     * @type {?|undefined}
+     */
+    ApiApplyInitPayload.prototype.include;
+}
+/**
+ * @record
+ */
+export function ApiApplyRollbackPayload() { }
+function ApiApplyRollbackPayload_tsickle_Closure_declarations() {
+}
+/**
  * @abstract
  */
-var NgrxJsonApiAction = (function () {
+var /**
+ * @abstract
+ */
+NgrxJsonApiAction = /** @class */ (function () {
     function NgrxJsonApiAction() {
     }
     return NgrxJsonApiAction;
 }());
+/**
+ * @abstract
+ */
 export { NgrxJsonApiAction };
 function NgrxJsonApiAction_tsickle_Closure_declarations() {
     /** @type {?} */
@@ -53,12 +87,8 @@ function NgrxJsonApiAction_tsickle_Closure_declarations() {
     /** @type {?} */
     NgrxJsonApiAction.prototype.type;
 }
-var ApiApplyInitAction = (function (_super) {
+var ApiApplyInitAction = /** @class */ (function (_super) {
     __extends(ApiApplyInitAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function ApiApplyInitAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -77,12 +107,8 @@ function ApiApplyInitAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiApplyInitAction.prototype.zoneId;
 }
-var ApiApplySuccessAction = (function (_super) {
+var ApiApplySuccessAction = /** @class */ (function (_super) {
     __extends(ApiApplySuccessAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function ApiApplySuccessAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -101,12 +127,8 @@ function ApiApplySuccessAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiApplySuccessAction.prototype.zoneId;
 }
-var ApiApplyFailAction = (function (_super) {
+var ApiApplyFailAction = /** @class */ (function (_super) {
     __extends(ApiApplyFailAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function ApiApplyFailAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -125,12 +147,8 @@ function ApiApplyFailAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiApplyFailAction.prototype.zoneId;
 }
-var ApiPostInitAction = (function (_super) {
+var ApiPostInitAction = /** @class */ (function (_super) {
     __extends(ApiPostInitAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function ApiPostInitAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -149,12 +167,8 @@ function ApiPostInitAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiPostInitAction.prototype.zoneId;
 }
-var ApiPostSuccessAction = (function (_super) {
+var ApiPostSuccessAction = /** @class */ (function (_super) {
     __extends(ApiPostSuccessAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function ApiPostSuccessAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -173,12 +187,8 @@ function ApiPostSuccessAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiPostSuccessAction.prototype.zoneId;
 }
-var ApiPostFailAction = (function (_super) {
+var ApiPostFailAction = /** @class */ (function (_super) {
     __extends(ApiPostFailAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function ApiPostFailAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -197,12 +207,8 @@ function ApiPostFailAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiPostFailAction.prototype.zoneId;
 }
-var ApiDeleteInitAction = (function (_super) {
+var ApiDeleteInitAction = /** @class */ (function (_super) {
     __extends(ApiDeleteInitAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function ApiDeleteInitAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -221,12 +227,8 @@ function ApiDeleteInitAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiDeleteInitAction.prototype.zoneId;
 }
-var ApiDeleteSuccessAction = (function (_super) {
+var ApiDeleteSuccessAction = /** @class */ (function (_super) {
     __extends(ApiDeleteSuccessAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function ApiDeleteSuccessAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -245,12 +247,8 @@ function ApiDeleteSuccessAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiDeleteSuccessAction.prototype.zoneId;
 }
-var ApiDeleteFailAction = (function (_super) {
+var ApiDeleteFailAction = /** @class */ (function (_super) {
     __extends(ApiDeleteFailAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function ApiDeleteFailAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -269,12 +267,8 @@ function ApiDeleteFailAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiDeleteFailAction.prototype.zoneId;
 }
-var ApiGetInitAction = (function (_super) {
+var ApiGetInitAction = /** @class */ (function (_super) {
     __extends(ApiGetInitAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function ApiGetInitAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -293,12 +287,8 @@ function ApiGetInitAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiGetInitAction.prototype.zoneId;
 }
-var ApiGetSuccessAction = (function (_super) {
+var ApiGetSuccessAction = /** @class */ (function (_super) {
     __extends(ApiGetSuccessAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function ApiGetSuccessAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -317,12 +307,8 @@ function ApiGetSuccessAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiGetSuccessAction.prototype.zoneId;
 }
-var ApiGetFailAction = (function (_super) {
+var ApiGetFailAction = /** @class */ (function (_super) {
     __extends(ApiGetFailAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function ApiGetFailAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -341,12 +327,8 @@ function ApiGetFailAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiGetFailAction.prototype.zoneId;
 }
-var ApiRollbackAction = (function (_super) {
+var ApiRollbackAction = /** @class */ (function (_super) {
     __extends(ApiRollbackAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function ApiRollbackAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -365,12 +347,8 @@ function ApiRollbackAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiRollbackAction.prototype.zoneId;
 }
-var ApiPatchInitAction = (function (_super) {
+var ApiPatchInitAction = /** @class */ (function (_super) {
     __extends(ApiPatchInitAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function ApiPatchInitAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -389,12 +367,8 @@ function ApiPatchInitAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiPatchInitAction.prototype.zoneId;
 }
-var ApiPatchSuccessAction = (function (_super) {
+var ApiPatchSuccessAction = /** @class */ (function (_super) {
     __extends(ApiPatchSuccessAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function ApiPatchSuccessAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -413,12 +387,8 @@ function ApiPatchSuccessAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiPatchSuccessAction.prototype.zoneId;
 }
-var ApiPatchFailAction = (function (_super) {
+var ApiPatchFailAction = /** @class */ (function (_super) {
     __extends(ApiPatchFailAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function ApiPatchFailAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -437,12 +407,8 @@ function ApiPatchFailAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiPatchFailAction.prototype.zoneId;
 }
-var DeleteStoreResourceAction = (function (_super) {
+var DeleteStoreResourceAction = /** @class */ (function (_super) {
     __extends(DeleteStoreResourceAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function DeleteStoreResourceAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -461,12 +427,8 @@ function DeleteStoreResourceAction_tsickle_Closure_declarations() {
     /** @type {?} */
     DeleteStoreResourceAction.prototype.zoneId;
 }
-var PatchStoreResourceAction = (function (_super) {
+var PatchStoreResourceAction = /** @class */ (function (_super) {
     __extends(PatchStoreResourceAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function PatchStoreResourceAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -485,12 +447,8 @@ function PatchStoreResourceAction_tsickle_Closure_declarations() {
     /** @type {?} */
     PatchStoreResourceAction.prototype.zoneId;
 }
-var NewStoreResourceAction = (function (_super) {
+var NewStoreResourceAction = /** @class */ (function (_super) {
     __extends(NewStoreResourceAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function NewStoreResourceAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -509,12 +467,8 @@ function NewStoreResourceAction_tsickle_Closure_declarations() {
     /** @type {?} */
     NewStoreResourceAction.prototype.zoneId;
 }
-var PostStoreResourceAction = (function (_super) {
+var PostStoreResourceAction = /** @class */ (function (_super) {
     __extends(PostStoreResourceAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function PostStoreResourceAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -533,12 +487,8 @@ function PostStoreResourceAction_tsickle_Closure_declarations() {
     /** @type {?} */
     PostStoreResourceAction.prototype.zoneId;
 }
-var RemoveQueryAction = (function (_super) {
+var RemoveQueryAction = /** @class */ (function (_super) {
     __extends(RemoveQueryAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function RemoveQueryAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -557,12 +507,8 @@ function RemoveQueryAction_tsickle_Closure_declarations() {
     /** @type {?} */
     RemoveQueryAction.prototype.zoneId;
 }
-var LocalQueryInitAction = (function (_super) {
+var LocalQueryInitAction = /** @class */ (function (_super) {
     __extends(LocalQueryInitAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function LocalQueryInitAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -581,12 +527,8 @@ function LocalQueryInitAction_tsickle_Closure_declarations() {
     /** @type {?} */
     LocalQueryInitAction.prototype.zoneId;
 }
-var LocalQuerySuccessAction = (function (_super) {
+var LocalQuerySuccessAction = /** @class */ (function (_super) {
     __extends(LocalQuerySuccessAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function LocalQuerySuccessAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -605,12 +547,8 @@ function LocalQuerySuccessAction_tsickle_Closure_declarations() {
     /** @type {?} */
     LocalQuerySuccessAction.prototype.zoneId;
 }
-var LocalQueryFailAction = (function (_super) {
+var LocalQueryFailAction = /** @class */ (function (_super) {
     __extends(LocalQueryFailAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function LocalQueryFailAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -629,11 +567,8 @@ function LocalQueryFailAction_tsickle_Closure_declarations() {
     /** @type {?} */
     LocalQueryFailAction.prototype.zoneId;
 }
-var CompactStoreAction = (function (_super) {
+var CompactStoreAction = /** @class */ (function (_super) {
     __extends(CompactStoreAction, _super);
-    /**
-     * @param {?} zoneId
-     */
     function CompactStoreAction(zoneId) {
         var _this = _super.call(this) || this;
         _this.zoneId = zoneId;
@@ -649,11 +584,8 @@ function CompactStoreAction_tsickle_Closure_declarations() {
     /** @type {?} */
     CompactStoreAction.prototype.zoneId;
 }
-var ClearStoreAction = (function (_super) {
+var ClearStoreAction = /** @class */ (function (_super) {
     __extends(ClearStoreAction, _super);
-    /**
-     * @param {?} zoneId
-     */
     function ClearStoreAction(zoneId) {
         var _this = _super.call(this) || this;
         _this.zoneId = zoneId;
@@ -669,12 +601,8 @@ function ClearStoreAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ClearStoreAction.prototype.zoneId;
 }
-var ApiQueryRefreshAction = (function (_super) {
+var ApiQueryRefreshAction = /** @class */ (function (_super) {
     __extends(ApiQueryRefreshAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function ApiQueryRefreshAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;
@@ -696,12 +624,8 @@ function ApiQueryRefreshAction_tsickle_Closure_declarations() {
     /** @type {?} */
     ApiQueryRefreshAction.prototype.zoneId;
 }
-var ModifyStoreResourceErrorsAction = (function (_super) {
+var ModifyStoreResourceErrorsAction = /** @class */ (function (_super) {
     __extends(ModifyStoreResourceErrorsAction, _super);
-    /**
-     * @param {?} payload
-     * @param {?} zoneId
-     */
     function ModifyStoreResourceErrorsAction(payload, zoneId) {
         var _this = _super.call(this) || this;
         _this.payload = payload;

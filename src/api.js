@@ -15,17 +15,17 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
-import * as _ from 'lodash/index';
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+import * as _ from 'lodash';
 import { HttpHeaders, } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 import { generateIncludedQueryParams, generateFieldsQueryParams, generateFilteringQueryParams, generateSortingQueryParams, generateQueryParams, } from './utils';
-var NgrxJsonApi = (function () {
-    /**
-     * @param {?} http
-     * @param {?} config
-     */
+var NgrxJsonApi = /** @class */ (function () {
     function NgrxJsonApi(http, config) {
         this.http = http;
         this.config = config;
@@ -37,7 +37,7 @@ var NgrxJsonApi = (function () {
         if (this.config.requestHeaders) {
             for (var _i = 0, _a = _.keys(this.config.requestHeaders); _i < _a.length; _i++) {
                 var name_1 = _a[_i];
-                var value = this.config.requestHeaders[name_1];
+                var /** @type {?} */ value = this.config.requestHeaders[name_1];
                 this.headers = this.headers.set(name_1, value);
             }
         }
@@ -47,7 +47,12 @@ var NgrxJsonApi = (function () {
      * @param {?} operation
      * @return {?}
      */
-    NgrxJsonApi.prototype.urlBuilder = function (query, operation) {
+    NgrxJsonApi.prototype.urlBuilder = /**
+     * @param {?} query
+     * @param {?} operation
+     * @return {?}
+     */
+    function (query, operation) {
         switch (operation) {
             case 'GET': {
                 if (query.type && query.id) {
@@ -76,7 +81,11 @@ var NgrxJsonApi = (function () {
      * @param {?} type
      * @return {?}
      */
-    NgrxJsonApi.prototype.collectionPathFor = function (type) {
+    NgrxJsonApi.prototype.collectionPathFor = /**
+     * @param {?} type
+     * @return {?}
+     */
+    function (type) {
         // assume that type == collectionPath if not configured otherwise
         var /** @type {?} */ definition = _.find(this.definitions, { type: type });
         if (definition) {
@@ -90,7 +99,11 @@ var NgrxJsonApi = (function () {
      * @param {?} type
      * @return {?}
      */
-    NgrxJsonApi.prototype.collectionUrlFor = function (type) {
+    NgrxJsonApi.prototype.collectionUrlFor = /**
+     * @param {?} type
+     * @return {?}
+     */
+    function (type) {
         var /** @type {?} */ collectionPath = this.collectionPathFor(type);
         return this.config.apiUrl + "/" + collectionPath;
     };
@@ -99,7 +112,12 @@ var NgrxJsonApi = (function () {
      * @param {?} id
      * @return {?}
      */
-    NgrxJsonApi.prototype.resourcePathFor = function (type, id) {
+    NgrxJsonApi.prototype.resourcePathFor = /**
+     * @param {?} type
+     * @param {?} id
+     * @return {?}
+     */
+    function (type, id) {
         var /** @type {?} */ collectionPath = this.collectionPathFor(type);
         return collectionPath + "/" + encodeURIComponent(id);
     };
@@ -108,7 +126,12 @@ var NgrxJsonApi = (function () {
      * @param {?} id
      * @return {?}
      */
-    NgrxJsonApi.prototype.resourceUrlFor = function (type, id) {
+    NgrxJsonApi.prototype.resourceUrlFor = /**
+     * @param {?} type
+     * @param {?} id
+     * @return {?}
+     */
+    function (type, id) {
         var /** @type {?} */ resourcePath = this.resourcePathFor(type, id);
         return this.config.apiUrl + "/" + resourcePath;
     };
@@ -116,7 +139,11 @@ var NgrxJsonApi = (function () {
      * @param {?} query
      * @return {?}
      */
-    NgrxJsonApi.prototype.find = function (query) {
+    NgrxJsonApi.prototype.find = /**
+     * @param {?} query
+     * @return {?}
+     */
+    function (query) {
         var /** @type {?} */ _generateIncludedQueryParams = generateIncludedQueryParams;
         var /** @type {?} */ _generateFilteringQueryParams = generateFilteringQueryParams;
         var /** @type {?} */ _generateFieldsQueryParams = generateFieldsQueryParams;
@@ -182,7 +209,12 @@ var NgrxJsonApi = (function () {
      * @param {?} document
      * @return {?}
      */
-    NgrxJsonApi.prototype.create = function (query, document) {
+    NgrxJsonApi.prototype.create = /**
+     * @param {?} query
+     * @param {?} document
+     * @return {?}
+     */
+    function (query, document) {
         if (typeof query === undefined) {
             return Observable.throw('Query not found');
         }
@@ -201,7 +233,12 @@ var NgrxJsonApi = (function () {
      * @param {?} document
      * @return {?}
      */
-    NgrxJsonApi.prototype.update = function (query, document) {
+    NgrxJsonApi.prototype.update = /**
+     * @param {?} query
+     * @param {?} document
+     * @return {?}
+     */
+    function (query, document) {
         if (typeof query === undefined) {
             return Observable.throw('Query not found');
         }
@@ -219,7 +256,11 @@ var NgrxJsonApi = (function () {
      * @param {?} query
      * @return {?}
      */
-    NgrxJsonApi.prototype.delete = function (query) {
+    NgrxJsonApi.prototype.delete = /**
+     * @param {?} query
+     * @return {?}
+     */
+    function (query) {
         if (typeof query === undefined) {
             return Observable.throw('Query not found');
         }
@@ -233,7 +274,11 @@ var NgrxJsonApi = (function () {
      * @param {?} requestOptions
      * @return {?}
      */
-    NgrxJsonApi.prototype.request = function (requestOptions) {
+    NgrxJsonApi.prototype.request = /**
+     * @param {?} requestOptions
+     * @return {?}
+     */
+    function (requestOptions) {
         var /** @type {?} */ request;
         var /** @type {?} */ newRequestOptions = __assign({}, requestOptions, { headers: this.headers, observe: 'response' });
         if (requestOptions.method === 'GET') {

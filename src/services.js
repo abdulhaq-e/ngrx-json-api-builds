@@ -16,21 +16,104 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     }
     return t;
 };
-import * as _ from 'lodash/index';
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+import * as _ from 'lodash';
 import 'rxjs/add/operator/finally';
-import { selectManyQueryResult, selectNgrxJsonApiDefaultZone, selectNgrxJsonApiZone, selectOneQueryResult, selectStoreResource } from './selectors';
+import { selectManyQueryResult, selectNgrxJsonApiDefaultZone, selectNgrxJsonApiZone, selectOneQueryResult, selectStoreResource, } from './selectors';
 import { ApiApplyInitAction, ApiDeleteInitAction, ApiGetInitAction, ApiPatchInitAction, ApiPostInitAction, ApiQueryRefreshAction, ClearStoreAction, CompactStoreAction, DeleteStoreResourceAction, LocalQueryInitAction, ModifyStoreResourceErrorsAction, NewStoreResourceAction, PatchStoreResourceAction, PostStoreResourceAction, RemoveQueryAction, } from './actions';
 import { NGRX_JSON_API_DEFAULT_ZONE, } from './interfaces';
 import { denormaliseStoreResource, denormaliseStoreResources, getDenormalisedPath, getDenormalisedValue, uuid, } from './utils';
 /**
+ * @record
+ */
+export function FindOptions() { }
+function FindOptions_tsickle_Closure_declarations() {
+    /** @type {?} */
+    FindOptions.prototype.query;
+    /** @type {?|undefined} */
+    FindOptions.prototype.fromServer;
+    /** @type {?|undefined} */
+    FindOptions.prototype.denormalise;
+}
+/**
+ * @record
+ */
+export function PutQueryOptions() { }
+function PutQueryOptions_tsickle_Closure_declarations() {
+    /** @type {?} */
+    PutQueryOptions.prototype.query;
+    /** @type {?|undefined} */
+    PutQueryOptions.prototype.fromServer;
+}
+/**
+ * @record
+ */
+export function PostResourceOptions() { }
+function PostResourceOptions_tsickle_Closure_declarations() {
+    /** @type {?} */
+    PostResourceOptions.prototype.resource;
+    /** @type {?|undefined} */
+    PostResourceOptions.prototype.toRemote;
+}
+/**
+ * @record
+ */
+export function PatchResourceOptions() { }
+function PatchResourceOptions_tsickle_Closure_declarations() {
+    /** @type {?} */
+    PatchResourceOptions.prototype.resource;
+    /** @type {?|undefined} */
+    PatchResourceOptions.prototype.toRemote;
+}
+/**
+ * @record
+ */
+export function NewResourceOptions() { }
+function NewResourceOptions_tsickle_Closure_declarations() {
+    /** @type {?} */
+    NewResourceOptions.prototype.resource;
+}
+/**
+ * @record
+ */
+export function DeleteResourceOptions() { }
+function DeleteResourceOptions_tsickle_Closure_declarations() {
+    /** @type {?} */
+    DeleteResourceOptions.prototype.resourceId;
+    /** @type {?|undefined} */
+    DeleteResourceOptions.prototype.toRemote;
+}
+/**
+ * This internface is deprecated, do no longer use.
+ * @record
+ */
+export function Options() { }
+function Options_tsickle_Closure_declarations() {
+    /** @type {?|undefined} */
+    Options.prototype.query;
+    /** @type {?|undefined} */
+    Options.prototype.denormalise;
+    /** @type {?|undefined} */
+    Options.prototype.fromServer;
+    /** @type {?|undefined} */
+    Options.prototype.resource;
+    /** @type {?|undefined} */
+    Options.prototype.toRemote;
+    /** @type {?|undefined} */
+    Options.prototype.resourceId;
+}
+/**
  * Represents an isolated area in the store with its own set of resources and queries.
  * 'api' is the default zone that already historically has been put beneath NgrxJsonApi within the store.
  */
-var NgrxJsonApiZoneService = (function () {
-    /**
-     * @param {?} zoneId
-     * @param {?} store
-     */
+var /**
+ * Represents an isolated area in the store with its own set of resources and queries.
+ * 'api' is the default zone that already historically has been put beneath NgrxJsonApi within the store.
+ */
+NgrxJsonApiZoneService = /** @class */ (function () {
     function NgrxJsonApiZoneService(zoneId, store) {
         this.zoneId = zoneId;
         this.store = store;
@@ -41,7 +124,13 @@ var NgrxJsonApiZoneService = (function () {
      * @param {?} options
      * @return {?}
      */
-    NgrxJsonApiZoneService.prototype.putQuery = function (options) {
+    NgrxJsonApiZoneService.prototype.putQuery = /**
+     * Adds the given query to the store. Any existing query with the same queryId is replaced.
+     * Make use of selectResults(...) to fetch the data.
+     * @param {?} options
+     * @return {?}
+     */
+    function (options) {
         var /** @type {?} */ query = options.query;
         var /** @type {?} */ fromServer = _.isUndefined(options.fromServer)
             ? true
@@ -60,14 +149,22 @@ var NgrxJsonApiZoneService = (function () {
      * @param {?} queryId
      * @return {?}
      */
-    NgrxJsonApiZoneService.prototype.refreshQuery = function (queryId) {
+    NgrxJsonApiZoneService.prototype.refreshQuery = /**
+     * @param {?} queryId
+     * @return {?}
+     */
+    function (queryId) {
         this.store.dispatch(new ApiQueryRefreshAction(queryId, this.zoneId));
     };
     /**
      * @param {?} queryId
      * @return {?}
      */
-    NgrxJsonApiZoneService.prototype.removeQuery = function (queryId) {
+    NgrxJsonApiZoneService.prototype.removeQuery = /**
+     * @param {?} queryId
+     * @return {?}
+     */
+    function (queryId) {
         this.store.dispatch(new RemoveQueryAction(queryId, this.zoneId));
     };
     /**
@@ -77,9 +174,18 @@ var NgrxJsonApiZoneService = (function () {
      * @param {?=} denormalize
      * @return {?} observable holding the data as array of resources.
      */
-    NgrxJsonApiZoneService.prototype.selectManyResults = function (queryId, denormalize) {
+    NgrxJsonApiZoneService.prototype.selectManyResults = /**
+     * Selects the data of the given query.
+     *
+     * @param {?} queryId
+     * @param {?=} denormalize
+     * @return {?} observable holding the data as array of resources.
+     */
+    function (queryId, denormalize) {
         if (denormalize === void 0) { denormalize = false; }
-        return this.store.let(selectNgrxJsonApiZone(this.zoneId)).let(selectManyQueryResult(queryId, denormalize));
+        return this.store
+            .let(selectNgrxJsonApiZone(this.zoneId))
+            .let(selectManyQueryResult(queryId, denormalize));
     };
     /**
      * Selects the data of the given query.
@@ -88,16 +194,31 @@ var NgrxJsonApiZoneService = (function () {
      * @param {?=} denormalize
      * @return {?} observable holding the data as array of resources.
      */
-    NgrxJsonApiZoneService.prototype.selectOneResults = function (queryId, denormalize) {
+    NgrxJsonApiZoneService.prototype.selectOneResults = /**
+     * Selects the data of the given query.
+     *
+     * @param {?} queryId
+     * @param {?=} denormalize
+     * @return {?} observable holding the data as array of resources.
+     */
+    function (queryId, denormalize) {
         if (denormalize === void 0) { denormalize = false; }
-        return this.store.let(selectNgrxJsonApiZone(this.zoneId)).let(selectOneQueryResult(queryId, denormalize));
+        return this.store
+            .let(selectNgrxJsonApiZone(this.zoneId))
+            .let(selectOneQueryResult(queryId, denormalize));
     };
     /**
      * @param {?} identifier of the resource
      * @return {?} observable of the resource
      */
-    NgrxJsonApiZoneService.prototype.selectStoreResource = function (identifier) {
-        return this.store.let(selectNgrxJsonApiZone(this.zoneId)).let(selectStoreResource(identifier));
+    NgrxJsonApiZoneService.prototype.selectStoreResource = /**
+     * @param {?} identifier of the resource
+     * @return {?} observable of the resource
+     */
+    function (identifier) {
+        return this.store
+            .let(selectNgrxJsonApiZone(this.zoneId))
+            .let(selectStoreResource(identifier));
     };
     /**
      * Updates the given resource in the store with the provided data.
@@ -106,7 +227,14 @@ var NgrxJsonApiZoneService = (function () {
      * @param {?} options
      * @return {?}
      */
-    NgrxJsonApiZoneService.prototype.patchResource = function (options) {
+    NgrxJsonApiZoneService.prototype.patchResource = /**
+     * Updates the given resource in the store with the provided data.
+     * Use commit() to send the changes to the remote JSON API endpoint.
+     *
+     * @param {?} options
+     * @return {?}
+     */
+    function (options) {
         var /** @type {?} */ resource = options.resource;
         var /** @type {?} */ toRemote = _.isUndefined(options.toRemote) ? false : options.toRemote;
         if (toRemote) {
@@ -123,7 +251,14 @@ var NgrxJsonApiZoneService = (function () {
      * @param {?} options
      * @return {?}
      */
-    NgrxJsonApiZoneService.prototype.newResource = function (options) {
+    NgrxJsonApiZoneService.prototype.newResource = /**
+     * Creates a new resources that is hold locally in the store
+     * and my later be posted.
+     *
+     * @param {?} options
+     * @return {?}
+     */
+    function (options) {
         var /** @type {?} */ resource = options.resource;
         this.store.dispatch(new NewStoreResourceAction(resource, this.zoneId));
     };
@@ -135,7 +270,15 @@ var NgrxJsonApiZoneService = (function () {
      * @param {?} options
      * @return {?}
      */
-    NgrxJsonApiZoneService.prototype.postResource = function (options) {
+    NgrxJsonApiZoneService.prototype.postResource = /**
+     * Adds the given resource to the store. Any already existing
+     * resource with the same id gets replaced. Use commit() to send
+     * the changes to the remote JSON API endpoint.
+     *
+     * @param {?} options
+     * @return {?}
+     */
+    function (options) {
         var /** @type {?} */ resource = options.resource;
         var /** @type {?} */ toRemote = _.isUndefined(options.toRemote) ? false : options.toRemote;
         if (toRemote) {
@@ -151,7 +294,13 @@ var NgrxJsonApiZoneService = (function () {
      * @param {?} options
      * @return {?}
      */
-    NgrxJsonApiZoneService.prototype.deleteResource = function (options) {
+    NgrxJsonApiZoneService.prototype.deleteResource = /**
+     * Marks the given resource for deletion.
+     *
+     * @param {?} options
+     * @return {?}
+     */
+    function (options) {
         var /** @type {?} */ resourceId = options.resourceId;
         var /** @type {?} */ toRemote = _.isUndefined(options.toRemote) ? false : options.toRemote;
         if (toRemote) {
@@ -165,21 +314,33 @@ var NgrxJsonApiZoneService = (function () {
      * Applies all pending changes to the remote JSON API endpoint.
      * @return {?}
      */
-    NgrxJsonApiZoneService.prototype.apply = function () {
+    NgrxJsonApiZoneService.prototype.apply = /**
+     * Applies all pending changes to the remote JSON API endpoint.
+     * @return {?}
+     */
+    function () {
         this.store.dispatch(new ApiApplyInitAction({}, this.zoneId));
     };
     /**
      * Clear all the contents from the store.
      * @return {?}
      */
-    NgrxJsonApiZoneService.prototype.clear = function () {
+    NgrxJsonApiZoneService.prototype.clear = /**
+     * Clear all the contents from the store.
+     * @return {?}
+     */
+    function () {
         this.store.dispatch(new ClearStoreAction(this.zoneId));
     };
     /**
      * Compacts the store by removing unreferences and unchanges resources.
      * @return {?}
      */
-    NgrxJsonApiZoneService.prototype.compact = function () {
+    NgrxJsonApiZoneService.prototype.compact = /**
+     * Compacts the store by removing unreferences and unchanges resources.
+     * @return {?}
+     */
+    function () {
         this.store.dispatch(new CompactStoreAction(this.zoneId));
     };
     /**
@@ -188,7 +349,13 @@ var NgrxJsonApiZoneService = (function () {
      * @param {?} errors
      * @return {?}
      */
-    NgrxJsonApiZoneService.prototype.addResourceErrors = function (id, errors) {
+    NgrxJsonApiZoneService.prototype.addResourceErrors = /**
+     * Adds the given errors to the resource with the given id.
+     * @param {?} id
+     * @param {?} errors
+     * @return {?}
+     */
+    function (id, errors) {
         this.store.dispatch(new ModifyStoreResourceErrorsAction({
             resourceId: id,
             errors: errors,
@@ -201,7 +368,13 @@ var NgrxJsonApiZoneService = (function () {
      * @param {?} errors
      * @return {?}
      */
-    NgrxJsonApiZoneService.prototype.removeResourceErrors = function (id, errors) {
+    NgrxJsonApiZoneService.prototype.removeResourceErrors = /**
+     * Removes the given errors to the resource with the given id.
+     * @param {?} id
+     * @param {?} errors
+     * @return {?}
+     */
+    function (id, errors) {
         this.store.dispatch(new ModifyStoreResourceErrorsAction({
             resourceId: id,
             errors: errors,
@@ -214,7 +387,13 @@ var NgrxJsonApiZoneService = (function () {
      * @param {?} errors
      * @return {?}
      */
-    NgrxJsonApiZoneService.prototype.setResourceErrors = function (id, errors) {
+    NgrxJsonApiZoneService.prototype.setResourceErrors = /**
+     * Sets the given errors to the resource with the given id.
+     * @param {?} id
+     * @param {?} errors
+     * @return {?}
+     */
+    function (id, errors) {
         this.store.dispatch(new ModifyStoreResourceErrorsAction({
             resourceId: id,
             errors: errors,
@@ -223,6 +402,10 @@ var NgrxJsonApiZoneService = (function () {
     };
     return NgrxJsonApiZoneService;
 }());
+/**
+ * Represents an isolated area in the store with its own set of resources and queries.
+ * 'api' is the default zone that already historically has been put beneath NgrxJsonApi within the store.
+ */
 export { NgrxJsonApiZoneService };
 function NgrxJsonApiZoneService_tsickle_Closure_declarations() {
     /** @type {?} */
@@ -230,12 +413,8 @@ function NgrxJsonApiZoneService_tsickle_Closure_declarations() {
     /** @type {?} */
     NgrxJsonApiZoneService.prototype.store;
 }
-var NgrxJsonApiService = (function (_super) {
+var NgrxJsonApiService = /** @class */ (function (_super) {
     __extends(NgrxJsonApiService, _super);
-    /**
-     * @param {?} store
-     * @param {?} config
-     */
     function NgrxJsonApiService(store, config) {
         var _this = _super.call(this, NGRX_JSON_API_DEFAULT_ZONE, store) || this;
         _this.config = config;
@@ -245,40 +424,55 @@ var NgrxJsonApiService = (function (_super) {
     /**
      * @return {?}
      */
-    NgrxJsonApiService.prototype.getDefaultZone = function () {
+    NgrxJsonApiService.prototype.getDefaultZone = /**
+     * @return {?}
+     */
+    function () {
         return this;
     };
     /**
      * @param {?} zoneId
      * @return {?}
      */
-    NgrxJsonApiService.prototype.getZone = function (zoneId) {
+    NgrxJsonApiService.prototype.getZone = /**
+     * @param {?} zoneId
+     * @return {?}
+     */
+    function (zoneId) {
         return new NgrxJsonApiZoneService(zoneId, this.store);
     };
     /**
      * @param {?} options
      * @return {?}
      */
-    NgrxJsonApiService.prototype.findOne = function (options) {
-        return (this.findInternal(options, false));
+    NgrxJsonApiService.prototype.findOne = /**
+     * @param {?} options
+     * @return {?}
+     */
+    function (options) {
+        return /** @type {?} */ (this.findInternal(options, false));
     };
     /**
      * @param {?} options
      * @return {?}
      */
-    NgrxJsonApiService.prototype.findMany = function (options) {
-        return (this.findInternal(options, true));
+    NgrxJsonApiService.prototype.findMany = /**
+     * @param {?} options
+     * @return {?}
+     */
+    function (options) {
+        return /** @type {?} */ (this.findInternal(options, true));
     };
     Object.defineProperty(NgrxJsonApiService.prototype, "storeSnapshot", {
-        /**
+        get: /**
          * @return {?}
          */
-        get: function () {
+        function () {
             var _this = this;
             if (!this._storeSnapshot) {
                 this.store
                     .let(selectNgrxJsonApiDefaultZone())
-                    .subscribe(function (it) { return (_this._storeSnapshot = (it)); });
+                    .subscribe(function (it) { return (_this._storeSnapshot = /** @type {?} */ (it)); });
                 if (!this._storeSnapshot) {
                     throw new Error('failed to initialize store snapshot');
                 }
@@ -293,7 +487,12 @@ var NgrxJsonApiService = (function (_super) {
      * @param {?} multi
      * @return {?}
      */
-    NgrxJsonApiService.prototype.findInternal = function (options, multi) {
+    NgrxJsonApiService.prototype.findInternal = /**
+     * @param {?} options
+     * @param {?} multi
+     * @return {?}
+     */
+    function (options, multi) {
         var _this = this;
         var /** @type {?} */ query = options.query;
         var /** @type {?} */ fromServer = _.isUndefined(options.fromServer)
@@ -317,14 +516,17 @@ var NgrxJsonApiService = (function (_super) {
         else {
             queryResult$ = this.selectOneResults(newQuery.queryId, denormalise);
         }
-        return (queryResult$.finally(function () {
+        return /** @type {?} */ (queryResult$.finally(function () {
             return _this.removeQuery(newQuery.queryId);
         }));
     };
     /**
      * @return {?}
      */
-    NgrxJsonApiService.prototype.uuid = function () {
+    NgrxJsonApiService.prototype.uuid = /**
+     * @return {?}
+     */
+    function () {
         return uuid();
     };
     /**
@@ -334,7 +536,14 @@ var NgrxJsonApiService = (function (_super) {
      * @param {?} identifier
      * @return {?}
      */
-    NgrxJsonApiService.prototype.getPersistedResourceSnapshot = function (identifier) {
+    NgrxJsonApiService.prototype.getPersistedResourceSnapshot = /**
+     * Gets the current persisted state of the given resources.
+     * Consider the use of selectResource(...) to get an observable of the resource.
+     *
+     * @param {?} identifier
+     * @return {?}
+     */
+    function (identifier) {
         var /** @type {?} */ snapshot = this.storeSnapshot;
         if (snapshot.data[identifier.type] &&
             snapshot.data[identifier.type][identifier.id]) {
@@ -349,7 +558,14 @@ var NgrxJsonApiService = (function (_super) {
      * @param {?} identifier
      * @return {?}
      */
-    NgrxJsonApiService.prototype.getResourceSnapshot = function (identifier) {
+    NgrxJsonApiService.prototype.getResourceSnapshot = /**
+     * Gets the current state of the given resources in the store.
+     * Consider the use of selectResource(...) to get an observable of the resource.
+     *
+     * @param {?} identifier
+     * @return {?}
+     */
+    function (identifier) {
         var /** @type {?} */ snapshot = this.storeSnapshot;
         if (snapshot.data[identifier.type] &&
             snapshot.data[identifier.type][identifier.id]) {
@@ -361,26 +577,35 @@ var NgrxJsonApiService = (function (_super) {
      * @param {?} storeResource$
      * @return {?}
      */
-    NgrxJsonApiService.prototype.denormaliseResource = function (storeResource$) {
-        return (storeResource$.combineLatest(this.store
+    NgrxJsonApiService.prototype.denormaliseResource = /**
+     * @param {?} storeResource$
+     * @return {?}
+     */
+    function (storeResource$) {
+        return storeResource$.combineLatest(this.store
             .let(selectNgrxJsonApiZone(this.zoneId))
             .map(function (state) { return state.data; }), function (storeResource, storeData) {
             if (_.isArray(storeResource)) {
                 return denormaliseStoreResources(/** @type {?} */ (storeResource), storeData);
             }
             else {
-                var /** @type {?} */ resource = (storeResource);
-                return (denormaliseStoreResource(resource, storeData));
+                var /** @type {?} */ resource = /** @type {?} */ (storeResource);
+                return /** @type {?} */ (denormaliseStoreResource(resource, storeData));
             }
-        }));
+        });
     };
     /**
      * @param {?} path
      * @param {?} resourceType
      * @return {?}
      */
-    NgrxJsonApiService.prototype.getDenormalisedPath = function (path, resourceType) {
-        var /** @type {?} */ pathSeparator = (_.get(this.config, 'filteringConfig.pathSeparator'));
+    NgrxJsonApiService.prototype.getDenormalisedPath = /**
+     * @param {?} path
+     * @param {?} resourceType
+     * @return {?}
+     */
+    function (path, resourceType) {
+        var /** @type {?} */ pathSeparator = /** @type {?} */ (_.get(this.config, 'filteringConfig.pathSeparator'));
         return getDenormalisedPath(path, resourceType, this.config.resourceDefinitions, pathSeparator);
     };
     /**
@@ -388,8 +613,13 @@ var NgrxJsonApiService = (function (_super) {
      * @param {?} storeResource
      * @return {?}
      */
-    NgrxJsonApiService.prototype.getDenormalisedValue = function (path, storeResource) {
-        var /** @type {?} */ pathSeparator = (_.get(this.config, 'filteringConfig.pathSeparator'));
+    NgrxJsonApiService.prototype.getDenormalisedValue = /**
+     * @param {?} path
+     * @param {?} storeResource
+     * @return {?}
+     */
+    function (path, storeResource) {
+        var /** @type {?} */ pathSeparator = /** @type {?} */ (_.get(this.config, 'filteringConfig.pathSeparator'));
         return getDenormalisedValue(path, storeResource, this.config.resourceDefinitions, pathSeparator);
     };
     return NgrxJsonApiService;

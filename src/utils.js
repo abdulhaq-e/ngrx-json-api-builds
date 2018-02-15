@@ -6,7 +6,11 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     }
     return t;
 };
-import * as _ from 'lodash/index';
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+import * as _ from 'lodash';
 import { Direction, } from './interfaces';
 /**
  * @param {?} state
@@ -42,7 +46,7 @@ export var /** @type {?} */ denormaliseObject = function (resource, storeData, b
                     var /** @type {?} */ relatedRS = getSingleStoreResource(/** @type {?} */ (data), storeData);
                     denormalizedRelation = denormaliseStoreResource(relatedRS, storeData, bag, denormalizePersisted);
                 }
-                else if (((data)).length == 0) {
+                else if ((/** @type {?} */ (data)).length == 0) {
                     denormalizedRelation = data;
                 }
                 else {
@@ -148,8 +152,12 @@ export var /** @type {?} */ getDenormalisedValue = function (path, storeResource
  * Given two objects, it will merge the second in the first.
  *
  */
-export var updateResourceObject = function (original, source) {
-    // by default arrays would make use of concat.
+export var /** @type {?} */ updateResourceObject = function (original, source) {
+    /**
+     * @param {?} objValue
+     * @param {?} srcValue
+     * @return {?}
+     */
     function customizer(objValue, srcValue) {
         if (_.isArray(objValue)) {
             return srcValue;
@@ -161,13 +169,13 @@ export var updateResourceObject = function (original, source) {
  * Insert a StoreResource given the Resource and the StoreResources
  *
  */
-export var insertStoreResource = function (storeResources, resource, fromServer) {
-    var newStoreResources = __assign({}, storeResources);
+export var /** @type {?} */ insertStoreResource = function (storeResources, resource, fromServer) {
+    var /** @type {?} */ newStoreResources = __assign({}, storeResources);
     if (fromServer) {
-        newStoreResources[resource.id] = __assign({}, resource, { persistedResource: resource, state: 'IN_SYNC', errors: [], loading: false });
+        newStoreResources[resource.id] = /** @type {?} */ (__assign({}, resource, { persistedResource: resource, state: 'IN_SYNC', errors: [], loading: false }));
     }
     else {
-        newStoreResources[resource.id] = __assign({}, resource, { persistedResource: null, state: 'CREATED', errors: [], loading: false });
+        newStoreResources[resource.id] = /** @type {?} */ (__assign({}, resource, { persistedResource: null, state: 'CREATED', errors: [], loading: false }));
     }
     return _.isEqual(storeResources, newStoreResources)
         ? storeResources
@@ -177,9 +185,9 @@ export var insertStoreResource = function (storeResources, resource, fromServer)
  * Removes a StoreResource given the Resource and the StoreResources
  *
  */
-export var removeStoreResource = function (storeData, resourceId) {
+export var /** @type {?} */ removeStoreResource = function (storeData, resourceId) {
     if (storeData[resourceId.type][resourceId.id]) {
-        var newState = __assign({}, storeData);
+        var /** @type {?} */ newState = __assign({}, storeData);
         newState[resourceId.type] = __assign({}, newState[resourceId.type]);
         delete newState[resourceId.type][resourceId.id];
         return newState;
@@ -195,18 +203,18 @@ export var removeStoreResource = function (storeData, resourceId) {
  * @param loading
  * @return
  */
-export var updateResourceState = function (storeData, resourceId, resourceState, loading) {
+export var /** @type {?} */ updateResourceState = function (storeData, resourceId, resourceState, loading) {
     if (_.isUndefined(storeData[resourceId.type]) ||
         _.isUndefined(storeData[resourceId.type][resourceId.id])) {
         if (resourceState === 'DELETED') {
-            var newState_1 = __assign({}, storeData);
+            var /** @type {?} */ newState_1 = __assign({}, storeData);
             newState_1[resourceId.type] = __assign({}, newState_1[resourceId.type]);
             newState_1[resourceId.type][resourceId.id] = __assign({}, newState_1[resourceId.type][resourceId.id]);
-            newState_1[resourceId.type][resourceId.id] = {
+            newState_1[resourceId.type][resourceId.id] = /** @type {?} */ ({
                 type: resourceId.type,
                 id: resourceId.id,
                 persistedResource: null,
-            };
+            });
             newState_1[resourceId.type][resourceId.id].state = 'NOT_LOADED';
             return newState_1;
         }
@@ -214,7 +222,7 @@ export var updateResourceState = function (storeData, resourceId, resourceState,
             return storeData;
         }
     }
-    var newState = __assign({}, storeData);
+    var /** @type {?} */ newState = __assign({}, storeData);
     newState[resourceId.type] = __assign({}, newState[resourceId.type]);
     newState[resourceId.type][resourceId.id] = __assign({}, newState[resourceId.type][resourceId.id]);
     if (resourceState !== null) {
@@ -232,11 +240,11 @@ export var updateResourceState = function (storeData, resourceId, resourceState,
  * @param resource1
  * @return
  */
-export var isEqualResource = function (resource0, resource1) {
+export var /** @type {?} */ isEqualResource = function (resource0, resource1) {
     if (resource0 === resource1) {
         return true;
     }
-    if (resource0 !== null !== (resource1 !== null)) {
+    if ((resource0 !== null) !== (resource1 !== null)) {
         return false;
     }
     return (_.isEqual(resource0.id, resource1.id) &&
@@ -281,7 +289,7 @@ export var /** @type {?} */ updateStoreResource = function (state, resource, fro
         }
     }
     var /** @type {?} */ newState = __assign({}, state);
-    newState[resource.id] = (__assign({}, newResource, { persistedResource: persistedResource, state: newResourceState, errors: [], loading: false }));
+    newState[resource.id] = /** @type {?} */ (__assign({}, newResource, { persistedResource: persistedResource, state: newResourceState, errors: [], loading: false }));
     return _.isEqual(newState[resource.id], state[resource.id])
         ? state
         : newState;
@@ -343,7 +351,7 @@ export var /** @type {?} */ updateResourceErrors = function (storeData, id, erro
             };
             for (var _i = 0, currentErrors_1 = currentErrors; _i < currentErrors_1.length; _i++) {
                 var currentError = currentErrors_1[_i];
-                _loop_1(/** @type {?} */ currentError);
+                _loop_1(currentError);
             }
         }
     }
@@ -363,7 +371,7 @@ function rollbackResource(newState, type, id) {
         delete newState[type][id];
     }
     else if (storeResource.state !== 'IN_SYNC') {
-        newState[type][id] = (__assign({}, newState[type][id], { state: 'IN_SYNC', resource: newState[type][id].persistedResource }));
+        newState[type][id] = /** @type {?} */ (__assign({}, newState[type][id], { state: 'IN_SYNC', resource: newState[type][id].persistedResource }));
     }
 }
 export var /** @type {?} */ rollbackStoreResources = function (storeData, ids, include) {
@@ -392,7 +400,7 @@ export var /** @type {?} */ deleteStoreResources = function (storeData, query) {
         newState[query.type] = {};
     }
     else {
-        newState[query.type] = (_.omit(newState[query.type], [
+        newState[query.type] = /** @type {?} */ (_.omit(newState[query.type], [
             query.id,
         ]));
     }
@@ -419,28 +427,28 @@ export var /** @type {?} */ clearQueryResult = function (storeData, queryId) {
  *
  * @return a new NgrxJsonApiStoreData with an inserted/updated resource.
  */
-export var updateStoreDataFromResource = function (storeData, resource, fromServer, override) {
+export var /** @type {?} */ updateStoreDataFromResource = function (storeData, resource, fromServer, override) {
     if (_.isUndefined(storeData[resource.type])) {
-        var newStoreData = __assign({}, storeData);
+        var /** @type {?} */ newStoreData = __assign({}, storeData);
         newStoreData[resource.type] = {};
         newStoreData[resource.type] = insertStoreResource(newStoreData[resource.type], resource, fromServer);
         return newStoreData;
     }
     else if (_.isUndefined(storeData[resource.type][resource.id]) || override) {
-        var updatedStoreResources = insertStoreResource(storeData[resource.type], resource, fromServer);
+        var /** @type {?} */ updatedStoreResources = insertStoreResource(storeData[resource.type], resource, fromServer);
         // check if nothing has changed
         if (updatedStoreResources !== storeData[resource.type]) {
-            var newStoreData = __assign({}, storeData);
+            var /** @type {?} */ newStoreData = __assign({}, storeData);
             newStoreData[resource.type] = updatedStoreResources;
             return newStoreData;
         }
         return storeData;
     }
     else {
-        var updatedStoreResources = updateStoreResource(storeData[resource.type], resource, fromServer);
+        var /** @type {?} */ updatedStoreResources = updateStoreResource(storeData[resource.type], resource, fromServer);
         // check if nothing has changed
         if (updatedStoreResources !== storeData[resource.type]) {
-            var newStoreData = __assign({}, storeData);
+            var /** @type {?} */ newStoreData = __assign({}, storeData);
             newStoreData[resource.type] = updatedStoreResources;
             return newStoreData;
         }
@@ -448,12 +456,13 @@ export var updateStoreDataFromResource = function (storeData, resource, fromServ
     }
 };
 export var /** @type {?} */ updateStoreDataFromPayload = function (storeData, payload) {
-    var /** @type {?} */ data = (_.get(payload, 'data'));
+    var /** @type {?} */ data = /** @type {?} */ (_.get(payload, 'data'));
     if (_.isUndefined(data)) {
         return storeData;
     }
-    var /** @type {?} */ resources = _.isArray(data) ? (data) : ([data]);
-    var /** @type {?} */ included = (_.get(payload, 'included'));
+    var /** @type {?} */ resources = _.isArray(data)
+        ? /** @type {?} */ (data) : /** @type {?} */ ([data]);
+    var /** @type {?} */ included = /** @type {?} */ (_.get(payload, 'included'));
     if (!_.isUndefined(included)) {
         resources = resources.concat(included);
     }
@@ -461,7 +470,7 @@ export var /** @type {?} */ updateStoreDataFromPayload = function (storeData, pa
     var /** @type {?} */ hasChange = false;
     for (var _i = 0, resources_1 = resources; _i < resources_1.length; _i++) {
         var resource = resources_1[_i];
-        var /** @type {?} */ storeResource = (__assign({}, resource, { persistedResource: resource, state: 'IN_SYNC', errors: [], loading: false }));
+        var /** @type {?} */ storeResource = /** @type {?} */ (__assign({}, resource, { persistedResource: resource, state: 'IN_SYNC', errors: [], loading: false }));
         if (!_.isEqual(storeResource, resource)) {
             hasChange = true;
             if (!newStoreData[resource.type]) {
@@ -485,31 +494,31 @@ export var /** @type {?} */ updateStoreDataFromPayload = function (storeData, pa
  * @return a new NgrxJsonApiStoreQueries with the inserted/modified
  * ResourceQueryStore
  */
-export var updateQueryParams = function (storeQueries, query) {
+export var /** @type {?} */ updateQueryParams = function (storeQueries, query) {
     if (!query.queryId) {
         return storeQueries;
     }
-    var newStoreQuery = __assign({}, storeQueries[query.queryId]);
+    var /** @type {?} */ newStoreQuery = __assign({}, storeQueries[query.queryId]);
     newStoreQuery.loading = true;
     newStoreQuery.query = _.cloneDeep(query);
     if (_.isUndefined(newStoreQuery.errors)) {
         newStoreQuery.errors = [];
     }
-    var newStoreQueries = __assign({}, storeQueries);
+    var /** @type {?} */ newStoreQueries = __assign({}, storeQueries);
     newStoreQueries[newStoreQuery.query.queryId] = newStoreQuery;
     return newStoreQueries;
 };
 /**
  * Updates the query results for given a queryId and the results.
  */
-export var updateQueryResults = function (storeQueries, queryId, document) {
-    var storeQuery = storeQueries[queryId];
+export var /** @type {?} */ updateQueryResults = function (storeQueries, queryId, document) {
+    var /** @type {?} */ storeQuery = storeQueries[queryId];
     if (storeQuery) {
-        var data = _.isArray(document.data) ? document.data : [document.data];
-        var newQueryStore = __assign({}, storeQuery, { resultIds: data.map(function (it) { return (it ? toResourceIdentifier(it) : []); }), meta: document.meta, links: document.links, loading: false });
+        var /** @type {?} */ data = _.isArray(document.data) ? document.data : [document.data];
+        var /** @type {?} */ newQueryStore = __assign({}, storeQuery, { resultIds: data.map(function (it) { return (it ? toResourceIdentifier(it) : []); }), meta: document.meta, links: document.links, loading: false });
         if (!_.isEqual(newQueryStore, storeQuery)) {
-            var newState = __assign({}, storeQueries);
-            newState[queryId] = newQueryStore;
+            var /** @type {?} */ newState = __assign({}, storeQueries);
+            newState[queryId] = /** @type {?} */ (newQueryStore);
             return newState;
         }
     }
@@ -521,12 +530,12 @@ export var updateQueryResults = function (storeQueries, queryId, document) {
  *
  *
  */
-export var updateQueryErrors = function (storeQueries, queryId, document) {
+export var /** @type {?} */ updateQueryErrors = function (storeQueries, queryId, document) {
     if (!queryId || !storeQueries[queryId]) {
         return storeQueries;
     }
-    var newState = __assign({}, storeQueries);
-    var newStoreQuery = __assign({}, newState[queryId]);
+    var /** @type {?} */ newState = __assign({}, storeQueries);
+    var /** @type {?} */ newStoreQuery = __assign({}, newState[queryId]);
     newStoreQuery.errors = [];
     newStoreQuery.loading = false;
     if (document.errors) {
@@ -539,15 +548,15 @@ export var updateQueryErrors = function (storeQueries, queryId, document) {
 /**
  * Removes a query given its queryId from the NgrxJsonApiStoreQueries.
  */
-export var removeQuery = function (storeQueries, queryId) {
-    var newState = __assign({}, storeQueries);
+export var /** @type {?} */ removeQuery = function (storeQueries, queryId) {
+    var /** @type {?} */ newState = __assign({}, storeQueries);
     delete newState[queryId];
     return newState;
 };
 /**
  * Given a resource, it will return an object containing the resource id and type.
  */
-export var toResourceIdentifier = function (resource) {
+export var /** @type {?} */ toResourceIdentifier = function (resource) {
     return { type: resource.type, id: resource.id };
 };
 /**
@@ -560,14 +569,14 @@ export var toResourceIdentifier = function (resource) {
  * @param pathSepartor
  * @return the value of the last field in the path.
  */
-export var getResourceFieldValueFromPath = function (path, baseStoreResource, storeData, resourceDefinitions, pathSeparator) {
+export var /** @type {?} */ getResourceFieldValueFromPath = function (path, baseStoreResource, storeData, resourceDefinitions, pathSeparator) {
     if (_.isUndefined(pathSeparator)) {
         pathSeparator = '.';
     }
-    var fields = path.split(pathSeparator);
-    var currentStoreResource = baseStoreResource;
-    for (var i = 0; i < fields.length; i++) {
-        var definition = _.find(resourceDefinitions, {
+    var /** @type {?} */ fields = path.split(pathSeparator);
+    var /** @type {?} */ currentStoreResource = baseStoreResource;
+    for (var /** @type {?} */ i = 0; i < fields.length; i++) {
+        var /** @type {?} */ definition = _.find(resourceDefinitions, {
             type: currentStoreResource.type,
         });
         if (_.isUndefined(definition)) {
@@ -588,17 +597,17 @@ export var getResourceFieldValueFromPath = function (path, baseStoreResource, st
             if (i === fields.length - 1) {
                 throw new Error('The last field in the filtering path cannot be a relation');
             }
-            var resourceRelation = definition.relationships[fields[i]];
+            var /** @type {?} */ resourceRelation = definition.relationships[fields[i]];
             if (resourceRelation.relationType === 'hasMany') {
                 throw new Error('Cannot filter past a hasMany relation');
             }
             else {
-                var relation = _.get(currentStoreResource, 'relationships.' + fields[i], null);
+                var /** @type {?} */ relation = _.get(currentStoreResource, 'relationships.' + fields[i], null);
                 if (!relation || !relation.data) {
                     return null;
                 }
                 else {
-                    var relatedPath = [resourceRelation.type, relation.data.id];
+                    var /** @type {?} */ relatedPath = [resourceRelation.type, relation.data.id];
                     currentStoreResource = _.get(storeData, relatedPath);
                 }
             }
@@ -619,15 +628,15 @@ export var /** @type {?} */ filterResources = function (resources, storeData, qu
                 var /** @type {?} */ pathSeparator;
                 var /** @type {?} */ filteringOperators;
                 if (!_.isUndefined(filteringConfig)) {
-                    pathSeparator = (_.get(filteringConfig, 'pathSeparator'));
-                    filteringOperators = (_.get(filteringConfig, 'filteringOperators'));
+                    pathSeparator = /** @type {?} */ (_.get(filteringConfig, 'pathSeparator'));
+                    filteringOperators = /** @type {?} */ (_.get(filteringConfig, 'filteringOperators'));
                 }
                 // resource type and attribute
                 var /** @type {?} */ resourceFieldValue = getResourceFieldValueFromPath(element.path, resource, storeData, resourceDefinitions, pathSeparator);
                 if (!resourceFieldValue) {
                     return false;
                 }
-                var /** @type {?} */ operator = (_.find(filteringOperators, {
+                var /** @type {?} */ operator = /** @type {?} */ (_.find(filteringOperators, {
                     name: element.operator,
                 }));
                 if (operator) {
@@ -794,6 +803,7 @@ export var /** @type {?} */ uuid = function () {
 var /** @type {?} */ toKey = function (id) {
     return id.id + '@' + id.type;
 };
+var ɵ0 = toKey;
 var /** @type {?} */ collectQueryResults = function (state, usedResources) {
     for (var /** @type {?} */ queryName in state.queries) {
         if (state.queries.hasOwnProperty(queryName)) {
@@ -807,6 +817,7 @@ var /** @type {?} */ collectQueryResults = function (state, usedResources) {
         }
     }
 };
+var ɵ1 = collectQueryResults;
 var /** @type {?} */ collectPendingChanges = function (state, usedResources) {
     for (var /** @type {?} */ type in state.data) {
         if (state.data.hasOwnProperty(type)) {
@@ -822,6 +833,7 @@ var /** @type {?} */ collectPendingChanges = function (state, usedResources) {
         }
     }
 };
+var ɵ2 = collectPendingChanges;
 var /** @type {?} */ collectReferencesForResource = function (state, usedResources, resource) {
     var /** @type {?} */ hasChanges;
     for (var /** @type {?} */ relationshipName in resource.relationships) {
@@ -844,6 +856,7 @@ var /** @type {?} */ collectReferencesForResource = function (state, usedResourc
     }
     return hasChanges;
 };
+var ɵ3 = collectReferencesForResource;
 var /** @type {?} */ collectReferences = function (state, usedResources) {
     while (true) {
         var /** @type {?} */ hasChanges = false;
@@ -868,6 +881,7 @@ var /** @type {?} */ collectReferences = function (state, usedResources) {
         }
     }
 };
+var ɵ4 = collectReferences;
 var /** @type {?} */ sweepUnusedResources = function (state, usedResources) {
     var /** @type {?} */ hasDeletions = false;
     var /** @type {?} */ newState = _.cloneDeep(state);
@@ -890,6 +904,7 @@ var /** @type {?} */ sweepUnusedResources = function (state, usedResources) {
     }
     return hasDeletions ? newState : state;
 };
+var ɵ5 = sweepUnusedResources;
 export var /** @type {?} */ compactStore = function (state) {
     var /** @type {?} */ usedResources = {};
     // query results can not be collected
@@ -901,6 +916,22 @@ export var /** @type {?} */ compactStore = function (state) {
     // remove everything that is not collected
     return sweepUnusedResources(state, usedResources);
 };
+/**
+ * @record
+ */
+function TopologySortContext() { }
+function TopologySortContext_tsickle_Closure_declarations() {
+    /** @type {?} */
+    TopologySortContext.prototype.pendingResources;
+    /** @type {?} */
+    TopologySortContext.prototype.cursor;
+    /** @type {?} */
+    TopologySortContext.prototype.sorted;
+    /** @type {?} */
+    TopologySortContext.prototype.visited;
+    /** @type {?} */
+    TopologySortContext.prototype.dependencies;
+}
 export var /** @type {?} */ sortPendingChanges = function (pendingResources) {
     // allocate dependency
     var /** @type {?} */ dependencies = {};
@@ -936,7 +967,7 @@ export var /** @type {?} */ sortPendingChanges = function (pendingResources) {
     // extract dependencies
     for (var _a = 0, pendingResources_2 = pendingResources; _a < pendingResources_2.length; _a++) {
         var pendingResource = pendingResources_2[_a];
-        _loop_2(/** @type {?} */ pendingResource);
+        _loop_2(pendingResource);
     }
     // order
     var /** @type {?} */ context = {
@@ -972,6 +1003,7 @@ var /** @type {?} */ visitPending = function (pendingResource, i, predecessors, 
     }
     context.sorted[--context.cursor] = pendingResource;
 };
+var ɵ6 = visitPending;
 /**
  * @param {?} state
  * @param {?} pending
@@ -1003,13 +1035,13 @@ function collectPendingChange(state, pending, id, include, includeNew) {
                         return relationInclude_1.push(relIncludeElem.slice(1));
                     });
                     if (_.isArray(data)) {
-                        var /** @type {?} */ relationIds = (data);
+                        var /** @type {?} */ relationIds = /** @type {?} */ (data);
                         relationIds.forEach(function (relationId) {
                             return collectPendingChange(state, pending, relationId, relationInclude_1, includeNew);
                         });
                     }
                     else {
-                        var /** @type {?} */ relationId = (data);
+                        var /** @type {?} */ relationId = /** @type {?} */ (data);
                         collectPendingChange(state, pending, relationId, relationInclude_1, includeNew);
                     }
                 }
@@ -1018,7 +1050,7 @@ function collectPendingChange(state, pending, id, include, includeNew) {
     };
     for (var _i = 0, include_1 = include; _i < include_1.length; _i++) {
         var includeElement = include_1[_i];
-        _loop_3(/** @type {?} */ includeElement);
+        _loop_3(includeElement);
     }
 }
 /**
@@ -1060,4 +1092,5 @@ export function getPendingChanges(state, ids, include, includeNew) {
     }
     return pending;
 }
+export { ɵ0, ɵ1, ɵ2, ɵ3, ɵ4, ɵ5, ɵ6 };
 //# sourceMappingURL=utils.js.map

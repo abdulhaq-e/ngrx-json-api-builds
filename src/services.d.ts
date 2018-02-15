@@ -162,7 +162,7 @@ export declare class NgrxJsonApiService extends NgrxJsonApiZoneService {
      * @param identifier
      */
     getResourceSnapshot(identifier: ResourceIdentifier): StoreResource;
-    denormaliseResource(storeResource$: Observable<StoreResource> | Observable<StoreResource[]>): Observable<StoreResource> | Observable<StoreResource[]>;
+    denormaliseResource(storeResource$: Observable<StoreResource | StoreResource[]>): Observable<StoreResource | StoreResource[]>;
     getDenormalisedPath(path: string, resourceType: string): string;
     getDenormalisedValue(path: string, storeResource: StoreResource): any;
 }

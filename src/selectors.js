@@ -6,7 +6,11 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     }
     return t;
 };
-import * as _ from 'lodash/index';
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+import * as _ from 'lodash';
 import 'rxjs/add/observable/concat';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/combineLatest';
@@ -19,15 +23,17 @@ import 'rxjs/add/operator/let';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/zip';
-import { NGRX_JSON_API_DEFAULT_ZONE } from './interfaces';
+import { filter, map } from 'rxjs/operators';
+import { select } from '@ngrx/store';
+import { NGRX_JSON_API_DEFAULT_ZONE, } from './interfaces';
 import { denormaliseStoreResource, denormaliseStoreResources } from './utils';
 /**
  * @return {?}
  */
 export function selectNgrxJson() {
-    return function (state$) { return state$.select('NgrxJsonApi')
-        .map(function (it) { /** @type {?} */ return (it); })
-        .filter(function (it) { return !_.isUndefined(it); }); };
+    return function (state$) {
+        return (/** @type {?} */ (state$)).pipe(select('NgrxJsonApi'), map(function (it) { return (it); }), filter(function (it) { return !_.isUndefined(it); }));
+    };
 }
 /**
  * @return {?}
@@ -40,8 +46,11 @@ export function selectNgrxJsonApiDefaultZone() {
  * @return {?}
  */
 export function selectNgrxJsonApiZone(zoneId) {
-    return function (state$) { return state$.let(selectNgrxJson())
-        .map(function (it) { /** @type {?} */ return (it.zones[zoneId]); }); };
+    return function (state$) {
+        return (/** @type {?} */ (state$))
+            .let(selectNgrxJson())
+            .map(function (it) { return (it.zones[zoneId]); });
+    };
 }
 /**
  * @param {?} state
@@ -49,7 +58,7 @@ export function selectNgrxJsonApiZone(zoneId) {
  * @return {?}
  */
 export function getNgrxJsonApiZone(state, zoneId) {
-    return (state['NgrxJsonApi']['zones'][zoneId]);
+    return /** @type {?} */ (state['NgrxJsonApi']['zones'][zoneId]);
 }
 /**
  * @param {?} queryId
@@ -57,8 +66,7 @@ export function getNgrxJsonApiZone(state, zoneId) {
  */
 export function selectStoreQuery(queryId) {
     return function (state$) {
-        return state$
-            .map(function (state) { return state.queries[queryId]; });
+        return state$.map(function (state) { return state.queries[queryId]; });
     };
 }
 /**
@@ -80,7 +88,7 @@ export function selectStoreResource(identifier) {
     return function (state$) {
         return state$
             .let(selectStoreResourcesOfType(identifier.type))
-            .map(function (resources) { /** @type {?} */ return ((resources ? resources[identifier.id] : undefined)); });
+            .map(function (resources) { return ((resources ? resources[identifier.id] : undefined)); });
     };
 }
 /**
@@ -153,13 +161,19 @@ export function getNgrxJsonApiStore(state$) {
 /**
  * deprecated, to not use any longer
  */
-var NgrxJsonApiSelectors = (function () {
+var /**
+ * deprecated, to not use any longer
+ */
+NgrxJsonApiSelectors = /** @class */ (function () {
     function NgrxJsonApiSelectors() {
     }
     /**
      * @return {?}
      */
-    NgrxJsonApiSelectors.prototype.getNgrxJsonApiStore$ = function () {
+    NgrxJsonApiSelectors.prototype.getNgrxJsonApiStore$ = /**
+     * @return {?}
+     */
+    function () {
         return function (state$) {
             return state$.let(selectNgrxJsonApiDefaultZone());
         };
@@ -167,7 +181,10 @@ var NgrxJsonApiSelectors = (function () {
     /**
      * @return {?}
      */
-    NgrxJsonApiSelectors.prototype.getStoreData$ = function () {
+    NgrxJsonApiSelectors.prototype.getStoreData$ = /**
+     * @return {?}
+     */
+    function () {
         return function (state$) {
             return state$.select('data');
         };
@@ -176,7 +193,11 @@ var NgrxJsonApiSelectors = (function () {
      * @param {?} type
      * @return {?}
      */
-    NgrxJsonApiSelectors.prototype.getStoreResourceOfType$ = function (type) {
+    NgrxJsonApiSelectors.prototype.getStoreResourceOfType$ = /**
+     * @param {?} type
+     * @return {?}
+     */
+    function (type) {
         var _this = this;
         return function (state$) {
             return state$
@@ -187,7 +208,10 @@ var NgrxJsonApiSelectors = (function () {
     /**
      * @return {?}
      */
-    NgrxJsonApiSelectors.prototype.getStoreQueries$ = function () {
+    NgrxJsonApiSelectors.prototype.getStoreQueries$ = /**
+     * @return {?}
+     */
+    function () {
         return function (state$) {
             return state$.select('queries');
         };
@@ -196,14 +220,22 @@ var NgrxJsonApiSelectors = (function () {
      * @param {?} queryId
      * @return {?}
      */
-    NgrxJsonApiSelectors.prototype.getResourceQuery$ = function (queryId) {
+    NgrxJsonApiSelectors.prototype.getResourceQuery$ = /**
+     * @param {?} queryId
+     * @return {?}
+     */
+    function (queryId) {
         return selectStoreQuery(queryId);
     };
     /**
      * @param {?} identifier
      * @return {?}
      */
-    NgrxJsonApiSelectors.prototype.getStoreResource$ = function (identifier) {
+    NgrxJsonApiSelectors.prototype.getStoreResource$ = /**
+     * @param {?} identifier
+     * @return {?}
+     */
+    function (identifier) {
         return selectStoreResource(identifier);
     };
     /**
@@ -211,7 +243,12 @@ var NgrxJsonApiSelectors = (function () {
      * @param {?} denormalize
      * @return {?}
      */
-    NgrxJsonApiSelectors.prototype.getManyResults$ = function (queryId, denormalize) {
+    NgrxJsonApiSelectors.prototype.getManyResults$ = /**
+     * @param {?} queryId
+     * @param {?} denormalize
+     * @return {?}
+     */
+    function (queryId, denormalize) {
         return selectManyQueryResult(queryId, denormalize);
     };
     /**
@@ -219,14 +256,23 @@ var NgrxJsonApiSelectors = (function () {
      * @param {?} denormalize
      * @return {?}
      */
-    NgrxJsonApiSelectors.prototype.getOneResult$ = function (queryId, denormalize) {
+    NgrxJsonApiSelectors.prototype.getOneResult$ = /**
+     * @param {?} queryId
+     * @param {?} denormalize
+     * @return {?}
+     */
+    function (queryId, denormalize) {
         return selectOneQueryResult(queryId, denormalize);
     };
     /**
      * @param {?} identifier
      * @return {?}
      */
-    NgrxJsonApiSelectors.prototype.getPersistedResource$ = function (identifier) {
+    NgrxJsonApiSelectors.prototype.getPersistedResource$ = /**
+     * @param {?} identifier
+     * @return {?}
+     */
+    function (identifier) {
         var _this = this;
         return function (state$) {
             return state$
@@ -236,5 +282,8 @@ var NgrxJsonApiSelectors = (function () {
     };
     return NgrxJsonApiSelectors;
 }());
+/**
+ * deprecated, to not use any longer
+ */
 export { NgrxJsonApiSelectors };
 //# sourceMappingURL=selectors.js.map

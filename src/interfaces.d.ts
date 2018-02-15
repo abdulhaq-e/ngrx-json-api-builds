@@ -202,25 +202,25 @@ export interface StoreQuery {
     errors: Array<ResourceError>;
 }
 /**
-* Container to hold a Resource in the store with state information.
-*/
+ * Container to hold a Resource in the store with state information.
+ */
 export interface StoreResource extends Resource {
     /**
-    * State of the resource to track local changes not yet
-    * published to the json api endpoint.
-    */
+     * State of the resource to track local changes not yet
+     * published to the json api endpoint.
+     */
     state?: ResourceState;
     /**
-    * The original resource obtained from the server.
-    */
+     * The original resource obtained from the server.
+     */
     persistedResource?: Resource;
     /**
-    * One of the operation types: reading, creating, updating or deleting.
-    */
+     * One of the operation types: reading, creating, updating or deleting.
+     */
     loading?: OperationType;
     /**
-    * Errors received from the server after attempting to store the resource.
-    */
+     * Errors received from the server after attempting to store the resource.
+     */
     errors?: Array<ResourceError>;
     /**
      * new resources may only obtain an id when posted to the server. Till that point

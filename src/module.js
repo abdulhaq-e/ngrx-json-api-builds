@@ -1,3 +1,7 @@
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 import { InjectionToken, NgModule } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Store, StoreModule } from '@ngrx/store';
@@ -58,14 +62,18 @@ export function configure(config) {
         },
     ];
 }
-var NgrxJsonApiModule = (function () {
+var NgrxJsonApiModule = /** @class */ (function () {
     function NgrxJsonApiModule() {
     }
     /**
      * @param {?} config
      * @return {?}
      */
-    NgrxJsonApiModule.configure = function (config) {
+    NgrxJsonApiModule.configure = /**
+     * @param {?} config
+     * @return {?}
+     */
+    function (config) {
         return {
             ngModule: NgrxJsonApiModule,
             providers: configure(config),
@@ -89,19 +97,17 @@ var NgrxJsonApiModule = (function () {
                     ],
                 },] },
     ];
-    /**
-     * @nocollapse
-     */
+    /** @nocollapse */
     NgrxJsonApiModule.ctorParameters = function () { return []; };
     return NgrxJsonApiModule;
 }());
 export { NgrxJsonApiModule };
 function NgrxJsonApiModule_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     NgrxJsonApiModule.decorators;
     /**
      * @nocollapse
-     * @type {?}
+     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
      */
     NgrxJsonApiModule.ctorParameters;
 }

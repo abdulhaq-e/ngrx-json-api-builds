@@ -1,4 +1,8 @@
 /**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
  * Generated bundle index. Do not edit.
  */
 export { SelectStoreResourcePipe, DenormaliseStoreResourcePipe, GetDenormalisedValuePipe, NgrxJsonApiService, NgrxJsonApiZoneService, NgrxJsonApiModule, NGRX_JSON_API_CONFIG, uuid, NGRX_JSON_API_DEFAULT_ZONE, Direction, NgrxJsonApiActionTypes, NgrxJsonApiAction, ApiApplyInitAction, ApiApplySuccessAction, ApiApplyFailAction, ApiPostInitAction, ApiPostSuccessAction, ApiPostFailAction, ApiDeleteInitAction, ApiDeleteSuccessAction, ApiDeleteFailAction, ApiGetInitAction, ApiGetSuccessAction, ApiGetFailAction, ApiRollbackAction, ApiPatchInitAction, ApiPatchSuccessAction, ApiPatchFailAction, DeleteStoreResourceAction, PatchStoreResourceAction, NewStoreResourceAction, PostStoreResourceAction, RemoveQueryAction, LocalQueryInitAction, LocalQuerySuccessAction, LocalQueryFailAction, CompactStoreAction, ClearStoreAction, ApiQueryRefreshAction, ModifyStoreResourceErrorsAction, selectNgrxJson, selectNgrxJsonApiDefaultZone, selectNgrxJsonApiZone, getNgrxJsonApiZone, selectStoreQuery, selectStoreResourcesOfType, selectStoreResource, selectManyQueryResult, selectOneQueryResult, getNgrxJsonApiStore, NgrxJsonApiSelectors } from './index';

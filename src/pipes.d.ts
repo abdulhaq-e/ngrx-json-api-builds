@@ -11,7 +11,7 @@ export declare class SelectStoreResourcePipe implements PipeTransform {
 export declare class DenormaliseStoreResourcePipe implements PipeTransform {
     private service;
     constructor(service: NgrxJsonApiService);
-    transform(obs: Observable<StoreResource> | Observable<StoreResource[]>): Observable<StoreResource> | Observable<StoreResource[]>;
+    transform(obs: Observable<StoreResource | StoreResource[]>): Observable<StoreResource | StoreResource[]>;
 }
 export declare class GetDenormalisedValuePipe implements PipeTransform {
     private service;

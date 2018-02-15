@@ -6,7 +6,7 @@ export declare const denormaliseStoreResource: (item: StoreResource, storeData: 
 export declare const getSingleStoreResource: (resourceId: ResourceIdentifier, storeData: NgrxJsonApiStoreData) => StoreResource;
 export declare const getMultipleStoreResource: (resourceIds: ResourceIdentifier[], resources: NgrxJsonApiStoreData) => StoreResource[];
 export declare const getDenormalisedPath: (path: string, baseResourceType: string, resourceDefinitions: ResourceDefinition[], pathSeparator?: string) => string;
-export declare const getDenormalisedValue: (path: string, storeResource: StoreResource, resourceDefinitions: ResourceDefinition[], pathSeparator?: string) => {};
+export declare const getDenormalisedValue: (path: string, storeResource: StoreResource, resourceDefinitions: ResourceDefinition[], pathSeparator?: string) => any;
 /**
  * Given two objects, it will merge the second in the first.
  *
@@ -46,10 +46,10 @@ export declare const updateResourceErrorsForQuery: (storeData: NgrxJsonApiStoreD
 export declare const updateResourceErrors: (storeData: NgrxJsonApiStoreData, id: ResourceIdentifier, errors: ResourceError[], modificationType: ErrorModificationType) => NgrxJsonApiStoreData;
 export declare const rollbackStoreResources: (storeData: NgrxJsonApiStoreData, ids: ResourceIdentifier[], include: string[]) => NgrxJsonApiStoreData;
 export declare const deleteStoreResources: (storeData: NgrxJsonApiStoreData, query: Query) => {
-    [id: string]: NgrxJsonApiStoreResources;
+    [x: string]: NgrxJsonApiStoreResources;
 };
 export declare const clearQueryResult: (storeData: NgrxJsonApiStoreQueries, queryId: string) => {
-    [id: string]: StoreQuery;
+    [x: string]: StoreQuery;
 };
 /**
  * Updates a given storeData by either inserting a resource or updating

@@ -1,3 +1,7 @@
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 export { NGRX_JSON_API_DEFAULT_ZONE, Direction } from './interfaces';
 export { SelectStoreResourcePipe, DenormaliseStoreResourcePipe, GetDenormalisedValuePipe, } from './pipes';
 export { NgrxJsonApiService, NgrxJsonApiZoneService, } from './services';

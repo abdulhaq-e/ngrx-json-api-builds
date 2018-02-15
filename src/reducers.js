@@ -6,6 +6,10 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     }
     return t;
 };
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 import { NgrxJsonApiActionTypes, } from './actions';
 import { clearQueryResult, compactStore, deleteStoreResources, getPendingChanges, removeQuery, removeStoreResource, rollbackStoreResources, setIn, updateQueriesForDeletedResource, updateQueryErrors, updateQueryParams, updateQueryResults, updateResourceErrors, updateResourceErrorsForQuery, updateResourceState, updateStoreDataFromPayload, updateStoreDataFromResource, } from './utils';
 export var /** @type {?} */ initialNgrxJsonApiZone = {
@@ -18,7 +22,7 @@ export var /** @type {?} */ initialNgrxJsonApiZone = {
     queries: {},
 };
 export var /** @type {?} */ initialNgrxJsonApiState = {
-    zones: {}
+    zones: {},
 };
 /**
  * @param {?=} state
@@ -58,7 +62,7 @@ export function NgrxJsonApiZoneReducer(zone, action) {
             return newZone;
         }
         case NgrxJsonApiActionTypes.API_GET_INIT: {
-            var /** @type {?} */ query = (action.payload);
+            var /** @type {?} */ query = /** @type {?} */ (action.payload);
             newZone = __assign({}, zone, { queries: updateQueryParams(zone.queries, query), isReading: zone.isReading + 1 });
             return newZone;
         }
@@ -112,17 +116,17 @@ export function NgrxJsonApiZoneReducer(zone, action) {
             return newZone;
         }
         case NgrxJsonApiActionTypes.REMOVE_QUERY: {
-            var /** @type {?} */ queryId = (action.payload);
+            var /** @type {?} */ queryId = /** @type {?} */ (action.payload);
             newZone = __assign({}, zone, { queries: removeQuery(zone.queries, queryId) });
             return newZone;
         }
         case NgrxJsonApiActionTypes.LOCAL_QUERY_INIT: {
-            var /** @type {?} */ query = (action.payload);
+            var /** @type {?} */ query = /** @type {?} */ (action.payload);
             newZone = __assign({}, zone, { queries: updateQueryParams(zone.queries, query) });
             return newZone;
         }
         case NgrxJsonApiActionTypes.MODIFY_STORE_RESOURCE_ERRORS: {
-            var /** @type {?} */ payload = (action.payload);
+            var /** @type {?} */ payload = /** @type {?} */ (action.payload);
             newZone = __assign({}, zone, { data: updateResourceErrors(zone.data, payload.resourceId, payload.errors, payload.modificationType) });
             return newZone;
         }
@@ -161,7 +165,7 @@ export function NgrxJsonApiZoneReducer(zone, action) {
             }
         }
         case NgrxJsonApiActionTypes.DELETE_STORE_RESOURCE: {
-            var /** @type {?} */ resourceId = (action.payload);
+            var /** @type {?} */ resourceId = /** @type {?} */ (action.payload);
             if (zone.data[resourceId.type] &&
                 zone.data[resourceId.type][resourceId.id]) {
                 var /** @type {?} */ resource = zone.data[resourceId.type][resourceId.id];
@@ -179,7 +183,7 @@ export function NgrxJsonApiZoneReducer(zone, action) {
             return zone;
         }
         case NgrxJsonApiActionTypes.API_APPLY_INIT: {
-            var /** @type {?} */ payload = ((action)).payload;
+            var /** @type {?} */ payload = (/** @type {?} */ (action)).payload;
             var /** @type {?} */ pending_1 = getPendingChanges(zone.data, payload.ids, payload.include);
             newZone = __assign({}, zone, { isApplying: zone.isApplying + 1 });
             for (var _i = 0, pending_2 = pending_1; _i < pending_2.length; _i++) {
@@ -202,7 +206,7 @@ export function NgrxJsonApiZoneReducer(zone, action) {
         case NgrxJsonApiActionTypes.API_APPLY_SUCCESS:
         case NgrxJsonApiActionTypes.API_APPLY_FAIL: {
             // apply all the committed or failed changes
-            var /** @type {?} */ actions = (action.payload);
+            var /** @type {?} */ actions = /** @type {?} */ (action.payload);
             newZone = zone;
             for (var _a = 0, actions_1 = actions; _a < actions_1.length; _a++) {
                 var commitAction = actions_1[_a];
@@ -212,7 +216,7 @@ export function NgrxJsonApiZoneReducer(zone, action) {
             return newZone;
         }
         case NgrxJsonApiActionTypes.API_ROLLBACK: {
-            var /** @type {?} */ payload = ((action)).payload;
+            var /** @type {?} */ payload = (/** @type {?} */ (action)).payload;
             newZone = __assign({}, zone, { data: rollbackStoreResources(zone.data, payload.ids, payload.include) });
             return newZone;
         }

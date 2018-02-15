@@ -1,10 +1,11 @@
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 import { Pipe } from '@angular/core';
 import 'rxjs/add/operator/let';
 import { NgrxJsonApiService } from './services';
-var SelectStoreResourcePipe = (function () {
-    /**
-     * @param {?} service
-     */
+var SelectStoreResourcePipe = /** @class */ (function () {
     function SelectStoreResourcePipe(service) {
         this.service = service;
     }
@@ -12,15 +13,17 @@ var SelectStoreResourcePipe = (function () {
      * @param {?} id
      * @return {?}
      */
-    SelectStoreResourcePipe.prototype.transform = function (id) {
+    SelectStoreResourcePipe.prototype.transform = /**
+     * @param {?} id
+     * @return {?}
+     */
+    function (id) {
         return this.service.selectStoreResource(id);
     };
     SelectStoreResourcePipe.decorators = [
         { type: Pipe, args: [{ name: 'jaSelectStoreResource' },] },
     ];
-    /**
-     * @nocollapse
-     */
+    /** @nocollapse */
     SelectStoreResourcePipe.ctorParameters = function () { return [
         { type: NgrxJsonApiService, },
     ]; };
@@ -28,20 +31,17 @@ var SelectStoreResourcePipe = (function () {
 }());
 export { SelectStoreResourcePipe };
 function SelectStoreResourcePipe_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     SelectStoreResourcePipe.decorators;
     /**
      * @nocollapse
-     * @type {?}
+     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
      */
     SelectStoreResourcePipe.ctorParameters;
     /** @type {?} */
     SelectStoreResourcePipe.prototype.service;
 }
-var DenormaliseStoreResourcePipe = (function () {
-    /**
-     * @param {?} service
-     */
+var DenormaliseStoreResourcePipe = /** @class */ (function () {
     function DenormaliseStoreResourcePipe(service) {
         this.service = service;
     }
@@ -49,15 +49,17 @@ var DenormaliseStoreResourcePipe = (function () {
      * @param {?} obs
      * @return {?}
      */
-    DenormaliseStoreResourcePipe.prototype.transform = function (obs) {
+    DenormaliseStoreResourcePipe.prototype.transform = /**
+     * @param {?} obs
+     * @return {?}
+     */
+    function (obs) {
         return this.service.denormaliseResource(obs);
     };
     DenormaliseStoreResourcePipe.decorators = [
         { type: Pipe, args: [{ name: 'denormaliseStoreResource' },] },
     ];
-    /**
-     * @nocollapse
-     */
+    /** @nocollapse */
     DenormaliseStoreResourcePipe.ctorParameters = function () { return [
         { type: NgrxJsonApiService, },
     ]; };
@@ -65,20 +67,17 @@ var DenormaliseStoreResourcePipe = (function () {
 }());
 export { DenormaliseStoreResourcePipe };
 function DenormaliseStoreResourcePipe_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     DenormaliseStoreResourcePipe.decorators;
     /**
      * @nocollapse
-     * @type {?}
+     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
      */
     DenormaliseStoreResourcePipe.ctorParameters;
     /** @type {?} */
     DenormaliseStoreResourcePipe.prototype.service;
 }
-var GetDenormalisedValuePipe = (function () {
-    /**
-     * @param {?} service
-     */
+var GetDenormalisedValuePipe = /** @class */ (function () {
     function GetDenormalisedValuePipe(service) {
         this.service = service;
     }
@@ -87,15 +86,18 @@ var GetDenormalisedValuePipe = (function () {
      * @param {?} storeResource
      * @return {?}
      */
-    GetDenormalisedValuePipe.prototype.transform = function (path, storeResource) {
+    GetDenormalisedValuePipe.prototype.transform = /**
+     * @param {?} path
+     * @param {?} storeResource
+     * @return {?}
+     */
+    function (path, storeResource) {
         return this.service.getDenormalisedValue(path, storeResource);
     };
     GetDenormalisedValuePipe.decorators = [
         { type: Pipe, args: [{ name: 'getDenormalisedValue' },] },
     ];
-    /**
-     * @nocollapse
-     */
+    /** @nocollapse */
     GetDenormalisedValuePipe.ctorParameters = function () { return [
         { type: NgrxJsonApiService, },
     ]; };
@@ -103,11 +105,11 @@ var GetDenormalisedValuePipe = (function () {
 }());
 export { GetDenormalisedValuePipe };
 function GetDenormalisedValuePipe_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     GetDenormalisedValuePipe.decorators;
     /**
      * @nocollapse
-     * @type {?}
+     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
      */
     GetDenormalisedValuePipe.ctorParameters;
     /** @type {?} */
