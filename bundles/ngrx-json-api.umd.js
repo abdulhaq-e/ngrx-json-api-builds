@@ -55,7 +55,7 @@ var denormaliseObject = function (resource, storeData, bag, denormalizePersisted
                     var /** @type {?} */ relatedRS = getSingleStoreResource(/** @type {?} */ (data), storeData);
                     denormalizedRelation = denormaliseStoreResource(relatedRS, storeData, bag, denormalizePersisted);
                 }
-                else if (data.length == 0) {
+                else if (((data)).length == 0) {
                     denormalizedRelation = data;
                 }
                 else {
@@ -599,7 +599,10 @@ var getResourceFieldValueFromPath = function (path, baseStoreResource, storeData
             lodash_index.isUndefined(definition.relationships)) {
             throw new Error('Attributes or Relationships must be provided');
         }
-        if (definition.attributes.hasOwnProperty(fields[i])) {
+        if (fields[i] === 'id') {
+            return lodash_index.get(currentStoreResource, 'id', null);
+        }
+        else if (definition.attributes.hasOwnProperty(fields[i])) {
             return lodash_index.get(currentStoreResource, 'attributes.' + fields[i], null);
         }
         else if (definition.relationships.hasOwnProperty(fields[i])) {
