@@ -192,7 +192,7 @@ export interface OneQueryResult extends QueryResult {
 }
 export interface StoreQuery {
     query: Query;
-    loading: Boolean;
+    loading: boolean;
     resultIds?: Array<ResourceIdentifier>;
     meta?: any;
     links?: any;
