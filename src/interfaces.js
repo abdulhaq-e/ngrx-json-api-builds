@@ -238,17 +238,30 @@ function Payload_tsickle_Closure_declarations() {
     Payload.prototype.query;
 }
 /**
+ * Specifies a GET query with parameters.
  * @record
  */
 export function Query() { }
 function Query_tsickle_Closure_declarations() {
-    /** @type {?|undefined} */
+    /**
+     * Uniquely identifies the query in the store
+     * @type {?|undefined}
+     */
     Query.prototype.queryId;
-    /** @type {?|undefined} */
+    /**
+     * resource type to query.
+     * @type {?|undefined}
+     */
     Query.prototype.type;
-    /** @type {?|undefined} */
+    /**
+     * resource id to query.
+     * @type {?|undefined}
+     */
     Query.prototype.id;
-    /** @type {?|undefined} */
+    /**
+     * sorting, filtering, etc. parameters.
+     * @type {?|undefined}
+     */
     Query.prototype.params;
 }
 /**
@@ -289,6 +302,7 @@ function QueryPageParams_tsickle_Closure_declarations() {
     QueryPageParams.prototype.size;
 }
 /**
+ * Represents a resource obtained from the server.
  * @record
  */
 export function Resource() { }
@@ -403,7 +417,11 @@ function SortingParam_tsickle_Closure_declarations() {
  */
 export function QueryResult() { }
 function QueryResult_tsickle_Closure_declarations() {
-    /** @type {?|undefined} */
+    /**
+     * Holds the resources from the query results. The field is dynamically populated by denormalizing
+     * StoreQuery.queryResults with the corresponding resources from the store.
+     * @type {?|undefined}
+     */
     QueryResult.prototype.data;
 }
 /**
@@ -427,18 +445,34 @@ function OneQueryResult_tsickle_Closure_declarations() {
  */
 export function StoreQuery() { }
 function StoreQuery_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /**
+     * query parameter
+     * @type {?}
+     */
     StoreQuery.prototype.query;
-    /** @type {?} */
+    /**
+     * Whether data is fetched from the server.
+     * @type {?}
+     */
     StoreQuery.prototype.loading;
-    /** @type {?|undefined} */
+    /**
+     * Ordered list of result identifiers that can be used to fetch the actual resources from the store.
+     * @type {?|undefined}
+     */
     StoreQuery.prototype.resultIds;
-    /** @type {?|undefined} */
+    /**
+     * Meta information obtained along with the results
+     * @type {?|undefined}
+     */
     StoreQuery.prototype.meta;
-    /** @type {?|undefined} */
+    /**
+     * Links information obtained along with the results.
+     * @type {?|undefined}
+     */
     StoreQuery.prototype.links;
     /**
-     * Errors received from the server after attempting to perform a GET request.
+     * Errors received from the server after attempting to perform a GET request. Errors related to POST, PATCH and
+     * DELETE are added to StoreResource.
      * @type {?}
      */
     StoreQuery.prototype.errors;

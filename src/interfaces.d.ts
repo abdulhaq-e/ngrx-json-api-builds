@@ -111,10 +111,25 @@ export interface Payload {
     jsonApiData?: Document;
     query?: Query;
 }
+/**
+ * Specifies a GET query with parameters.
+ */
 export interface Query {
+    /**
+     * Uniquely identifies the query in the store
+     */
     queryId?: string;
+    /**
+     * resource type to query.
+     */
     type?: string;
+    /**
+     * resource id to query.
+     */
     id?: string;
+    /**
+     * sorting, filtering, etc. parameters.
+     */
     params?: QueryParams;
 }
 export interface QueryParams {
@@ -133,6 +148,9 @@ export interface QueryPageParams {
     number?: number;
     size?: number;
 }
+/**
+ * Represents a resource obtained from the server.
+ */
 export interface Resource extends ResourceIdentifier {
     attributes?: {
         [key: string]: any;
@@ -190,6 +208,10 @@ export interface SortingParam {
     direction: Direction;
 }
 export interface QueryResult extends StoreQuery {
+    /**
+     * Holds the resources from the query results. The field is dynamically populated by denormalizing
+     * StoreQuery.queryResults with the corresponding resources from the store.
+     */
     data?: StoreResource | Array<StoreResource>;
 }
 export interface ManyQueryResult extends QueryResult {
@@ -199,13 +221,29 @@ export interface OneQueryResult extends QueryResult {
     data?: StoreResource;
 }
 export interface StoreQuery {
+    /**
+     * query parameter
+     */
     query: Query;
+    /**
+     * Whether data is fetched from the server.
+     */
     loading: boolean;
+    /**
+     * Ordered list of result identifiers that can be used to fetch the actual resources from the store.
+     */
     resultIds?: Array<ResourceIdentifier>;
+    /**
+     * Meta information obtained along with the results
+     */
     meta?: any;
+    /**
+     * Links information obtained along with the results.
+     */
     links?: any;
     /**
-     * Errors received from the server after attempting to perform a GET request.
+     * Errors received from the server after attempting to perform a GET request. Errors related to POST, PATCH and
+     * DELETE are added to StoreResource.
      */
     errors: Array<ResourceError>;
 }

@@ -79,6 +79,7 @@ Direction[Direction.DESC] = "DESC";
  * @record
  */
 /**
+ * Specifies a GET query with parameters.
  * @record
  */
 /**
@@ -88,6 +89,7 @@ Direction[Direction.DESC] = "DESC";
  * @record
  */
 /**
+ * Represents a resource obtained from the server.
  * @record
  */
 /**
