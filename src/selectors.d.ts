@@ -20,6 +20,7 @@ export declare function getNgrxJsonApiZone(state: any, zoneId: string): NgrxJson
 export declare function selectStoreQuery(queryId: string): (state: Observable<NgrxJsonApiStore>) => Observable<StoreQuery>;
 export declare function selectStoreResourcesOfType(type: string): (state: Observable<NgrxJsonApiStore>) => Observable<NgrxJsonApiStoreResources>;
 export declare function selectStoreResource(identifier: ResourceIdentifier): (state$: Observable<NgrxJsonApiStore>) => Observable<StoreResource>;
+export declare function selectStoreResources(identifiers: ResourceIdentifier[]): (state$: Observable<NgrxJsonApiStore>) => Observable<StoreResource[]>;
 export declare function selectManyQueryResult(queryId: string, denormalize?: boolean): (state: Observable<NgrxJsonApiStore>) => Observable<ManyQueryResult>;
 export declare function selectOneQueryResult(queryId: string, denormalize?: boolean): (state: Observable<NgrxJsonApiStore>) => Observable<OneQueryResult>;
 /**

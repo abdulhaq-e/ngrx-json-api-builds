@@ -22,7 +22,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
  */
 import * as _ from 'lodash';
 import 'rxjs/add/operator/finally';
-import { selectManyQueryResult, selectNgrxJsonApiDefaultZone, selectNgrxJsonApiZone, selectOneQueryResult, selectStoreResource, } from './selectors';
+import { selectManyQueryResult, selectNgrxJsonApiDefaultZone, selectNgrxJsonApiZone, selectOneQueryResult, selectStoreResource, selectStoreResources, } from './selectors';
 import { ApiApplyInitAction, ApiDeleteInitAction, ApiGetInitAction, ApiPatchInitAction, ApiPostInitAction, ApiQueryRefreshAction, ClearStoreAction, CompactStoreAction, DeleteStoreResourceAction, LocalQueryInitAction, ModifyStoreResourceErrorsAction, NewStoreResourceAction, PatchStoreResourceAction, PostStoreResourceAction, RemoveQueryAction, } from './actions';
 import { NGRX_JSON_API_DEFAULT_ZONE, } from './interfaces';
 import { denormaliseStoreResource, denormaliseStoreResources, getDenormalisedPath, getDenormalisedValue, uuid, } from './utils';
@@ -219,6 +219,19 @@ NgrxJsonApiZoneService = /** @class */ (function () {
         return this.store
             .let(selectNgrxJsonApiZone(this.zoneId))
             .let(selectStoreResource(identifier));
+    };
+    /**
+     * @param {?} identifiers of the resources
+     * @return {?} observable of the resources
+     */
+    NgrxJsonApiZoneService.prototype.selectStoreResources = /**
+     * @param {?} identifiers of the resources
+     * @return {?} observable of the resources
+     */
+    function (identifiers) {
+        return this.store
+            .let(selectNgrxJsonApiZone(this.zoneId))
+            .let(selectStoreResources(identifiers));
     };
     /**
      * Updates the given resource in the store with the provided data.

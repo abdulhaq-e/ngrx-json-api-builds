@@ -41,6 +41,42 @@ function SelectStoreResourcePipe_tsickle_Closure_declarations() {
     /** @type {?} */
     SelectStoreResourcePipe.prototype.service;
 }
+var SelectStoreResourcesPipe = /** @class */ (function () {
+    function SelectStoreResourcesPipe(service) {
+        this.service = service;
+    }
+    /**
+     * @param {?} ids
+     * @return {?}
+     */
+    SelectStoreResourcesPipe.prototype.transform = /**
+     * @param {?} ids
+     * @return {?}
+     */
+    function (ids) {
+        return this.service.selectStoreResources(ids);
+    };
+    SelectStoreResourcesPipe.decorators = [
+        { type: Pipe, args: [{ name: 'jaSelectStoreResources' },] },
+    ];
+    /** @nocollapse */
+    SelectStoreResourcesPipe.ctorParameters = function () { return [
+        { type: NgrxJsonApiService, },
+    ]; };
+    return SelectStoreResourcesPipe;
+}());
+export { SelectStoreResourcesPipe };
+function SelectStoreResourcesPipe_tsickle_Closure_declarations() {
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
+    SelectStoreResourcesPipe.decorators;
+    /**
+     * @nocollapse
+     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
+     */
+    SelectStoreResourcesPipe.ctorParameters;
+    /** @type {?} */
+    SelectStoreResourcesPipe.prototype.service;
+}
 var DenormaliseStoreResourcePipe = /** @class */ (function () {
     function DenormaliseStoreResourcePipe(service) {
         this.service = service;

@@ -92,6 +92,22 @@ export function selectStoreResource(identifier) {
     };
 }
 /**
+ * @param {?} identifiers
+ * @return {?}
+ */
+export function selectStoreResources(identifiers) {
+    return function (state$) {
+        return state$.pipe(map(function (state) { return state.data; }), map(function (data) {
+            return identifiers.map(function (identifier) {
+                if (!data || !data[identifier.type]) {
+                    return undefined;
+                }
+                return /** @type {?} */ (data[identifier.type][identifier.id]);
+            });
+        }));
+    };
+}
+/**
  * @param {?} queryId
  * @param {?=} denormalize
  * @return {?}

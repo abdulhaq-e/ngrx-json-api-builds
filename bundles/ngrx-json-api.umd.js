@@ -1285,6 +1285,22 @@ function selectStoreResource(identifier) {
     };
 }
 /**
+ * @param {?} identifiers
+ * @return {?}
+ */
+function selectStoreResources(identifiers) {
+    return function (state$) {
+        return state$.pipe(operators.map(function (state) { return state.data; }), operators.map(function (data) {
+            return identifiers.map(function (identifier) {
+                if (!data || !data[identifier.type]) {
+                    return undefined;
+                }
+                return /** @type {?} */ (data[identifier.type][identifier.id]);
+            });
+        }));
+    };
+}
+/**
  * @param {?} queryId
  * @param {?=} denormalize
  * @return {?}
@@ -2004,6 +2020,19 @@ var NgrxJsonApiZoneService = (function () {
                 .let(selectStoreResource(identifier));
         };
     /**
+     * @param {?} identifiers of the resources
+     * @return {?} observable of the resources
+     */
+    NgrxJsonApiZoneService.prototype.selectStoreResources = /**
+     * @param {?} identifiers of the resources
+     * @return {?} observable of the resources
+     */
+        function (identifiers) {
+            return this.store
+                .let(selectNgrxJsonApiZone(this.zoneId))
+                .let(selectStoreResources(identifiers));
+        };
+    /**
      * Updates the given resource in the store with the provided data.
      * Use commit() to send the changes to the remote JSON API endpoint.
      *
@@ -2424,6 +2453,32 @@ var SelectStoreResourcePipe = (function () {
         ];
     };
     return SelectStoreResourcePipe;
+}());
+var SelectStoreResourcesPipe = (function () {
+    function SelectStoreResourcesPipe(service) {
+        this.service = service;
+    }
+    /**
+     * @param {?} ids
+     * @return {?}
+     */
+    SelectStoreResourcesPipe.prototype.transform = /**
+     * @param {?} ids
+     * @return {?}
+     */
+        function (ids) {
+            return this.service.selectStoreResources(ids);
+        };
+    SelectStoreResourcesPipe.decorators = [
+        { type: core.Pipe, args: [{ name: 'jaSelectStoreResources' },] },
+    ];
+    /** @nocollapse */
+    SelectStoreResourcesPipe.ctorParameters = function () {
+        return [
+            { type: NgrxJsonApiService, },
+        ];
+    };
+    return SelectStoreResourcesPipe;
 }());
 var DenormaliseStoreResourcePipe = (function () {
     function DenormaliseStoreResourcePipe(service) {
@@ -3498,6 +3553,7 @@ var NgrxJsonApiModule = (function () {
 }());
 
 exports.SelectStoreResourcePipe = SelectStoreResourcePipe;
+exports.SelectStoreResourcesPipe = SelectStoreResourcesPipe;
 exports.DenormaliseStoreResourcePipe = DenormaliseStoreResourcePipe;
 exports.GetDenormalisedValuePipe = GetDenormalisedValuePipe;
 exports.NgrxJsonApiService = NgrxJsonApiService;
@@ -3544,6 +3600,7 @@ exports.getNgrxJsonApiZone = getNgrxJsonApiZone;
 exports.selectStoreQuery = selectStoreQuery;
 exports.selectStoreResourcesOfType = selectStoreResourcesOfType;
 exports.selectStoreResource = selectStoreResource;
+exports.selectStoreResources = selectStoreResources;
 exports.selectManyQueryResult = selectManyQueryResult;
 exports.selectOneQueryResult = selectOneQueryResult;
 exports.getNgrxJsonApiStore = getNgrxJsonApiStore;

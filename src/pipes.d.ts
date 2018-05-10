@@ -8,6 +8,11 @@ export declare class SelectStoreResourcePipe implements PipeTransform {
     constructor(service: NgrxJsonApiService);
     transform(id: ResourceIdentifier): Observable<StoreResource>;
 }
+export declare class SelectStoreResourcesPipe implements PipeTransform {
+    private service;
+    constructor(service: NgrxJsonApiService);
+    transform(ids: ResourceIdentifier[]): Observable<StoreResource[]>;
+}
 export declare class DenormaliseStoreResourcePipe implements PipeTransform {
     private service;
     constructor(service: NgrxJsonApiService);

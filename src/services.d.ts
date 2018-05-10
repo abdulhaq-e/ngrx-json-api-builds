@@ -75,6 +75,11 @@ export declare class NgrxJsonApiZoneService {
      */
     selectStoreResource(identifier: ResourceIdentifier): Observable<StoreResource>;
     /**
+     * @param identifiers of the resources
+     * @returns observable of the resources
+     */
+    selectStoreResources(identifiers: ResourceIdentifier[]): Observable<StoreResource[]>;
+    /**
      * Updates the given resource in the store with the provided data.
      * Use commit() to send the changes to the remote JSON API endpoint.
      *

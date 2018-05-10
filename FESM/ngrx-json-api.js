@@ -1326,6 +1326,22 @@ function selectStoreResource(identifier) {
     };
 }
 /**
+ * @param {?} identifiers
+ * @return {?}
+ */
+function selectStoreResources(identifiers) {
+    return function (state$) {
+        return state$.pipe(map(function (state) { return state.data; }), map(function (data) {
+            return identifiers.map(function (identifier) {
+                if (!data || !data[identifier.type]) {
+                    return undefined;
+                }
+                return /** @type {?} */ (data[identifier.type][identifier.id]);
+            });
+        }));
+    };
+}
+/**
  * @param {?} queryId
  * @param {?=} denormalize
  * @return {?}
@@ -2047,6 +2063,19 @@ var NgrxJsonApiZoneService = /** @class */ (function () {
             .let(selectStoreResource(identifier));
     };
     /**
+     * @param {?} identifiers of the resources
+     * @return {?} observable of the resources
+     */
+    NgrxJsonApiZoneService.prototype.selectStoreResources = /**
+     * @param {?} identifiers of the resources
+     * @return {?} observable of the resources
+     */
+    function (identifiers) {
+        return this.store
+            .let(selectNgrxJsonApiZone(this.zoneId))
+            .let(selectStoreResources(identifiers));
+    };
+    /**
      * Updates the given resource in the store with the provided data.
      * Use commit() to send the changes to the remote JSON API endpoint.
      *
@@ -2467,6 +2496,30 @@ var SelectStoreResourcePipe = /** @class */ (function () {
         { type: NgrxJsonApiService, },
     ]; };
     return SelectStoreResourcePipe;
+}());
+var SelectStoreResourcesPipe = /** @class */ (function () {
+    function SelectStoreResourcesPipe(service) {
+        this.service = service;
+    }
+    /**
+     * @param {?} ids
+     * @return {?}
+     */
+    SelectStoreResourcesPipe.prototype.transform = /**
+     * @param {?} ids
+     * @return {?}
+     */
+    function (ids) {
+        return this.service.selectStoreResources(ids);
+    };
+    SelectStoreResourcesPipe.decorators = [
+        { type: Pipe, args: [{ name: 'jaSelectStoreResources' },] },
+    ];
+    /** @nocollapse */
+    SelectStoreResourcesPipe.ctorParameters = function () { return [
+        { type: NgrxJsonApiService, },
+    ]; };
+    return SelectStoreResourcesPipe;
 }());
 var DenormaliseStoreResourcePipe = /** @class */ (function () {
     function DenormaliseStoreResourcePipe(service) {
@@ -3545,5 +3598,5 @@ var NgrxJsonApiModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { SelectStoreResourcePipe, DenormaliseStoreResourcePipe, GetDenormalisedValuePipe, NgrxJsonApiService, NgrxJsonApiZoneService, NgrxJsonApiModule, NGRX_JSON_API_CONFIG, uuid, NGRX_JSON_API_DEFAULT_ZONE, Direction, NgrxJsonApiActionTypes, NgrxJsonApiAction, ApiApplyInitAction, ApiApplySuccessAction, ApiApplyFailAction, ApiPostInitAction, ApiPostSuccessAction, ApiPostFailAction, ApiDeleteInitAction, ApiDeleteSuccessAction, ApiDeleteFailAction, ApiGetInitAction, ApiGetSuccessAction, ApiGetFailAction, ApiRollbackAction, ApiPatchInitAction, ApiPatchSuccessAction, ApiPatchFailAction, DeleteStoreResourceAction, PatchStoreResourceAction, NewStoreResourceAction, PostStoreResourceAction, RemoveQueryAction, LocalQueryInitAction, LocalQuerySuccessAction, LocalQueryFailAction, CompactStoreAction, ClearStoreAction, ApiQueryRefreshAction, ModifyStoreResourceErrorsAction, selectNgrxJson, selectNgrxJsonApiDefaultZone, selectNgrxJsonApiZone, getNgrxJsonApiZone, selectStoreQuery, selectStoreResourcesOfType, selectStoreResource, selectManyQueryResult, selectOneQueryResult, getNgrxJsonApiStore, NgrxJsonApiSelectors, NgrxJsonApi as ɵf, NgrxJsonApiEffects as ɵe, apiFactory as ɵa, configure as ɵd, selectorsFactory as ɵb, serviceFactory as ɵc, NgrxJsonApiStoreReducer as ɵg, reducer as ɵh };
+export { SelectStoreResourcePipe, SelectStoreResourcesPipe, DenormaliseStoreResourcePipe, GetDenormalisedValuePipe, NgrxJsonApiService, NgrxJsonApiZoneService, NgrxJsonApiModule, NGRX_JSON_API_CONFIG, uuid, NGRX_JSON_API_DEFAULT_ZONE, Direction, NgrxJsonApiActionTypes, NgrxJsonApiAction, ApiApplyInitAction, ApiApplySuccessAction, ApiApplyFailAction, ApiPostInitAction, ApiPostSuccessAction, ApiPostFailAction, ApiDeleteInitAction, ApiDeleteSuccessAction, ApiDeleteFailAction, ApiGetInitAction, ApiGetSuccessAction, ApiGetFailAction, ApiRollbackAction, ApiPatchInitAction, ApiPatchSuccessAction, ApiPatchFailAction, DeleteStoreResourceAction, PatchStoreResourceAction, NewStoreResourceAction, PostStoreResourceAction, RemoveQueryAction, LocalQueryInitAction, LocalQuerySuccessAction, LocalQueryFailAction, CompactStoreAction, ClearStoreAction, ApiQueryRefreshAction, ModifyStoreResourceErrorsAction, selectNgrxJson, selectNgrxJsonApiDefaultZone, selectNgrxJsonApiZone, getNgrxJsonApiZone, selectStoreQuery, selectStoreResourcesOfType, selectStoreResource, selectStoreResources, selectManyQueryResult, selectOneQueryResult, getNgrxJsonApiStore, NgrxJsonApiSelectors, NgrxJsonApi as ɵf, NgrxJsonApiEffects as ɵe, apiFactory as ɵa, configure as ɵd, selectorsFactory as ɵb, serviceFactory as ɵc, NgrxJsonApiStoreReducer as ɵg, reducer as ɵh };
 //# sourceMappingURL=ngrx-json-api.js.map
