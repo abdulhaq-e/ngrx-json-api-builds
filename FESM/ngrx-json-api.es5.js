@@ -140,6 +140,9 @@ Direction[Direction.DESC] = "DESC";
  * @record
  */
 /**
+ * @record
+ */
+/**
  * Container to hold a Resource in the store with state information.
  * @record
  */
@@ -2723,6 +2726,7 @@ var NgrxJsonApi = (function () {
             var /** @type {?} */ fieldsParams = '';
             var /** @type {?} */ offsetParams = '';
             var /** @type {?} */ limitParams = '';
+            var /** @type {?} */ pageParams = '';
             if (typeof query === undefined) {
                 return Observable.throw('Query not found');
             }
@@ -2745,8 +2749,15 @@ var NgrxJsonApi = (function () {
                 if (hasIn(query.params, 'offset')) {
                     offsetParams = 'page[offset]=' + query.params.offset;
                 }
+                if (hasIn(query.params, 'page')) {
+                    pageParams = keys(query.params.page)
+                        .map(function (key) {
+                        return "page[" + key + "]=" + query.params.page[key];
+                    })
+                        .join('&');
+                }
             }
-            queryParams = _generateQueryParams(includedParam, filteringParams, sortingParams, fieldsParams, offsetParams, limitParams);
+            queryParams = _generateQueryParams(includedParam, filteringParams, sortingParams, fieldsParams, offsetParams, limitParams, pageParams);
             var /** @type {?} */ requestOptions = {
                 method: 'GET',
                 url: this.urlBuilder(query, 'GET') + queryParams,

@@ -268,6 +268,25 @@ function QueryParams_tsickle_Closure_declarations() {
     QueryParams.prototype.offset;
     /** @type {?|undefined} */
     QueryParams.prototype.limit;
+    /** @type {?|undefined} */
+    QueryParams.prototype.page;
+}
+/**
+ * @record
+ */
+export function QueryPageParams() { }
+function QueryPageParams_tsickle_Closure_declarations() {
+    /* TODO: handle strange member:
+    [id: string]: string | number;
+    */
+    /** @type {?|undefined} */
+    QueryPageParams.prototype.offset;
+    /** @type {?|undefined} */
+    QueryPageParams.prototype.limit;
+    /** @type {?|undefined} */
+    QueryPageParams.prototype.number;
+    /** @type {?|undefined} */
+    QueryPageParams.prototype.size;
 }
 /**
  * @record

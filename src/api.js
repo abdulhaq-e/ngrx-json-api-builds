@@ -174,6 +174,7 @@ var NgrxJsonApi = /** @class */ (function () {
         var /** @type {?} */ fieldsParams = '';
         var /** @type {?} */ offsetParams = '';
         var /** @type {?} */ limitParams = '';
+        var /** @type {?} */ pageParams = '';
         if (typeof query === undefined) {
             return Observable.throw('Query not found');
         }
@@ -196,8 +197,15 @@ var NgrxJsonApi = /** @class */ (function () {
             if (_.hasIn(query.params, 'offset')) {
                 offsetParams = 'page[offset]=' + query.params.offset;
             }
+            if (_.hasIn(query.params, 'page')) {
+                pageParams = _.keys(query.params.page)
+                    .map(function (key) {
+                    return "page[" + key + "]=" + query.params.page[key];
+                })
+                    .join('&');
+            }
         }
-        queryParams = _generateQueryParams(includedParam, filteringParams, sortingParams, fieldsParams, offsetParams, limitParams);
+        queryParams = _generateQueryParams(includedParam, filteringParams, sortingParams, fieldsParams, offsetParams, limitParams, pageParams);
         var /** @type {?} */ requestOptions = {
             method: 'GET',
             url: this.urlBuilder(query, 'GET') + queryParams,
