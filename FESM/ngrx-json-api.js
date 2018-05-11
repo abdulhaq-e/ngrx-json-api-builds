@@ -3577,6 +3577,7 @@ var NgrxJsonApiModule = /** @class */ (function () {
                         DenormaliseStoreResourcePipe,
                         GetDenormalisedValuePipe,
                         SelectStoreResourcePipe,
+                        SelectStoreResourcesPipe,
                     ],
                     imports: [
                         EffectsModule.forFeature([NgrxJsonApiEffects]),
@@ -3586,6 +3587,7 @@ var NgrxJsonApiModule = /** @class */ (function () {
                         DenormaliseStoreResourcePipe,
                         GetDenormalisedValuePipe,
                         SelectStoreResourcePipe,
+                        SelectStoreResourcesPipe,
                     ],
                 },] },
     ];

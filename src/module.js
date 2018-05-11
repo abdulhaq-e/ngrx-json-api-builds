@@ -10,7 +10,7 @@ import { NgrxJsonApi } from './api';
 import { NgrxJsonApiEffects } from './effects';
 import { NgrxJsonApiService } from './services';
 import { reducer } from './reducers';
-import { DenormaliseStoreResourcePipe, GetDenormalisedValuePipe, SelectStoreResourcePipe, } from './pipes';
+import { DenormaliseStoreResourcePipe, GetDenormalisedValuePipe, SelectStoreResourcePipe, SelectStoreResourcesPipe, } from './pipes';
 import { NgrxJsonApiSelectors } from './selectors';
 export var /** @type {?} */ NGRX_JSON_API_CONFIG = new InjectionToken('NGRX_JSON_API_CONFIG');
 /**
@@ -85,6 +85,7 @@ var NgrxJsonApiModule = /** @class */ (function () {
                         DenormaliseStoreResourcePipe,
                         GetDenormalisedValuePipe,
                         SelectStoreResourcePipe,
+                        SelectStoreResourcesPipe,
                     ],
                     imports: [
                         EffectsModule.forFeature([NgrxJsonApiEffects]),
@@ -94,6 +95,7 @@ var NgrxJsonApiModule = /** @class */ (function () {
                         DenormaliseStoreResourcePipe,
                         GetDenormalisedValuePipe,
                         SelectStoreResourcePipe,
+                        SelectStoreResourcesPipe,
                     ],
                 },] },
     ];
