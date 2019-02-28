@@ -709,9 +709,8 @@ export var /** @type {?} */ generateFilteringQueryParams = function (filtering) 
         return '';
     }
     var /** @type {?} */ filteringParams = filtering.map(function (f) {
-        return ('filter[' +
-            f.path +
-            ']' +
+        return ('filter' +
+            (f.path ? '[' + f.path + ']' : '') +
             (f.operator ? '[' + f.operator + ']' : '') +
             '=' +
             encodeURIComponent(f.value));
